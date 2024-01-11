@@ -80,9 +80,9 @@ const ClubCard = ({ isBoxOpen, onToggleModal }) => {
     return (
         <>
             <Container>
-                <Image src="https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png"></Image>
+                <Image src="https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png" href="#popup-box" onClick={onToggleModal} ></Image>
                 <Title>Upsilon Pi Epsilon(UPE)</Title>
-                <StyledLink href="#popup-box" onClick={onToggleModal}>UPE</StyledLink>
+                <StyledLink>UPE</StyledLink>
                 <Box isOpen={isBoxOpen}>
                     <Content>
                         <h1 style={{ color: 'blue' }}>UPE</h1>
