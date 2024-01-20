@@ -1,25 +1,25 @@
 import React from 'react';
 import NavigationBar from './NavigationBar.js';
 
-export const Home = () => {
+export const About = () => {
     // Dummy data for clubs (replace this with actual data)
     const clubs = [
-        { name: 'Club 1', description: 'Description of Club 1' },
-        { name: 'Club 2', description: 'Description of Club 2' },
-        { name: 'Club 3', description: 'Description of Club 3' },
+        { name: 'President', description: 'Description of Club 1' },
+        { name: 'Vice-President', description: 'Description of Club 2' },
+        { name: 'Webmaster', description: 'Description of Club 3' },
     ];
 
     return (
         <div>
             <header>
-                <h1>Welcome to ESUC</h1>
+                <h1>Learn more about ESUC and the team</h1>
                 <NavigationBar></NavigationBar>
             </header>
             <section>
-                <p>This is the official page of ESUC at UCLA</p>
+                <p>About ESUC</p>
             </section>
             <section>
-                <h2>Clubs at UCLA</h2>
+                <h2>Leadership Team</h2>
                 <ul>
                     {clubs.map((club, index) => (
                         <li key={index}>
