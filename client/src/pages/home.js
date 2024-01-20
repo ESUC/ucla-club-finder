@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import CardGrid from './CardGrid.js';
+import ClubCard from './ClubCard.js';
 import { TextField, Button, Paper, Typography, makeStyles, FormControl, FormControlLabel, Checkbox } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
@@ -7,6 +10,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from 'styled-components'
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import CardGrid from './CardGrid.js';
+import ClubCard from './ClubCard.js';
 
 const accordionStyle = {
     width: '300px', // Adjust the width as needed
@@ -16,6 +21,7 @@ export const Home = () => {
     return (
         <div>
             <h1>Home</h1>
+            <CardGrid/>
             <Grid container spacing={1}>
                 <Grid xs = {9}>
                     <h2>(Club Cards)</h2>
