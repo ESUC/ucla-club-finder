@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import CardGrid from '../components/CardGrid.js';
 import ClubCard from '../components/ClubCard.js';
+import NavigationBar from '../pages/NavigationBar.js';
 
 const accordionStyle = {
     width: '300px', // Adjust the width as needed
