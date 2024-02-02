@@ -24,7 +24,7 @@ export const Home = () => {
                 <Grid container spacing={1}>
                     <Grid xs = {3}>
                         <Accordion style={accordionStyle}>
-                            <AccordionSummary id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
+                            <AccordionSummary style={{marginLeft: '10px'}} id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
                                 Club Type
                             </AccordionSummary>
                             <AccordionDetails>
@@ -37,7 +37,7 @@ export const Home = () => {
                             </AccordionDetails>
                         </Accordion>
                         <Accordion style={accordionStyle}>
-                            <AccordionSummary id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
+                            <AccordionSummary style={{marginLeft: '10px'}} id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
                                 Major
                             </AccordionSummary>
                             <AccordionDetails>
@@ -51,7 +51,7 @@ export const Home = () => {
                             </AccordionDetails>
                         </Accordion>
                         <Accordion style={accordionStyle}>
-                            <AccordionSummary id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
+                            <AccordionSummary style={{marginLeft: '10px'}} id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
                                 Meeting Days
                             </AccordionSummary>
                             <AccordionDetails>
@@ -67,7 +67,7 @@ export const Home = () => {
                             </AccordionDetails>
                         </Accordion>
                         <Accordion style={accordionStyle}>
-                            <AccordionSummary id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
+                            <AccordionSummary style={{marginLeft: '10px'}} id="panel-header" aria-controls="panel-content" expandIcon={<ExpandMoreIcon />}>
                                 Size
                             </AccordionSummary>
                             <AccordionDetails>

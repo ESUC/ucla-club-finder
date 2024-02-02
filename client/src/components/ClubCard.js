@@ -1,9 +1,13 @@
 
 import styled from 'styled-components'
+import React, { useState } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const Container = styled.div`
     width: 18em;
-    height: 18em;
+    height: 22em;
     border-radius: 10px;
     background-color: #ADD8E6;
     margin-bottom: 2em;
@@ -76,10 +80,18 @@ const BoxClose = styled.a`
 `;
 
 const ClubCard = ({ isBoxOpen, onToggleModal }) => {
+    const [isFavorited, setIsFavorited] = useState(false);
+
+    const handleToggleFavorite = () => {
+        setIsFavorited((prev) => !prev);
+    };
 
     return (
         <>
             <Container>
+                <IconButton onClick={handleToggleFavorite} color={isFavorited ? 'primary' : 'default'}>
+                    {isFavorited ? <StarIcon /> : <StarBorderIcon />}
+                </IconButton>
                 <Image src="https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png" href="#popup-box" onClick={onToggleModal} ></Image>
                 <Title>Upsilon Pi Epsilon(UPE)</Title>
                 <StyledLink>UPE</StyledLink>
