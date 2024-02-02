@@ -2,8 +2,8 @@
 import styled from 'styled-components'
 
 const Container = styled.div`
-    width: 20em;
-    height: 20em;
+    width: 18em;
+    height: 18em;
     border-radius: 10px;
     background-color: #ADD8E6;
     margin-bottom: 2em;
@@ -22,8 +22,8 @@ const Title = styled.div`
 `
 
 const Image = styled.img`
-    width: 15em;
-    height: 15em;
+    width: 13em;
+    height: 13em;
     position: relative;
     margin-top: 1em;
     margin-left: 2.5em;
