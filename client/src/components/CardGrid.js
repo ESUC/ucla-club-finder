@@ -30,11 +30,11 @@ const CardGrid = () => {
 
     return(
         <>
-            <Grid>
+            <Grid xs={1}>
                 {Array.from({ length: 9 }).map((_, index) => (
                     <ClubCard isBoxOpen={isBoxOpen} onToggleModal={handleToggleModal} key={index}>Card {index + 1}</ClubCard>
                 ))}
-        </Grid>
+            </Grid>
         </>
     )
 }
