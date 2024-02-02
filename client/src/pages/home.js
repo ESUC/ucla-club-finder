@@ -18,6 +18,7 @@ export const Home = () => {
     return (
         <div>
             <h1 style={{margin: '10px'}}>ClubFinder</h1>
+            <NavigationBar></NavigationBar>
             <div style={{ margin: '10px' }}> 
                 <Grid container spacing={1}>
                     <Grid xs = {3}>
