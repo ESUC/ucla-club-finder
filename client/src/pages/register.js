@@ -1,44 +1,91 @@
 import React, { useState } from 'react';
 import { TextField, Button, Paper, Typography, makeStyles } from '@mui/material';
 import styled from 'styled-components'
+import Avatar from '@mui/material/Avatar';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Container from '@mui/material/Container';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import InputAdornment from '@mui/material/InputAdornment';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
-
-const Container = styled(Paper)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: auto;
-  margin-top: 200px;
-  max-width: 300px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+const OuterContainer = styled.div `
+    background: white;
+    background: linear-gradient(to right bottom, #FFC400, #00D2FF);
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const Register = () => {
-    const [lastName, setLastName] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     return (
         <>
-        <Container className="paper">
-        <Typography className="title" variant="h5" align="center" style={{margin:"10px"}} >Register</Typography>
-        <StyledForm className="text">
-            <TextField label="First Name" variant="outlined" value={firstName}/>
-            <TextField label="Last Name" type="password" variant="outlined" value={lastName}/>
-            <TextField label="Email" variant="outlined" value={email}/>
-            <TextField label="Username" variant="outlined" value={username}/>
-            <TextField label="Password" type="password" variant="outlined" value={password}/>
-            <Button variant="contained" color="primary"> Login</Button>
-        </StyledForm>
+        <OuterContainer>
+        <Container maxWidth="xs" 
+          sx={{
+              height: "80vh",
+              borderRadius:4, 
+              padding:"50px",
+              background: "white",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: '0 4px 8px black'
+              }}
+        >
+        <Typography variant="h5" align="center" sx={{color:"black"}}>Register</Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              name="firstName"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, background: 'white', 
+                background: '#00A7FF',}}
+            >
+              SUBMIT
+            </Button>
+            </Box>
         </Container>
-        
+        </OuterContainer>
         </>
     );
 }
