@@ -6,12 +6,13 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const Container = styled.div`
-    width: 18em;
-    height: 22em;
+    width: 20em;
+    height: 21em;
     border-radius: 10px;
     background-color: #ADD8E6;
     margin-bottom: 2em;
 `
+
 
 const Title = styled.div`
     margin-top: 1em;
@@ -51,7 +52,7 @@ const Box = styled.div`
     align-items: center;
     display: flex;
     justify-content: center; 
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components'
 import ClubCard from '../components/ClubCard.js';
 import Carousel from 'react-material-ui-carousel';
+import FlippableCard from '../components/FlippableCard.js';
 
 export const SavedClubs = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,7 +19,7 @@ export const SavedClubs = () => {
                 <Carousel index={currentIndex} autoPlay={false} navButtonsAlwaysVisible={true}>
                     {
                         Array.from({ length: 9 }).map((_, index) => (
-                        <ClubCard key={index}>Card {index + 1}</ClubCard>
+                        <FlippableCard key={index}>Card {index + 1}</FlippableCard>
                         ))
                     }
                 </Carousel>
