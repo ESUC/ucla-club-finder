@@ -1,9 +1,9 @@
 
 import styled from 'styled-components'
 import React, { useState } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import IconButton from '@mui/material/IconButton';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const Container = styled.div`
     width: 18em;
