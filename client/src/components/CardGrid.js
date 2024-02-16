@@ -28,11 +28,14 @@ const CardGrid = () => {
         setBoxOpen(!isBoxOpen);
     };
 
+    const image = ["https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png","https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bsg.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/asme.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aiaa.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/dbf.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ieee.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/qwerhacks.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/mrs.png", "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aiche.png"]; 
+    const title = ["UPE", "BSG", "ASME", "AIAA", "DBF", "IEEE", "MRS", "QWER Hacks", "AIChe"]
+
     return(
         <>
             <Grid xs={1}>
                 {Array.from({ length: 9 }).map((_, index) => (
-                    <ClubCard isBoxOpen={isBoxOpen} onToggleModal={handleToggleModal} key={index}>Card {index + 1}</ClubCard>
+                    <ClubCard img= {image[index]} title={title[index]}isBoxOpen={isBoxOpen} onToggleModal={handleToggleModal} key={index}>Card {index + 1}</ClubCard>
                 ))}
             </Grid>
         </>
