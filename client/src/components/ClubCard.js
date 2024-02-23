@@ -65,7 +65,7 @@ const Box = styled.div`
 const Content = styled.div`
     position: absolute;
     background: white;
-    width: 400px;
+    width: 300px;
     padding: 1em 2em;
     border-radius: 4px;
 `;
