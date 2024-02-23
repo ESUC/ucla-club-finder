@@ -1,6 +1,6 @@
-
 import styled from 'styled-components'
 import React, { useState } from 'react';
+import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -30,7 +30,6 @@ const Image = styled.img`
     width: 13em;
     height: 13em;
     position: relative;
-    margin-top: 1em;
     margin-left: 2.5em;
     border-radius: 10px;
     background-color: white;
@@ -66,7 +65,7 @@ const Box = styled.div`
 const Content = styled.div`
     position: absolute;
     background: white;
-    width: 400px;
+    width: 300px;
     padding: 1em 2em;
     border-radius: 4px;
 `;
@@ -80,7 +79,7 @@ const BoxClose = styled.a`
     font-size: 30px;
 `;
 
-const ClubCard = ({ isBoxOpen, onToggleModal }) => {
+const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
     const [isFavorited, setIsFavorited] = useState(false);
 
     const handleToggleFavorite = () => {
@@ -89,13 +88,21 @@ const ClubCard = ({ isBoxOpen, onToggleModal }) => {
 
     return (
         <>
-            <Container>
-                <IconButton onClick={handleToggleFavorite} color={isFavorited ? 'primary' : 'default'}>
+        <Card
+        style={{
+            width: '20em',
+            height: '21em',
+            margin: '1em',
+            backgroundColor: '#ADD8E6',
+        }}
+        >
+            <IconButton onClick={handleToggleFavorite} color={isFavorited ? 'primary' : 'blue'}>
                     {isFavorited ? <StarIcon /> : <StarBorderIcon />}
-                </IconButton>
-                <Image src="https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png" href="#popup-box" onClick={onToggleModal} ></Image>
-                <Title>Upsilon Pi Epsilon(UPE)</Title>
-                <StyledLink>UPE</StyledLink>
+            </IconButton>
+            <p></p>
+            <Image src={img} href="#popup-box" onClick={onToggleModal} ></Image>
+            <Title>"Insert Title Here"</Title>
+            <StyledLink>{title}</StyledLink>
                 <Box isOpen={isBoxOpen}>
                     <Content>
                         <h1 style={{ color: 'blue' }}>UPE</h1>
@@ -103,12 +110,6 @@ const ClubCard = ({ isBoxOpen, onToggleModal }) => {
                             <p>Acronym: UPE
                             Social Links:
                             Website: https://upe.seas.ucla.edu/
-                            Instagram: @upeucla
-                            Facebook: https://www.facebook.com/upeucla
-                            Discord: https://discord.gg/4WTPEgb2x6
-                            Linktree: https://linktr.ee/upeucla
-                            Newsletter sign-up: http://eepurl.com/c-ajCL
-                            LinkedIn: https://www.linkedin.com/company/73796748
                             Description:
                             Upsilon Pi Epsilon is the computer science honors society at UCLA. Through mentorship, corporate events, tutoring, and outreach, we support students' growth in technology and computer science. Some of our past events include the CS Career Fair, Hot Ones panel featuring professors with startup experience and serial entrepreneurs, and a finance talk with Professor Carey Nachenberg! Come out to our UPE Intro Event on Thursday, 9/29, 6 pm at Young Hall CS 50 to learn more about induction requirements, free UPE resources, and exciting upcoming events!
                         </p>
@@ -116,8 +117,8 @@ const ClubCard = ({ isBoxOpen, onToggleModal }) => {
                         <BoxClose href="#" onClick={onToggleModal}> ×</BoxClose>
                     </Content>
                 </Box>
-            </Container>
-        </>
+        </Card>
+      </>
     );
 }
 
