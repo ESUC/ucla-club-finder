@@ -1,0 +1,19 @@
+.home-container {
+  display: flex;
+}
+
+header {
+  flex: 1; /* Allow the header to grow and take up remaining space */
+}
+
+/* Target the NavigationBar component using its tag name */
+.home-container {
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Space out items, pushing NavigationBar to the right */
+  align-items: center; /* Align items vertically */
+}
