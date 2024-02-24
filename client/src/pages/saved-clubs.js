@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import styled from 'styled-components'
 import ClubCard from '../components/ClubCard.js';
 import Carousel from 'react-material-ui-carousel';
 import FlippableCard from '../components/FlippableCard.js';
+import NavigationBar from "../components/NavigationBar.js";
 
 export const SavedClubs = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,6 +17,7 @@ export const SavedClubs = () => {
     return (
         <>
             <h1>Saved Clubs</h1>
+            <NavigationBar />
             <Container>
                 <Carousel index={currentIndex} autoPlay={false} navButtonsAlwaysVisible={true}>
                     {
