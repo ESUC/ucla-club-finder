@@ -1,14 +1,17 @@
 require ('dotenv').config()
 
 const express = require('express')
+const cors = require('cors')
 
 // express app
 const app = express()
 const clubRoutes = require('./routes/clubs')
+const userRoutes = require('./routes/users')
 const mongoose = require('mongoose')
 
 //middleware
 app.use(express.json())
+app.use(cors())
 
 app.use((req, res, next) => {
     console.log(req.path, req.method)
@@ -17,6 +20,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/clubs/', clubRoutes);
+app.use('/api/users/', userRoutes);
 
 // connect to db
 mongoose.connect(process.env.MONG_URI)

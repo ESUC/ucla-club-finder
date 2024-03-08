@@ -20,6 +20,8 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import NavigationBar from "../components/NavigationBar.js";
+import axios from "axios";
+
 
 const OuterContainer = styled.div`
   background: white;
@@ -31,6 +33,16 @@ const OuterContainer = styled.div`
 `;
 
 export const Login = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:4000/api/users/auth/login', {email, password})
+    .then(result => console.log(result))
+    .catch(err => console.log(err))
+  }
+
   return (
     <>
       <NavigationBar />
@@ -60,6 +72,7 @@ export const Login = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -74,9 +87,9 @@ export const Login = () => {
               fullWidth
               name="password"
               label="Password"
-              type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -94,6 +107,7 @@ export const Login = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
+              onClick={handleLogin}
             >
               LOGIN
             </Button>

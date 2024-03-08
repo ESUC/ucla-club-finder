@@ -20,6 +20,7 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import NavigationBar from "../components/NavigationBar.js";
+import axios from "axios";
 
 const OuterContainer = styled.div`
   background: white;
@@ -31,6 +32,18 @@ const OuterContainer = styled.div`
 `;
 
 export const Register = () => {
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:4000/api/users/auth/register', {firstName, lastName, email, password})
+    .then(result => console.log(result))
+    .catch(err => console.log(err))
+  }
+
   return (
     <>
       <NavigationBar />
@@ -58,6 +71,7 @@ export const Register = () => {
               id="firstName"
               label="First Name"
               name="firstName"
+              onChange={(e) => setFirstName(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -66,6 +80,7 @@ export const Register = () => {
               id="lastName"
               label="Last Name"
               name="lastName"
+              onChange={(e) => setLastName(e.target.value)}
             />
 
             <TextField
@@ -75,6 +90,7 @@ export const Register = () => {
               id="email"
               label="Email Address"
               name="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -84,12 +100,14 @@ export const Register = () => {
               label="Password"
               type="password"
               id="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
+              onClick={handleRegister}
             >
               SUBMIT
             </Button>
