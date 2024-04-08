@@ -15,7 +15,7 @@ const router = express.Router()
 // POST a new club
 router.post('/auth/register', async (req, res) => {
     const {firstName, lastName, email, password} = req.body
-
+    
     try { 
         const user = await User.create({firstName, lastName, email, password})
         res.status(200).json(user)
@@ -28,6 +28,7 @@ router.post('/auth/register', async (req, res) => {
 router.post('/auth/login', async (req, res) => {
     const {email, password} = req.body
     const user = await User.findOne({email: email});
+    console.log(user.password)
     if (user) {
         if (user.password === password) {
             res.json("Success")
