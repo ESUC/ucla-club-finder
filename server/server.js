@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     next()
 }) 
 
-// routes
+// routes for the backend
 app.use('/api/clubs/', clubRoutes);
 app.use('/api/users/', userRoutes);
 
