@@ -21,6 +21,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import NavigationBar from "../components/NavigationBar.js";
 import axios from "axios";
+import { withRouter } from 'react-router-dom';
+
 
 const OuterContainer = styled.div`
   background: white;
@@ -37,10 +39,18 @@ export const Register = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+
   const handleRegister = (e) => {
     e.preventDefault()
     axios.post('http://localhost:4000/api/users/auth/register', {firstName, lastName, email, password})
-    .then(result => console.log(result))
+    .then(response => {
+      if (response && response.status === 200) {
+        window.location.href = '/auth/login';
+        console.log(response);
+      } else {
+        console.log('Login unsuccessful');
+      }
+    })
     .catch(err => console.log(err))
   }
 
