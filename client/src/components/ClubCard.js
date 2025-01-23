@@ -100,26 +100,51 @@ const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
                     {isFavorited ? <StarIcon /> : <StarBorderIcon />}
             </IconButton>
             <p></p>
-            <Image src={img} href="#popup-box" onClick={onToggleModal} ></Image>
+            <Image src={img} href="#popup-box" onClick={onToggleModal}></Image>
             <Title>"Insert Title Here"</Title>
             <StyledLink>{title}</StyledLink>
                 <Box isOpen={isBoxOpen}>
-                    <Content>
-                        <h1 style={{ color: 'blue' }}>UPE</h1>
-                        <b>
-                            <p>Acronym: UPE
-                            Social Links:
-                            Website: https://upe.seas.ucla.edu/
-                            Description:
-                            Upsilon Pi Epsilon is the computer science honors society at UCLA. Through mentorship, corporate events, tutoring, and outreach, we support students' growth in technology and computer science. Some of our past events include the CS Career Fair, Hot Ones panel featuring professors with startup experience and serial entrepreneurs, and a finance talk with Professor Carey Nachenberg! Come out to our UPE Intro Event on Thursday, 9/29, 6 pm at Young Hall CS 50 to learn more about induction requirements, free UPE resources, and exciting upcoming events!
+                    <Content style={{ width: '500px', height: 'auto', padding: '2em' }}>
+                        <h1 style={{ color: '#007BFF', textAlign: 'center', marginBottom: '1em' }}>Upsilon Pi Epsilon (UPE)</h1>
+                        <p style={{ paddingBottom: '0.5em' }}>
+                            <strong style={{ color: '#333' }}>Acronym:</strong> 
+                            <span style={{ color: '#555' }}> UPE</span>
                         </p>
-                        </b>
-                        <BoxClose href="#" onClick={onToggleModal}> ×</BoxClose>
+                        <p style={{ paddingBottom: '0.5em' }}>
+                            <strong style={{ color: '#333' }}>Social Links: </strong>
+                            <a
+                                href="https://upe.seas.ucla.edu/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#007BFF', textDecoration: 'underline' }}
+                            >
+                                Website
+                            </a>
+                        </p>
+                        <p>
+                            <strong style={{ color: '#333' }}>Description:  </strong>
+                            <span style={{ color: '#555' }}>
+                            Upsilon Pi Epsilon is the computer science honors society at UCLA. Through mentorship, corporate events, tutoring, and outreach, we support students' growth in technology and computer science. Some of our past events include the CS Career Fair, Hot Ones panel featuring professors with startup experience and serial entrepreneurs, and a finance talk with Professor Carey Nachenberg!
+                            </span>
+                        </p>
+                        <div style={{ marginTop: '1em', padding: '10px', backgroundColor: '#f8f8f8', borderRadius: '5px' }}>
+                            <h3 style={{ color: '#007BFF' }}><center>Upcoming Events</center></h3>
+                            <h4 style={{ marginBottom: '5px' }}><strong style={{ color: '#333' }}>Intro Meeting</strong></h4>
+                            <p style={{ marginTop: '0' }}>
+                                <span style={{ color: '#555' }}>
+                                    <strong style={{ color: '#333' }}>Date:</strong> Thursday, 9/29 <br />
+                                    <strong style={{ color: '#333' }}>Time:</strong> 6 PM <br />
+                                    <strong style={{ color: '#333' }}>Location:</strong> Young Hall CS 50
+                                </span>
+                            </p>
+                        </div>
+                        <BoxClose href="#" onClick={onToggleModal} style={{ fontSize: '30px' }}> ×</BoxClose>
                     </Content>
                 </Box>
         </Card>
-      </>
+        </>
     );
 }
 
 export default ClubCard;
+
