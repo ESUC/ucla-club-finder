@@ -48,7 +48,7 @@ export const Register = () => {
         window.location.href = '/auth/login';
         console.log(response);
       } else {
-        console.log('Login unsuccessful');
+        console.log('Registration unsuccessful');
       }
     })
     .catch(err => console.log(err))
