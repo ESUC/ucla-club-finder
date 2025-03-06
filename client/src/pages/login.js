@@ -2,130 +2,119 @@ import React, { useState } from "react";
 import {
   TextField,
   Button,
-  Paper,
   Typography,
-  makeStyles,
+  Container,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  InputAdornment,
+  IconButton,
+  Grid,
 } from "@mui/material";
-import styled from "styled-components";
-import Avatar from "@mui/material/Avatar";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Container from "@mui/material/Container";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import InputAdornment from "@mui/material/InputAdornment";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NavigationBar from "../components/NavigationBar.js";
+import styled from "styled-components";
 import axios from "axios";
 
-
-const OuterContainer = styled.div`
-  background: white;
-  background: linear-gradient(to right bottom, #ffc400, #00d2ff);
+const PageContainer = styled.div`
+  display: flex;
   height: 100vh;
   width: 100vw;
+`;
+
+const FormContainer = styled.div`
+  flex: 1;
+  display: flex;
   justify-content: center;
   align-items: center;
+  background: white;
+  padding: 40px;
+`;
+
+const StyledContainer = styled(Container)`
+  width: 100%;
+  padding: 40px;
+  border-radius: 8px;
+`;
+
+const BackgroundContainer = styled.div`
+  flex: 1;
+  background: linear-gradient(to right, #002855, #00ff99);
 `;
 
 export const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/login', {email, password})
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
-  }
+    e.preventDefault();
+    axios.post("http://localhost:4000/api/users/auth/login", { email, password })
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       <NavigationBar />
-      <OuterContainer>
-        <Container
-          maxWidth="xs"
-          sx={{
-            height: "80vh",
-            borderRadius: 4,
-            padding: "50px",
-            background: "white",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0 4px 8px black",
-          }}
-        >
-          <Typography variant="h5" align="center" sx={{ color: "black" }}>
-            LOGIN
-          </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => setEmail(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonOutlineIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockOpenIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
-              onClick={handleLogin}
-            >
-              LOGIN
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      </OuterContainer>
+      <PageContainer>
+        <FormContainer>
+          <StyledContainer>
+            <Typography variant="h5" align="left" gutterBottom>
+              Welcome to ESUC UCLA
+            </Typography>
+            <Typography variant="body2" align="left" sx={{ marginBottom: "20px" }}>
+              Don't have an account? <Link href="/signup">Sign up</Link>
+            </Typography>
+            <form onSubmit={handleLogin}>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="Remember me"
+                sx={{ marginTop: "20px" }}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                type="submit"
+                sx={{ mt: 2, background: "#ccc", color: "black", borderRadius: "15px", marginBottom: "20px"}}
+              >
+                Login
+              </Button>
+              <Typography align="center"> <Link href="#" sx={{width: "100%"}}>Forgot password?</Link> </Typography>
+                {/*<Grid item>
+                  <Typography> 
+                    Don't have an account? <Link href="/signup">Sign Up</Link>
+                  </Typography>
+                </Grid>*/}
+            </form>
+          </StyledContainer>
+        </FormContainer>
+        <BackgroundContainer />
+      </PageContainer>
     </>
   );
 };
