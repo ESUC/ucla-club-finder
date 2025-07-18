@@ -7,15 +7,19 @@ const fs = require('fs');
     const response = await fetch(url); //fetch HTML content from url
 
     const $ = cheerio.load(await response.text());
-    const body = $("main").text().split('\n').map(line => line.trim()).filter(line => line.length > 0).join('\n');
+    const lines = $("main").text()
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
     
     
+    const clubNames = lines.filter((_, index) => index % 2 === 1);
 
-    fs.writeFile('output.txt', body, (err) => {
+    fs.writeFile('output.txt', clubNames.join('\n'), (err) => {
         if (err) {
             console.error('Error writing to file', err);
         } else {
-            console.log('Data has been written to output.txt');
+            console.log(`Extracted ${clubNames.length} club names to clubs.txt`);
         }
     });
 
