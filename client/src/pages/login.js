@@ -32,6 +32,7 @@ const OuterContainer = styled.div`
   align-items: center;
 `;
 
+
 export const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -39,7 +40,14 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault()
     axios.post('http://localhost:4000/api/users/auth/login', {email, password})
-    .then(result => console.log(result))
+    .then(response => {
+      if (response && response.status === 200) {
+        window.location.href = '/home';
+        console.log(response);
+      } else {
+        console.log('Login unsuccessful');
+      }
+    })
     .catch(err => console.log(err))
   }
 
