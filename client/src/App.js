@@ -10,7 +10,6 @@ export const App = () => {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/auth/login" element={<Login /> } />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/home" element={<Home /> } />
           <Route path="/about" element={<About /> } />
