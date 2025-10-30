@@ -42,17 +42,25 @@ const BackgroundContainer = styled.div`
   background: linear-gradient(to right, #002855, #00ff99);
 `;
 
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:4000/api/users/auth/login", { email, password })
-      .then((result) => console.log(result))
-      .catch((err) => console.log(err));
-  };
+    e.preventDefault()
+    axios.post('http://localhost:4000/api/users/auth/login', {email, password})
+    .then(response => {
+      if (response && response.status === 200) {
+        window.location.href = '/home';
+        console.log(response);
+      } else {
+        console.log('Login unsuccessful');
+      }
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <>

@@ -16,6 +16,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NavigationBar from "../components/NavigationBar.js";
 import styled from "styled-components";
 import axios from "axios";
+import { withRouter } from 'react-router-dom';
+
 
 const PageContainer = styled.div`
   display: flex;
@@ -50,12 +52,20 @@ export const Register = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:4000/api/users/signup", { email, username, password })
-      .then((result) => console.log(result))
-      .catch((err) => console.log(err));
-  };
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:4000/api/users/auth/register', {firstName, lastName, email, password})
+    .then(response => {
+      if (response && response.status === 200) {
+        window.location.href = '/auth/login';
+        console.log(response);
+      } else {
+        console.log('Registration unsuccessful');
+      }
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <>
