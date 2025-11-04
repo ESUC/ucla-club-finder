@@ -47,7 +47,7 @@ export const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/register', {email, username, password})
+    axios.post('http://localhost:4000/api/users/auth/register', { email, password, firstName, lastName })
     .then(response => {
       if (response && response.status === 200) {
         window.location.href = '/auth/login';
