@@ -21,10 +21,14 @@ const NoResults = styled.div`
 `;
 
 const CardGrid = ({ searchQuery = "" }) => {
-    const [isBoxOpen, setBoxOpen] = useState(false);
+    const [openIndex, setOpenIndex] = useState(null);
 
-    const handleToggleModal = () => {
-        setBoxOpen(!isBoxOpen);
+    const handleOpenModal = (index) => {
+        setOpenIndex(index);
+    };
+
+    const handleCloseModal = () => {
+        setOpenIndex(null);
     };
 
     const image = [
@@ -96,9 +100,10 @@ const CardGrid = ({ searchQuery = "" }) => {
                     <ClubCard 
                         img={image[originalIndex]} 
                         title={title[originalIndex]} 
-                        isBoxOpen={isBoxOpen} 
-                        onToggleModal={handleToggleModal} 
-                        key={originalIndex}
+                        isBoxOpen={openIndex === originalIndex}
+                        onOpen={() => handleOpenModal(originalIndex)}
+                        onClose={handleCloseModal}
+                        key={title[originalIndex]}
                     >
                         Card {originalIndex + 1}
                     </ClubCard>

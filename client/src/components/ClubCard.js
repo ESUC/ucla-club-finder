@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
@@ -180,7 +181,7 @@ const BoxClose = styled.button`
   }
 `;
 
-const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
+const ClubCard = ({ isBoxOpen, onOpen, onClose, img, title }) => {
     const [isFavorited, setIsFavorited] = useState(false);
 
     const handleToggleFavorite = () => {
@@ -217,9 +218,9 @@ const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
 
     return (
         <>
-        <CardContainer>
+        <CardContainer onClick={onOpen}>
             <FavoriteButton 
-                onClick={handleToggleFavorite} 
+                onClick={(e) => { e.stopPropagation(); handleToggleFavorite(); }} 
                 color={isFavorited ? 'primary' : 'default'}
                 isFavorited={isFavorited}
                 className="favorite-button"
@@ -227,7 +228,7 @@ const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
                 {isFavorited ? <StarIcon /> : <StarBorderIcon />}
             </FavoriteButton>
             
-            <LogoSection onClick={onToggleModal} className="logo-section">
+            <LogoSection className="logo-section">
                 <LogoImage src={img} alt={title} />
             </LogoSection>
             
@@ -236,22 +237,25 @@ const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
                 <Abbreviation>{title}</Abbreviation>
             </FooterSection>
             
-            <Box isOpen={isBoxOpen}>
-                <Content>
-                    <h1 style={{ color: '#0f172a', marginBottom: '16px' }}>{title}</h1>
-                    <p style={{ color: '#64748b', lineHeight: '1.6', marginBottom: '16px' }}>
-                        {getFullName(title)} - A student organization dedicated to fostering innovation, 
-                        collaboration, and professional development in engineering at UCLA.
-                    </p>
-                    <div style={{ color: '#f59e0b', fontWeight: '600', marginBottom: '8px' }}>
-                        Meeting Times: TBD
-                    </div>
-                    <div style={{ color: '#64748b', fontSize: '0.9rem' }}>
-                        Contact: {title.toLowerCase()}@ucla.edu
-                    </div>
-                    <BoxClose onClick={onToggleModal}>×</BoxClose>
-                </Content>
-            </Box>
+            {createPortal(
+                <Box isOpen={isBoxOpen} onClick={onClose}>
+                    <Content onClick={(e) => e.stopPropagation()}>
+                        <h1 style={{ color: '#0f172a', marginBottom: '16px' }}>{title}</h1>
+                        <p style={{ color: '#64748b', lineHeight: '1.6', marginBottom: '16px' }}>
+                            {getFullName(title)} - A student organization dedicated to fostering innovation, 
+                            collaboration, and professional development in engineering at UCLA.
+                        </p>
+                        <div style={{ color: '#f59e0b', fontWeight: '600', marginBottom: '8px' }}>
+                            Meeting Times: TBD
+                        </div>
+                        <div style={{ color: '#64748b', fontSize: '0.9rem' }}>
+                            Contact: {title.toLowerCase()}@ucla.edu
+                        </div>
+                        <BoxClose onClick={onClose}>×</BoxClose>
+                    </Content>
+                </Box>,
+                document.body
+            )}
         </CardContainer>
       </>
     );
