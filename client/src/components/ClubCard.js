@@ -258,3 +258,4 @@ const ClubCard = ({ isBoxOpen, onToggleModal, img, title }) => {
 }
 
 export default ClubCard;
+
