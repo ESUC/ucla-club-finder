@@ -12,7 +12,7 @@ import {
   Grid,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import NavigationBar from "../components/NavigationBar.js";
+import NavigationBar from "../components/NavigationBar";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -144,11 +144,6 @@ export const Login = () => {
                 Login
               </Button>
               <Typography align="center" sx={{ mt: 1 }}> <Link href="#" style={{ width: "100%", color: "#4F9CF9" }}>Forgot password?</Link> </Typography>
-                {/*<Grid item>
-                  <Typography> 
-                    Don't have an account? <Link href="/signup">Sign Up</Link>
-                  </Typography>
-                </Grid>*/}
             </form>
           </StyledContainer>
         </FormContainer>
@@ -157,3 +152,5 @@ export const Login = () => {
     </>
   );
 };
+
+

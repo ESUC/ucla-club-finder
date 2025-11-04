@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Box,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import InfoIcon from "@mui/icons-material/Info";
@@ -129,3 +124,5 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
+
+

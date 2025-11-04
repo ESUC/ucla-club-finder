@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components'
-import ClubCard from '../components/ClubCard.js';
+import ClubCard from '../components/ClubCard';
 import Carousel from 'react-material-ui-carousel';
-import FlippableCard from '../components/FlippableCard.js';
-import NavigationBar from "../components/NavigationBar.js";
+import FlippableCard from '../components/FlippableCard';
+import NavigationBar from "../components/NavigationBar";
 
 export const SavedClubs = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,3 +30,5 @@ export const SavedClubs = () => {
         </>
     );
 }
+
+

@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar.js";
+import NavigationBar from "../components/NavigationBar";
 import "../css/About.css";
 
 export const About = () => {
@@ -36,3 +36,5 @@ export const About = () => {
     </div>
   );
 };
+
+

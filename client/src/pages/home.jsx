@@ -19,7 +19,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styled from "styled-components";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import CardGrid from "../components/CardGrid.js";
+import CardGrid from "../components/CardGrid";
 import NavigationBar from "../components/NavigationBar";
 import "../css/Home.css";
 
@@ -38,7 +38,6 @@ const categories = [
   "OTHER",
 ];
 
-// Suggested search terms for autocomplete
 const searchSuggestions = [
   "Computer Science",
   "Engineering",
@@ -155,23 +154,10 @@ export const Home = () => {
         <Typography variant="h3" align="center" className="home-title">
           Organizations
         </Typography>
-        {/* <div className="home-underline" /> */}
         <Typography variant="subtitle1" align="center" className="home-subtitle">
           Discover and explore UCLA engineering organizations. Use the search bar to find specific clubs or browse by category using the filters. Click on any organization card to learn more about their activities, meeting times, and opportunities.
         </Typography>
       </div>
-      {/* <div className="category-bar">
-        {categories.map((cat) => (
-          <Chip
-            key={cat}
-            label={cat}
-            clickable
-            color={selectedCategory === cat ? "primary" : "default"}
-            onClick={() => setSelectedCategory(cat)}
-            className="category-chip"
-          />
-        ))}
-      </div> */}
       <div className="main-content">
         <aside className="sidebar">
           <Accordion className="filter-accordion">
@@ -287,7 +273,7 @@ export const Home = () => {
                       '&:hover': {
                         backgroundColor: '#f8fafc',
                       },
-                                           '&[aria-selected="true"]': {
+                      '&[aria-selected="true"]': {
                        backgroundColor: 'transparent',
                        color: '#0f172a',
                        '&:hover': {
@@ -306,3 +292,5 @@ export const Home = () => {
     </div>
   );
 };
+
+

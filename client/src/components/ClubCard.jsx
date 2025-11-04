@@ -188,7 +188,6 @@ const ClubCard = ({ isBoxOpen, onOpen, onClose, img, title }) => {
         setIsFavorited((prev) => !prev);
     };
 
-    // Get full name based on title
     const getFullName = (clubTitle) => {
         const fullNames = {
             "UPE": "Upsilon Pi Epsilon",
@@ -262,4 +261,5 @@ const ClubCard = ({ isBoxOpen, onOpen, onClose, img, title }) => {
 }
 
 export default ClubCard;
+
 

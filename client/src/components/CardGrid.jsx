@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ClubCard from './ClubCard.js';
+import ClubCard from './ClubCard';
 
 const Grid = styled.div`
     width: 100%;
@@ -36,7 +36,6 @@ const CardGrid = ({ searchQuery = "" }) => {
     ]; 
     const title = ["UPE", "BSG", "ASME", "AIAA", "DBF", "IEEE", "MRS", "QWER Hacks", "AIChe", "ITE", "3D4E", "MentorSEAS", "UAS@UCLA", "BMES", "Rocket Project", "SWE", "ACM@UCLA", "SOLES|SHPE@UCLA", "EWB", "IEEE-WIE", "SWUG"];
 
-    // Club descriptions for search functionality
     const descriptions = [
         "Upsilon Pi Epsilon - Computer Science Honors Society",
         "Bruin Space - Aerospace engineering and space exploration",
@@ -61,14 +60,11 @@ const CardGrid = ({ searchQuery = "" }) => {
         "Software Undergraduate Group"
     ];
 
-    // Filter clubs based on search query
     const filteredClubs = Array.from({ length: 21 }).filter((_, index) => {
         if (!searchQuery.trim()) return true;
-        
         const query = searchQuery.toLowerCase();
         const clubName = title[index].toLowerCase();
         const description = descriptions[index].toLowerCase();
-        
         return clubName.includes(query) || description.includes(query);
     });
 
@@ -88,14 +84,11 @@ const CardGrid = ({ searchQuery = "" }) => {
             {filteredClubs.map((_, index) => {
                 const originalIndex = Array.from({ length: 21 }).findIndex((_, i) => {
                     if (!searchQuery.trim()) return i === index;
-                    
                     const query = searchQuery.toLowerCase();
                     const clubName = title[i].toLowerCase();
                     const description = descriptions[i].toLowerCase();
-                    
                     return clubName.includes(query) || description.includes(query);
                 });
-                
                 return (
                     <ClubCard 
                         img={image[originalIndex]} 
@@ -114,3 +107,5 @@ const CardGrid = ({ searchQuery = "" }) => {
 }
 
 export default CardGrid;
+
+
