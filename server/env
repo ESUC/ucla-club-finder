@@ -1,0 +1,4 @@
+PORT = 4000
+MONG_URI=mongodb+srv://ClubFinderUser:gjN9Hi4HE6h8DkoR@clubfinder.voobmns.mongodb.net/?retryWrites=true&w=majority&appName=ClubFinder
+
+
