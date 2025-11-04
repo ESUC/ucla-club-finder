@@ -55,7 +55,7 @@ export const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/register', {firstName, lastName, email, password})
+    axios.post('http://localhost:4000/api/users/auth/register', {email, username, password})
     .then(response => {
       if (response && response.status === 200) {
         window.location.href = '/auth/login';
@@ -79,7 +79,7 @@ export const Register = () => {
             <Typography variant="body2" align="left" sx={{marginBottom: "20px"}}>
               Already have an account? <Link href="/auth/login">Log in</Link>
             </Typography>
-            <form onSubmit={handleSignup}>
+            <form onSubmit={handleRegister}>
               <TextField
                 fullWidth
                 margin="normal"
