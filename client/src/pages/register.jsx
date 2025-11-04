@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Container, FormControlLabel, Checkbox, Link, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import NavigationBar from "../components/NavigationBar.js";
+import NavigationBar from "../components/NavigationBar";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -134,13 +134,6 @@ export const Register = () => {
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                 }}
               />
-             {/*} <List dense>
-                <ListItem>• Use 8 or more characters</ListItem>
-                <ListItem>• One uppercase character</ListItem>
-                <ListItem>• One lowercase character</ListItem>
-                <ListItem>• One special character</ListItem>
-                <ListItem>• One number</ListItem>
-              </List>*/}
               <FormControlLabel
                 control={<Checkbox color="primary" />}
                 label="I want to receive news on the newest UCLA Engineering Clubs"
@@ -179,3 +172,5 @@ export const Register = () => {
     </>
   );
 };
+
+
