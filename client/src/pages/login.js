@@ -18,8 +18,9 @@ import axios from "axios";
 
 const PageContainer = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
+  background: #F5F8FF;
 `;
 
 const FormContainer = styled.div`
@@ -27,19 +28,22 @@ const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
-  padding: 40px;
+  padding: 40px 16px;
 `;
 
 const StyledContainer = styled(Container)`
   width: 100%;
-  padding: 40px;
-  border-radius: 8px;
+  max-width: 560px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(4,56,115,0.08);
+  border: 1px solid #E6EEF9;
 `;
 
-const BackgroundContainer = styled.div`
+const SidePanel = styled.div`
   flex: 1;
-  background: linear-gradient(to right, #002855, #00ff99);
+  background: #043873;
 `;
 
 
@@ -68,11 +72,11 @@ export const Login = () => {
       <PageContainer>
         <FormContainer>
           <StyledContainer>
-            <Typography variant="h5" align="left" gutterBottom>
+            <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
               Welcome to ESUC UCLA
             </Typography>
-            <Typography variant="body2" align="left" sx={{ marginBottom: "20px" }}>
-              Don't have an account? <Link href="/signup">Sign up</Link>
+            <Typography variant="body2" align="left" style={{ marginBottom: "20px" }}>
+              Don't have an account? <Link href="/auth/register" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>Sign up</Link>
             </Typography>
             <form onSubmit={handleLogin}>
               <TextField
@@ -81,6 +85,12 @@ export const Login = () => {
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
               />
               <TextField
                 fullWidth
@@ -98,21 +108,42 @@ export const Login = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
               />
               <FormControlLabel
                 control={<Checkbox color="primary" />}
                 label="Remember me"
-                sx={{ marginTop: "20px" }}
+                style={{ marginTop: "20px" }}
               />
               <Button
                 fullWidth
                 variant="contained"
                 type="submit"
-                sx={{ mt: 2, background: "#ccc", color: "black", borderRadius: "15px", marginBottom: "20px"}}
+                sx={{
+                  mt: 2,
+                  mb: 2,
+                  height: 54,
+                  background: '#043873',
+                  color: '#FFFFFF',
+                  borderRadius: '16px',
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  letterSpacing: '.2px',
+                  boxShadow: '0 10px 20px rgba(79,156,249,0.35)',
+                  '&:hover': {
+                    background: '#062E63',
+                    boxShadow: '0 12px 24px rgba(79,156,249,0.45)'
+                  }
+                }}
               >
                 Login
               </Button>
-              <Typography align="center"> <Link href="#" sx={{width: "100%"}}>Forgot password?</Link> </Typography>
+              <Typography align="center" sx={{ mt: 1 }}> <Link href="#" style={{ width: "100%", color: "#4F9CF9" }}>Forgot password?</Link> </Typography>
                 {/*<Grid item>
                   <Typography> 
                     Don't have an account? <Link href="/signup">Sign Up</Link>
@@ -121,7 +152,7 @@ export const Login = () => {
             </form>
           </StyledContainer>
         </FormContainer>
-        <BackgroundContainer />
+        <SidePanel />
       </PageContainer>
     </>
   );

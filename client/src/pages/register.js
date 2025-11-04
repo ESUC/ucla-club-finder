@@ -1,28 +1,16 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  InputAdornment,
-  IconButton,
-  List,
-  ListItem,
-} from "@mui/material";
+import { TextField, Button, Typography, Container, FormControlLabel, Checkbox, Link, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NavigationBar from "../components/NavigationBar.js";
 import styled from "styled-components";
 import axios from "axios";
-import { withRouter } from 'react-router-dom';
 
 
 const PageContainer = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
+  background: #F5F8FF;
 `;
 
 const FormContainer = styled.div`
@@ -30,25 +18,29 @@ const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
-  padding: 40px;
+  background: #ffffff;
+  padding: 40px 16px;
 `;
 
 const StyledContainer = styled(Container)`
   width: 100%;
-  padding: 40px;
-  border-radius: 8px;
-  /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);*/
+  max-width: 560px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(4,56,115,0.08);
+  border: 1px solid #E6EEF9;
 `;
 
-const BackgroundContainer = styled.div`
+const SidePanel = styled.div`
   flex: 1;
-  background: linear-gradient(to right, #002855, #00ff99);
+  background: #043873;
 `;
 
 export const Register = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -73,26 +65,51 @@ export const Register = () => {
       <PageContainer>
         <FormContainer>
           <StyledContainer>
-            <Typography variant="h5" align="left" gutterBottom>
-              Welcome to ESUC UCLA
+            <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
+              Create your account
             </Typography>
             <Typography variant="body2" align="left" sx={{marginBottom: "20px"}}>
-              Already have an account? <Link href="/auth/login">Log in</Link>
+              Already have an account? <Link href="/auth/login" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>Log in</Link>
             </Typography>
             <form onSubmit={handleRegister}>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="First name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Last name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
+              />
               <TextField
                 fullWidth
                 margin="normal"
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
               />
               <TextField
                 fullWidth
@@ -110,6 +127,12 @@ export const Register = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
               />
              {/*} <List dense>
                 <ListItem>• Use 8 or more characters</ListItem>
@@ -124,20 +147,34 @@ export const Register = () => {
                 sx={{marginTop: "20px"}}
               />
               <Typography variant="body2" align="left" sx={{marginTop: "20px"}}>
-                By creating an account, you agree to the <Link href="/">Terms of use</Link> and <Link href="/">Privacy Policy</Link>
+                By creating an account, you agree to the <Link href="/" style={{ color: "#4F9CF9" }}>Terms of use</Link> and <Link href="/" style={{ color: "#4F9CF9" }}>Privacy Policy</Link>
               </Typography>
               <Button
                 fullWidth
                 variant="contained"
                 type="submit"
-                sx={{ mt: 2, background: "#ccc", color: "black", borderRadius: "15px" }}
+                sx={{
+                  mt: 2,
+                  height: 54,
+                  background: '#043873',
+                  color: '#FFFFFF',
+                  borderRadius: '16px',
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  letterSpacing: '.2px',
+                  boxShadow: '0 10px 20px rgba(79,156,249,0.35)',
+                  '&:hover': {
+                    background: '#062E63',
+                    boxShadow: '0 12px 24px rgba(79,156,249,0.45)'
+                  }
+                }}
               >
                 Create an account
               </Button>
             </form>
           </StyledContainer>
         </FormContainer>
-        <BackgroundContainer />
+        <SidePanel />
       </PageContainer>
     </>
   );
