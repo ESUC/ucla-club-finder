@@ -1,3 +1,32 @@
+# Environment files
+.env
+server/.env
+client/.env
+
+# Node dependencies
+node_modules/
+server/node_modules/
+client/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Build outputs
+client/build/
+coverage/
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
