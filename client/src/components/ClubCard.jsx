@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';

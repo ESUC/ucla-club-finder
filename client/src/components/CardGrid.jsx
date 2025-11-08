@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+
 import ClubCard from './ClubCard';
 
 const Grid = styled.div`
