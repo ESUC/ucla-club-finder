@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Typography, Container, FormControlLabel, Checkbox, Link, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import NavigationBar from "../components/NavigationBar";
 import styled from "styled-components";
 import axios from "axios";
+
+import NavigationBar from "../components/NavigationBar";
 
 
 const PageContainer = styled.div`

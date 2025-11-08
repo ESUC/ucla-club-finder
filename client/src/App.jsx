@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Home } from "./pages/home";
@@ -14,7 +15,6 @@ export const App = () => {
           <Route path="/auth/register" element={<Register />} />
           <Route path="/home" element={<Home /> } />
           <Route path="/about" element={<About /> } />
-          <Route path="/about2" element={<About /> } />
           <Route path="/saved-clubs" element={<SavedClubs /> } />
         </Routes>  
       </Router>
