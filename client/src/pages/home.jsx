@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   TextField,
-  Button,
   Typography,
   FormControl,
   FormControlLabel,
   Checkbox,
-  Chip,
-  Box,
-  InputAdornment,
   Autocomplete,
   Paper,
 } from "@mui/material";
@@ -18,25 +14,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styled from "styled-components";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+
 import CardGrid from "../components/CardGrid";
 import NavigationBar from "../components/NavigationBar";
 import "../css/Home.css";
-
-const categories = [
-  "ALL",
-  "AERO",
-  "BIO",
-  "CHEM",
-  "CIV",
-  "CS/CSE",
-  "ECE",
-  "MATSCI",
-  "MECH",
-  "EDI",
-  "EDU",
-  "OTHER",
-];
 
 const searchSuggestions = [
   "Computer Science",
@@ -140,7 +121,6 @@ const SearchContainer = styled.div`
 `;
 
 export const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (event, newValue) => {
