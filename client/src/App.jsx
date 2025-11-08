@@ -14,6 +14,7 @@ export const App = () => {
           <Route path="/auth/register" element={<Register />} />
           <Route path="/home" element={<Home /> } />
           <Route path="/about" element={<About /> } />
+          <Route path="/about2" element={<About /> } />
           <Route path="/saved-clubs" element={<SavedClubs /> } />
         </Routes>  
       </Router>
