@@ -1,13 +1,13 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components'
-import ClubCard from '../components/ClubCard';
 import Carousel from 'react-material-ui-carousel';
+
 import FlippableCard from '../components/FlippableCard';
 import NavigationBar from "../components/NavigationBar";
 
 export const SavedClubs = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex] = useState(0);
 
     const Container = styled.div`
         width: 20em;

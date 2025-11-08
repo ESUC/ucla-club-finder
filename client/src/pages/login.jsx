@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   TextField,
   Button,
@@ -9,12 +9,12 @@ import {
   Link,
   InputAdornment,
   IconButton,
-  Grid,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import NavigationBar from "../components/NavigationBar";
 import styled from "styled-components";
 import axios from "axios";
+
+import NavigationBar from "../components/NavigationBar";
 
 const PageContainer = styled.div`
   display: flex;
