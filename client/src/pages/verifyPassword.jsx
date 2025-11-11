@@ -19,7 +19,7 @@ import Container from "@mui/material/Container";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import NavigationBar from "../components/NavigationBar.js";
+import NavigationBar from "../components/NavigationBar.jsx";
 import axios from "axios";
 
 
@@ -33,7 +33,7 @@ const OuterContainer = styled.div`
 `;
 
 
-export const Password = () => {
+export const VerifyPassword = () => {
   const [password, setPassword] = useState();
   const [newPassword, setConfirmed] = useState();
   const [code, setCode] = useState();

@@ -19,7 +19,7 @@ import Container from "@mui/material/Container";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import NavigationBar from "../components/NavigationBar.js";
+import NavigationBar from "../components/NavigationBar.jsx";
 import axios from "axios";
 
 
@@ -33,23 +33,24 @@ const OuterContainer = styled.div`
 `;
 
 
-export const Password = () => {
+export const ForgotPassword = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [code, setCode] = useState();
 
   const handlePassword = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/forgot-password', {email})
-    .then(response => {
-      if (response && response.status === 200) {
-        window.location.href = '/auth/verify-password';
-        console.log(response);
-      } else {
-        console.log('Unsuccessful');
-      }
-    })
-    .catch(err => console.log(err))
+    // axios.post('http://localhost:4000/api/users/auth/forgot-password', {email})
+    // .then(response => {
+    //   if (response && response.status === 200) {
+    //     window.location.href = '/auth/verify-password';
+    //     console.log(response);
+    //   } else {
+    //     console.log('Unsuccessful');
+    //   }
+    // })
+    // .catch(err => console.log(err))
+    console.log("trigger");
   }
 
   return (
