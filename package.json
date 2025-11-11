@@ -20,8 +20,9 @@
     "prettier": "^3.6.2"
   },
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx",
+    "lint": "eslint .",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky"
   },
   "lint-staged": {
