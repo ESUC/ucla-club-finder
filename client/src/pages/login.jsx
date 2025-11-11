@@ -156,7 +156,7 @@ export const Login = () => {
               </Button>
               <Typography align="center" sx={{ mt: 1 }}>
                 {' '}
-                <Link href="#" style={{ width: '100%', color: '#4F9CF9' }}>
+                <Link href="/auth/forgot-password" style={{ width: '100%', color: '#4F9CF9' }}>
                   Forgot password?
                 </Link>{' '}
               </Typography>
