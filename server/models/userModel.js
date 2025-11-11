@@ -20,6 +20,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    savedClubs: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Club',
+      },
+    ],
   },
   { timestamps: true }
 );

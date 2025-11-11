@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import axios from 'axios';
 
 const CardContainer = styled(Card)`
   width: 280px;
@@ -181,11 +182,21 @@ const BoxClose = styled.button`
   }
 `;
 
-const ClubCard = ({ isBoxOpen, onOpen, onClose, img, title }) => {
+const ClubCard = ({ isBoxOpen, onOpen, onClose, img, title, userId, clubId }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   const handleToggleFavorite = () => {
-    setIsFavorited((prev) => !prev);
+    if (isFavorited) {
+      axios
+        .delete(`http://localhost:4000/api/users/save/${clubId}`, { data: { userId } })
+        .then(() => setIsFavorited(false))
+        .catch((err) => console.log(err.message));
+    } else {
+      axios
+        .post(`http://localhost:4000/api/users/save/${clubId}`, { userId })
+        .then(() => setIsFavorited(true))
+        .catch((err) => console.log(err.message));
+    }
   };
 
   const getFullName = (clubTitle) => {
