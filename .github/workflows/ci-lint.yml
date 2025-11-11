@@ -1,11 +1,7 @@
 name: Lint (ESLint + Prettier)
 on:
   pull_request:
-    paths:
-      - "**/*.js"
-      - "**/*.jsx"
-      - "**/*.ts"
-      - "**/*.tsx"
+    types: [opened, synchronize, reopened]
 
 jobs:
   lint:
@@ -15,6 +11,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run format -- --check
+      - name: Install root dependencies
+        run: npm ci --legacy-peer-deps
+      - name: Run ESLint
+        run: npm run lint
+      - name: Check Prettier formatting
+        run: npm run format:check

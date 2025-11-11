@@ -1,18 +1,8 @@
 import { useState } from 'react';
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  FormControlLabel,
-  Checkbox,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { TextField, Button, Typography, Container, InputAdornment } from '@mui/material';
+import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar';
 
@@ -46,24 +36,22 @@ const SidePanel = styled.div`
   background: #043873;
 `;
 
-export const Login = () => {
+export const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e) => {
+  const handlePassword = (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:4000/api/users/auth/login', { email, password })
-      .then((response) => {
-        if (response && response.status === 200) {
-          window.location.href = '/home';
-          console.log(response);
-        } else {
-          console.log('Login unsuccessful');
-        }
-      })
-      .catch((err) => console.log(err));
+    // axios.post('http://localhost:4000/api/users/auth/forgot-password', { email })
+    //   .then((response) => {
+    //     if (response && response.status === 200) {
+    //       window.location.href = '/auth/verify-password';
+    //       console.log(response);
+    //     } else {
+    //       console.log('Unsuccessful');
+    //     }
+    //   })
+    //   .catch((err) => console.log(err));
+    console.log('trigger');
   };
 
   return (
@@ -78,44 +66,25 @@ export const Login = () => {
               gutterBottom
               sx={{ color: '#043873', fontWeight: 700 }}
             >
-              Welcome to ESUC UCLA
+              Forgot Password
             </Typography>
             <Typography variant="body2" align="left" style={{ marginBottom: '20px' }}>
-              Don't have an account?{' '}
-              <Link
-                to="/auth/register"
-                style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC' }}
-              >
-                Sign up
+              Enter your email address and we'll send you a code to reset your password.{' '}
+              <Link to="/auth/login" style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC' }}>
+                Back to login
               </Link>
             </Typography>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handlePassword}>
               <TextField
                 fullWidth
                 margin="normal"
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Password"
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonOutlineIcon />
                     </InputAdornment>
                   ),
                 }}
@@ -125,11 +94,6 @@ export const Login = () => {
                   '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                 }}
-              />
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Remember me"
-                style={{ marginTop: '20px' }}
               />
               <Button
                 fullWidth
@@ -152,17 +116,8 @@ export const Login = () => {
                   },
                 }}
               >
-                Login
+                Send Code
               </Button>
-              <Typography align="center" sx={{ mt: 1 }}>
-                {' '}
-                <Link
-                  to="/auth/forgot-password"
-                  style={{ width: '100%', color: '#4F9CF9', textDecoration: 'none' }}
-                >
-                  Forgot password?
-                </Link>{' '}
-              </Typography>
             </form>
           </StyledContainer>
         </FormContainer>

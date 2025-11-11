@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Button, Box } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import LoginIcon from "@mui/icons-material/Login";
-import InfoIcon from "@mui/icons-material/Info";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import LoginIcon from '@mui/icons-material/Login';
+import InfoIcon from '@mui/icons-material/Info';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import styled from 'styled-components';
 
 const StyledAppBar = styled(AppBar)`
   background: #ffffff !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
   border-bottom: 1px solid #e2e8f0;
 `;
 
@@ -65,19 +65,19 @@ const NavButton = styled(Button)`
   border-radius: 10px !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   min-width: auto !important;
-  
+
   &:hover {
     background: #f8fafc !important;
     color: #0f172a !important;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
-  
+
   .MuiButton-startIcon {
     margin-right: 8px;
     color: #94a3b8;
   }
-  
+
   &:hover .MuiButton-startIcon {
     color: #64748b;
   }
@@ -96,9 +96,9 @@ const NavigationBar = () => {
     <StyledAppBar position="fixed">
       <StyledToolbar>
         <Logo>
-          <LogoImage 
-            src="/esuc-logo.png" 
-            alt="ESUC Logo" 
+          <LogoImage
+            src="/esuc-logo.png"
+            alt="ESUC Logo"
             onError={(e) => {
               e.target.style.display = 'none';
             }}
@@ -107,12 +107,7 @@ const NavigationBar = () => {
         </Logo>
         <NavButtons>
           {navItems.map((item) => (
-            <NavButton
-              key={item.text}
-              component={Link}
-              to={item.to}
-              startIcon={item.icon}
-            >
+            <NavButton key={item.text} component={Link} to={item.to} startIcon={item.icon}>
               {item.text}
             </NavButton>
           ))}
@@ -123,5 +118,3 @@ const NavigationBar = () => {
 };
 
 export default NavigationBar;
-
-
