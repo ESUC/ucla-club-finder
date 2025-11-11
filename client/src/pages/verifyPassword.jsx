@@ -6,7 +6,6 @@ import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar';
 
-
 const OuterContainer = styled.div`
   background: white;
   background: linear-gradient(to right bottom, #ffc400, #00d2ff);
@@ -16,7 +15,6 @@ const OuterContainer = styled.div`
   align-items: center;
 `;
 
-
 export const VerifyPassword = () => {
   const [password, setPassword] = useState('');
   // eslint-disable-next-line no-unused-vars
@@ -24,18 +22,19 @@ export const VerifyPassword = () => {
   const [code, setCode] = useState('');
 
   const handlePassword = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/verify-password', {code, password})
-    .then(response => {
-      if (response && response.status === 200) {
-        window.location.href = '/auth/login';
-        console.log(response);
-      } else {
-        console.log('Reset password unsuccessful');
-      }
-    })
-    .catch(err => console.log(err))
-  }
+    e.preventDefault();
+    axios
+      .post('http://localhost:4000/api/users/auth/verify-password', { code, password })
+      .then((response) => {
+        if (response && response.status === 200) {
+          window.location.href = '/auth/login';
+          console.log(response);
+        } else {
+          console.log('Reset password unsuccessful');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -44,16 +43,16 @@ export const VerifyPassword = () => {
         <Container
           maxWidth="xs"
           sx={{
-            height: "80vh",
+            height: '80vh',
             borderRadius: 4,
-            padding: "50px",
-            background: "white",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0 4px 8px black",
+            padding: '50px',
+            background: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            boxShadow: '0 4px 8px black',
           }}
         >
-          <Typography variant="h5" align="center" sx={{ color: "black" }}>
+          <Typography variant="h5" align="center" sx={{ color: 'black' }}>
             FORGOT PASSWORD
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
