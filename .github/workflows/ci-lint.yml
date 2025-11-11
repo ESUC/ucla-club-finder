@@ -1,11 +1,7 @@
 name: Lint (ESLint + Prettier)
 on:
   pull_request:
-    paths:
-      - '**/*.js'
-      - '**/*.jsx'
-      - '**/*.ts'
-      - '**/*.tsx'
+    types: [opened, synchronize, reopened]
 
 jobs:
   lint:
