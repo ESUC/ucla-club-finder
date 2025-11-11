@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   TextField,
   Button,
@@ -6,21 +6,21 @@ import {
   Container,
   FormControlLabel,
   Checkbox,
-  Link,
   InputAdornment,
   IconButton,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import styled from "styled-components";
-import axios from "axios";
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
 
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from '../components/NavigationBar';
 
 const PageContainer = styled.div`
   display: flex;
   min-height: 100vh;
   width: 100vw;
-  background: #F5F8FF;
+  background: #f5f8ff;
 `;
 
 const FormContainer = styled.div`
@@ -37,8 +37,8 @@ const StyledContainer = styled(Container)`
   padding: 32px;
   border-radius: 16px;
   background: #ffffff;
-  box-shadow: 0 10px 30px rgba(4,56,115,0.08);
-  border: 1px solid #E6EEF9;
+  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
+  border: 1px solid #e6eef9;
 `;
 
 const SidePanel = styled.div`
@@ -46,25 +46,25 @@ const SidePanel = styled.div`
   background: #043873;
 `;
 
-
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/login', {email, password})
-    .then(response => {
-      if (response && response.status === 200) {
-        window.location.href = '/home';
-        console.log(response);
-      } else {
-        console.log('Login unsuccessful');
-      }
-    })
-    .catch(err => console.log(err))
-  }
+    e.preventDefault();
+    axios
+      .post('http://localhost:4000/api/users/auth/login', { email, password })
+      .then((response) => {
+        if (response && response.status === 200) {
+          window.location.href = '/home';
+          console.log(response);
+        } else {
+          console.log('Login unsuccessful');
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -72,11 +72,22 @@ export const Login = () => {
       <PageContainer>
         <FormContainer>
           <StyledContainer>
-            <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
+            <Typography
+              variant="h5"
+              align="left"
+              gutterBottom
+              sx={{ color: '#043873', fontWeight: 700 }}
+            >
               Welcome to ESUC UCLA
             </Typography>
-            <Typography variant="body2" align="left" style={{ marginBottom: "20px" }}>
-              Don't have an account? <Link href="/auth/register" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>Sign up</Link>
+            <Typography variant="body2" align="left" style={{ marginBottom: '20px' }}>
+              Don't have an account?{' '}
+              <Link
+                to="/auth/register"
+                style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC' }}
+              >
+                Sign up
+              </Link>
             </Typography>
             <form onSubmit={handleLogin}>
               <TextField
@@ -96,7 +107,7 @@ export const Login = () => {
                 fullWidth
                 margin="normal"
                 label="Password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 InputProps={{
@@ -118,7 +129,7 @@ export const Login = () => {
               <FormControlLabel
                 control={<Checkbox color="primary" />}
                 label="Remember me"
-                style={{ marginTop: "20px" }}
+                style={{ marginTop: '20px' }}
               />
               <Button
                 fullWidth
@@ -137,13 +148,21 @@ export const Login = () => {
                   boxShadow: '0 10px 20px rgba(79,156,249,0.35)',
                   '&:hover': {
                     background: '#062E63',
-                    boxShadow: '0 12px 24px rgba(79,156,249,0.45)'
-                  }
+                    boxShadow: '0 12px 24px rgba(79,156,249,0.45)',
+                  },
                 }}
               >
                 Login
               </Button>
-              <Typography align="center" sx={{ mt: 1 }}> <Link href="#" style={{ width: "100%", color: "#4F9CF9" }}>Forgot password?</Link> </Typography>
+              <Typography align="center" sx={{ mt: 1 }}>
+                {' '}
+                <Link
+                  to="/auth/forgot-password"
+                  style={{ width: '100%', color: '#4F9CF9', textDecoration: 'none' }}
+                >
+                  Forgot password?
+                </Link>{' '}
+              </Typography>
             </form>
           </StyledContainer>
         </FormContainer>
@@ -152,5 +171,3 @@ export const Login = () => {
     </>
   );
 };
-
-
