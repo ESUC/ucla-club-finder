@@ -1,26 +1,10 @@
-import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Paper,
-  Typography,
-  makeStyles,
-} from "@mui/material";
-import styled from "styled-components";
-import Avatar from "@mui/material/Avatar";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Container from "@mui/material/Container";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import InputAdornment from "@mui/material/InputAdornment";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import NavigationBar from "../components/NavigationBar.jsx";
-import axios from "axios";
+import { useState } from 'react';
+import { TextField, Button, Typography, Container, Box, InputAdornment } from '@mui/material';
+import { LockOpen as LockOpenIcon } from '@mui/icons-material';
+import styled from 'styled-components';
+import axios from 'axios';
+
+import NavigationBar from '../components/NavigationBar';
 
 
 const OuterContainer = styled.div`
@@ -34,9 +18,10 @@ const OuterContainer = styled.div`
 
 
 export const VerifyPassword = () => {
-  const [password, setPassword] = useState();
-  const [newPassword, setConfirmed] = useState();
-  const [code, setCode] = useState();
+  const [password, setPassword] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [newPassword, setConfirmed] = useState('');
+  const [code, setCode] = useState('');
 
   const handlePassword = (e) => {
     e.preventDefault()
@@ -127,7 +112,7 @@ export const VerifyPassword = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
+              sx={{ mt: 3, mb: 2, background: '#00A7FF' }}
               onClick={handlePassword}
             >
               Reset Password

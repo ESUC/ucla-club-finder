@@ -54,7 +54,7 @@ export default [
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "no-console": "off",
     },
-    settings: { react: { version: "detect" } },
+    settings: { react: { version: "18.2" } },
   },
 
   // Tests: allow Jest globals
