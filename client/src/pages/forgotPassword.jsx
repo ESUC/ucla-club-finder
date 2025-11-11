@@ -3,7 +3,6 @@ import { TextField, Button, Typography, Container, InputAdornment } from '@mui/m
 import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar';
 
