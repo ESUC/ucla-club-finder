@@ -6,11 +6,11 @@ import {
   Container,
   FormControlLabel,
   Checkbox,
-  Link,
   InputAdornment,
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -90,7 +90,10 @@ export const Register = () => {
             </Typography>
             <Typography variant="body2" align="left" sx={{ marginBottom: '20px' }}>
               Already have an account?{' '}
-              <Link href="/auth/login" style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC' }}>
+              <Link
+                to="/auth/login"
+                style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC', textDecoration: 'none' }}
+              >
                 Log in
               </Link>
             </Typography>
@@ -164,11 +167,11 @@ export const Register = () => {
               />
               <Typography variant="body2" align="left" sx={{ marginTop: '20px' }}>
                 By creating an account, you agree to the{' '}
-                <Link href="/" style={{ color: '#4F9CF9' }}>
+                <Link to="/" style={{ color: '#4F9CF9', textDecoration: 'none' }}>
                   Terms of use
                 </Link>{' '}
                 and{' '}
-                <Link href="/" style={{ color: '#4F9CF9' }}>
+                <Link to="/" style={{ color: '#4F9CF9', textDecoration: 'none' }}>
                   Privacy Policy
                 </Link>
               </Typography>

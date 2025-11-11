@@ -6,11 +6,11 @@ import {
   Container,
   FormControlLabel,
   Checkbox,
-  Link,
   InputAdornment,
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -83,7 +83,7 @@ export const Login = () => {
             <Typography variant="body2" align="left" style={{ marginBottom: '20px' }}>
               Don't have an account?{' '}
               <Link
-                href="/auth/register"
+                to="/auth/register"
                 style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC' }}
               >
                 Sign up
@@ -156,7 +156,10 @@ export const Login = () => {
               </Button>
               <Typography align="center" sx={{ mt: 1 }}>
                 {' '}
-                <Link href="/auth/forgot-password" style={{ width: '100%', color: '#4F9CF9' }}>
+                <Link
+                  to="/auth/forgot-password"
+                  style={{ width: '100%', color: '#4F9CF9', textDecoration: 'none' }}
+                >
                   Forgot password?
                 </Link>{' '}
               </Typography>
