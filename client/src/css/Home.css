@@ -1,4 +1,5 @@
-body, .home-bg {
+body,
+.home-bg {
   font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
   background: #ffffff;
 }
@@ -46,7 +47,6 @@ header {
   margin-bottom: 40px;
   text-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
   font-family: 'Inter', 'Roboto', Arial, sans-serif;
-
 }
 
 .home-underline {
@@ -57,7 +57,7 @@ header {
   border-radius: 3px;
   box-shadow: 0 2px 8px rgba(255, 196, 0, 0.3);
   position: relative;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -92,7 +92,7 @@ header {
   font-weight: 700 !important;
   font-size: 1.08rem !important;
   border-radius: 999px !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   padding: 0 10px;
   transition: all 0.3s ease;
 }
@@ -264,13 +264,15 @@ header {
 /* Enhanced search styling is now handled by StyledAutocomplete component */
 
 /* CardGrid assumed to be a flex or grid container */
-.content-area .MuiGrid-root, .content-area .card-grid {
+.content-area .MuiGrid-root,
+.content-area .card-grid {
   margin-top: 10px;
   gap: 28px;
 }
 
 /* Card styles (if using MUI Paper or custom) */
-.card, .MuiPaper-root {
+.card,
+.MuiPaper-root {
   background: #ffffff;
   border-radius: 16px !important;
   border: 1px solid #e2e8f0;
@@ -280,7 +282,8 @@ header {
   overflow: hidden;
 }
 
-.card::before, .MuiPaper-root::before {
+.card::before,
+.MuiPaper-root::before {
   content: '';
   position: absolute;
   top: 0;
@@ -292,13 +295,15 @@ header {
   transition: opacity 0.3s ease;
 }
 
-.card:hover, .MuiPaper-root:hover {
+.card:hover,
+.MuiPaper-root:hover {
   box-shadow: 0 8px 32px rgba(26, 54, 93, 0.15) !important;
   transform: translateY(-4px);
   border-color: #1a365d;
 }
 
-.card:hover::before, .MuiPaper-root:hover::before {
+.card:hover::before,
+.MuiPaper-root:hover::before {
   opacity: 1;
 }
 
