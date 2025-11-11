@@ -3,8 +3,8 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
 const uri = process.env.MONG_URI;
-const dbName = "ClubFinder"; 
-const collectionName = "clubs";
+const dbName = 'ClubFinder';
+const collectionName = 'clubs';
 
 async function main() {
   const client = new MongoClient(uri);
@@ -18,17 +18,17 @@ async function main() {
     // Parse club names from the file
     const clubNames = data
       .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
 
-    const clubDocs = clubNames.map(name => ({ name }));
+    const clubDocs = clubNames.map((name) => ({ name }));
 
     // Insert all club documents into the collection
     const result = await db.collection(collectionName).insertMany(clubDocs);
 
     console.log(`Inserted ${result.insertedCount} clubs into collection "${collectionName}".`);
   } catch (err) {
-    console.error("Error uploading clubs:", err);
+    console.error('Error uploading clubs:', err);
   } finally {
     await client.close();
   }
