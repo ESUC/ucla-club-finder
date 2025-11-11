@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: 20
       - name: Install root dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Run ESLint
         run: npm run lint
       - name: Check Prettier formatting
