@@ -55,7 +55,16 @@ const FlippableCard = () => {
             boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
           }}
         />
-        <Typography variant="h6" component="div" style={{ fontWeight: 700, color: '#003b71', fontFamily: 'Inter, Roboto, Arial, sans-serif', marginBottom: 4 }}>
+        <Typography
+          variant="h6"
+          component="div"
+          style={{
+            fontWeight: 700,
+            color: '#003b71',
+            fontFamily: 'Inter, Roboto, Arial, sans-serif',
+            marginBottom: 4,
+          }}
+        >
           {isFlipped ? 'Back Content' : 'Front Content'}
         </Typography>
       </CardContent>
@@ -70,7 +79,10 @@ const FlippableCard = () => {
           transform: 'rotateY(180deg)',
         }}
       >
-        <Typography variant="body1" style={{ color: '#0077c2', fontFamily: 'Inter, Roboto, Arial, sans-serif' }}>
+        <Typography
+          variant="body1"
+          style={{ color: '#0077c2', fontFamily: 'Inter, Roboto, Arial, sans-serif' }}
+        >
           This is the back of the card.
         </Typography>
       </CardContent>
@@ -79,5 +91,3 @@ const FlippableCard = () => {
 };
 
 export default FlippableCard;
-
-

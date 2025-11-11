@@ -1,15 +1,10 @@
-import { useState } from "react";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-} from "@mui/material";
-import styled from "styled-components";
-import Container from "@mui/material/Container";
-import axios from "axios";
+import { useState } from 'react';
+import { TextField, Button, Typography, Box } from '@mui/material';
+import styled from 'styled-components';
+import Container from '@mui/material/Container';
+import axios from 'axios';
 
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from '../components/NavigationBar';
 
 const OuterContainer = styled.div`
   background: white;
@@ -27,11 +22,17 @@ export const Register = () => {
   const [password, setPassword] = useState();
 
   const handleRegister = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/register', {firstName, lastName, email, password})
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
-  }
+    e.preventDefault();
+    axios
+      .post('http://localhost:4000/api/users/auth/register', {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -40,16 +41,16 @@ export const Register = () => {
         <Container
           maxWidth="xs"
           sx={{
-            height: "80vh",
+            height: '80vh',
             borderRadius: 4,
-            padding: "50px",
-            background: "white",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0 4px 8px black",
+            padding: '50px',
+            background: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            boxShadow: '0 4px 8px black',
           }}
         >
-          <Typography variant="h5" align="center" sx={{ color: "black" }}>
+          <Typography variant="h5" align="center" sx={{ color: 'black' }}>
             Register
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
@@ -95,7 +96,7 @@ export const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, background: "#00A7FF" }}
+              sx={{ mt: 3, mb: 2, background: '#00A7FF' }}
               onClick={handleRegister}
             >
               SUBMIT
@@ -106,5 +107,3 @@ export const Register = () => {
     </>
   );
 };
-
-

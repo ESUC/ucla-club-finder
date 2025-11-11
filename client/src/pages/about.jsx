@@ -1,12 +1,11 @@
-
-import NavigationBar from "../components/NavigationBar";
-import "../css/About.css";
+import NavigationBar from '../components/NavigationBar';
+import '../css/About.css';
 
 export const About = () => {
   const clubs = [
-    { name: "President", description: "Description of Club 1" },
-    { name: "Vice-President", description: "Description of Club 2" },
-    { name: "Webmaster", description: "Description of Club 3" },
+    { name: 'President', description: 'Description of Club 1' },
+    { name: 'Vice-President', description: 'Description of Club 2' },
+    { name: 'Webmaster', description: 'Description of Club 3' },
   ];
 
   return (
@@ -36,5 +35,3 @@ export const About = () => {
     </div>
   );
 };
-
-
