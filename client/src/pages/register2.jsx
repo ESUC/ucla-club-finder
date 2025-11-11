@@ -1,28 +1,10 @@
-import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Paper,
-  Typography,
-  makeStyles,
-} from "@mui/material";
-import styled from "styled-components";
-import Avatar from "@mui/material/Avatar";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Container from "@mui/material/Container";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import InputAdornment from "@mui/material/InputAdornment";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import NavigationBar from "../components/NavigationBar.js";
-import axios from "axios";
-import { withRouter } from 'react-router-dom';
+import { useState } from 'react';
+import { TextField, Button, Typography, Box } from '@mui/material';
+import styled from 'styled-components';
+import Container from '@mui/material/Container';
+import axios from 'axios';
 
+import NavigationBar from '../components/NavigationBar';
 
 const OuterContainer = styled.div`
   background: white;
@@ -39,20 +21,18 @@ export const Register = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-
   const handleRegister = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/register', {firstName, lastName, email, password})
-    .then(response => {
-      if (response && response.status === 200) {
-        window.location.href = '/auth/login';
-        console.log(response);
-      } else {
-        console.log('Registration unsuccessful');
-      }
-    })
-    .catch(err => console.log(err))
-  }
+    e.preventDefault();
+    axios
+      .post('http://localhost:4000/api/users/auth/register', {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
@@ -61,16 +41,16 @@ export const Register = () => {
         <Container
           maxWidth="xs"
           sx={{
-            height: "80vh",
+            height: '80vh',
             borderRadius: 4,
-            padding: "50px",
-            background: "white",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0 4px 8px black",
+            padding: '50px',
+            background: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            boxShadow: '0 4px 8px black',
           }}
         >
-          <Typography variant="h5" align="center" sx={{ color: "black" }}>
+          <Typography variant="h5" align="center" sx={{ color: 'black' }}>
             Register
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
@@ -116,7 +96,7 @@ export const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
+              sx={{ mt: 3, mb: 2, background: '#00A7FF' }}
               onClick={handleRegister}
             >
               SUBMIT
