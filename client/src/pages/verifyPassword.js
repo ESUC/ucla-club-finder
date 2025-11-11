@@ -33,19 +33,20 @@ const OuterContainer = styled.div`
 `;
 
 
-export const Login = () => {
-  const [email, setEmail] = useState();
+export const Password = () => {
   const [password, setPassword] = useState();
+  const [newPassword, setConfirmed] = useState();
+  const [code, setCode] = useState();
 
-  const handleLogin = (e) => {
+  const handlePassword = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/login', {email, password})
+    axios.post('http://localhost:4000/api/users/auth/verify-password', {code, password})
     .then(response => {
       if (response && response.status === 200) {
-        window.location.href = '/home';
+        window.location.href = '/auth/login';
         console.log(response);
       } else {
-        console.log('Login unsuccessful');
+        console.log('Reset password unsuccessful');
       }
     })
     .catch(err => console.log(err))
@@ -68,23 +69,22 @@ export const Login = () => {
           }}
         >
           <Typography variant="h5" align="center" sx={{ color: "black" }}>
-            LOGIN
+            FORGOT PASSWORD
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => setEmail(e.target.value)}
+              name="code"
+              label="Code"
+              id="code"
+              autoComplete="code"
+              onChange={(e) => setCode(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonOutlineIcon />
+                    <LockOpenIcon />
                   </InputAdornment>
                 ),
               }}
@@ -94,9 +94,9 @@ export const Login = () => {
               required
               fullWidth
               name="password"
-              label="Password"
-              id="password"
-              autoComplete="current-password"
+              label="New Password"
+              id="new-password"
+              autoComplete="new-password"
               onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -106,31 +106,32 @@ export const Login = () => {
                 ),
               }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Confirm Password"
+              id="confirmed-password"
+              autoComplete="confirmed-password"
+              onChange={(e) => setConfirmed(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOpenIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
-              onClick={handleLogin}
+              onClick={handlePassword}
             >
-              LOGIN
+              Reset Password
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/auth/forgot-password" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/auth/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Container>
       </OuterContainer>
