@@ -21,7 +21,7 @@ const NoResults = styled.div`
   font-weight: 500;
 `;
 
-const CardGrid = ({ searchQuery = '' }) => {
+const CardGrid = ({ searchQuery = '', userId, clubId }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const handleOpenModal = (index) => {
@@ -140,6 +140,8 @@ const CardGrid = ({ searchQuery = '' }) => {
             onOpen={() => handleOpenModal(originalIndex)}
             onClose={handleCloseModal}
             key={title[originalIndex]}
+            userId={userId}
+            clubId={clubId}
           >
             Card {originalIndex + 1}
           </ClubCard>

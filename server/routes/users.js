@@ -56,4 +56,59 @@ router.post('/auth/login', async (req, res) => {
   }
 });
 
+router.get('/saved/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).populate('savedClubs');
+    if (!user) {
+      return res.status(400).json({ error: 'No user detected' });
+    }
+    res.status(200).json(user.savedClubs);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.post('/save/:clubId', async (req, res) => {
+  const { clubId } = req.params;
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ error: 'No user detected' });
+    }
+    if (user.savedClubs.some((id) => id.toString() === clubId)) {
+      return res.status(400).json({ error: 'Club has already been saved' });
+    }
+    user.savedClubs.push(clubId);
+    await user.save();
+    res.status(200).json('Club saved');
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.delete('/save/:clubId', async (req, res) => {
+  const { clubId } = req.params;
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ error: 'No user detected' });
+    }
+    if (!user.savedClubs.some((id) => id.toString() === clubId)) {
+      return res.status(400).json({ error: 'Club not currently saved' });
+    }
+    if (user.savedClubs.length === 1) {
+      user.set('savedClubs', undefined);
+    } else {
+      user.savedClubs.pull(clubId);
+    }
+    await user.save();
+    res.status(200).json('Club deleted');
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = router;

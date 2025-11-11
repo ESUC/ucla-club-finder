@@ -123,6 +123,10 @@ const SearchContainer = styled.div`
 export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
+  // TEMPORARY WILL CHANGE LATER
+  const userId = '6627638285b11e9ed9d11fc9'; // john bruin
+  const clubId = '6909d80faf668433ff54eced'; // UPE
+
   const handleSearchChange = (event, newValue) => {
     setSearchQuery(newValue || '');
   };
@@ -268,7 +272,7 @@ export const Home = () => {
               )}
             />
           </SearchContainer>
-          <CardGrid searchQuery={searchQuery} />
+          <CardGrid searchQuery={searchQuery} userId={userId} clubId={clubId} />
         </section>
       </div>
     </div>
