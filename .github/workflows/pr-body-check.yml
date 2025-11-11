@@ -1,0 +1,31 @@
+name: PR Body Check
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR body format
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const errors = [];
+
+            // Require "**Issue:** #<number>"
+            const issueLine = body.match(/\*\*Issue:\*\*\s*#\d+/);
+            if (!issueLine)
+              errors.push("Missing or malformed **Issue:** `#<number>` (e.g. `**Issue:** #123`).");
+
+            // Require non-empty current solution
+            const current = body.match(/\*\*Current solution\*\*[\s\S]*?(?:\n{2,}|$)/i);
+            if (!current || current[0].replace(/\*\*Current solution\*\*/i,"").trim().length < 10)
+              errors.push("**Current solution** must describe your change (≥10 chars).");
+
+            if (errors.length) {
+              core.setFailed("PR Body Check failed:\n- " + errors.join("\n- "));
+            } else {
+              core.notice("✅ PR body looks good!");
+            }
