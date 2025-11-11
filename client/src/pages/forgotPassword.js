@@ -33,19 +33,20 @@ const OuterContainer = styled.div`
 `;
 
 
-export const Login = () => {
+export const Password = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [code, setCode] = useState();
 
-  const handleLogin = (e) => {
+  const handlePassword = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:4000/api/users/auth/login', {email, password})
+    axios.post('http://localhost:4000/api/users/auth/forgot-password', {email})
     .then(response => {
       if (response && response.status === 200) {
-        window.location.href = '/home';
+        window.location.href = '/auth/verify-password';
         console.log(response);
       } else {
-        console.log('Login unsuccessful');
+        console.log('Unsuccessful');
       }
     })
     .catch(err => console.log(err))
@@ -68,7 +69,7 @@ export const Login = () => {
           }}
         >
           <Typography variant="h5" align="center" sx={{ color: "black" }}>
-            LOGIN
+            FORGOT PASSWORD
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
@@ -89,48 +90,15 @@ export const Login = () => {
                 ),
               }}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockOpenIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, background: "white", background: "#00A7FF" }}
-              onClick={handleLogin}
+              onClick={handlePassword}
             >
-              LOGIN
+              Send Code
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/auth/forgot-password" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/auth/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Container>
       </OuterContainer>
