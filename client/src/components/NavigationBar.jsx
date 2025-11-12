@@ -8,18 +8,18 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import styled from 'styled-components';
 
 const StyledAppBar = styled(AppBar)`
-  background: #ffffff !important;
+  background: #043873 !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
   border-bottom: 1px solid #e2e8f0;
 `;
 
 const StyledToolbar = styled(Toolbar)`
   display: flex;
+  width: 1920px;
+  padding: 16px 72px 16px 220px;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
   min-height: 72px;
-  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
 `;
@@ -36,17 +36,19 @@ const Logo = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  border-radius: 8px;
+  width: 65px;
+  height: 57px;
+  flex-shrink: 0;
+  aspect-ratio: 65/57;
 `;
 
 const LogoText = styled.span`
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
 
 const NavButtons = styled(Box)`
@@ -87,9 +89,8 @@ const NavigationBar = () => {
   const navItems = [
     { text: 'Home', icon: <HomeIcon />, to: '/home' },
     { text: 'Saved Clubs', icon: <ListAltIcon />, to: '/saved-clubs' },
-    { text: 'Login', icon: <LoginIcon />, to: '/auth/login' },
-    { text: 'Register', icon: <HowToRegIcon />, to: '/auth/register' },
     { text: 'About', icon: <InfoIcon />, to: '/about' },
+    { text: 'Login', icon: <LoginIcon />, to: '/auth/login' },
   ];
 
   return (
@@ -103,7 +104,7 @@ const NavigationBar = () => {
               e.target.style.display = 'none';
             }}
           />
-          <LogoText>UCLA Club Finder</LogoText>
+          <LogoText>esucla</LogoText>
         </Logo>
         <NavButtons>
           {navItems.map((item) => (
