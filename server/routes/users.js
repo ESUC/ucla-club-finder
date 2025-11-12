@@ -21,10 +21,14 @@ const validPassword = (password) => {
 };
 
 router.post('/auth/register', async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, username, email, password, year, major} = req.body;
+
+  if (!email || !email.endsWith('@ucla.edu') || !email.endsWith('@g.ucla.edu')) {
+    return res.status(400).json({ error: 'You must register with a valid UCLA email.' });
+  }
 
   if (!validPassword(password)) {
-    return res.status(500).json({ error: 'Invalid Passcode' });
+    return res.status(400).json({ error: 'Invalid Passcode' });
   }
 
   const salt = bcrypt.genSaltSync(10);
@@ -32,11 +36,14 @@ router.post('/auth/register', async (req, res) => {
   console.log(hash);
 
   try {
-    const user = await User.create({ firstName, lastName, email, password: hash });
+    const user = await User.create({ firstName, lastName, username, email, password: hash, year, major});
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+  //year validation
+  //major should be a drop down
+  //update the reasong for password fail/ specs for correct pasword
   //res.json({mssg: 'registered a user'})
 });
 
