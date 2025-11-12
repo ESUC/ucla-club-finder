@@ -12,13 +12,35 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    username: { 
+      type: String, 
+      unique: true, 
+      required: true,
+    },
     email: {
       type: String,
+      unique: true,
       required: true,
     },
     password: {
       type: String,
       required: true,
+    },
+    profilePicture: { 
+      type: String, 
+      default: '',
+    },
+    major: { 
+      type: String, 
+      required: true,
+    },
+    year: { 
+      type: String, 
+      required: true,
+    },
+    bio: { 
+      type: String, 
+      default: '', 
     },
     savedClubs: [
       {

@@ -50,18 +50,24 @@ const SidePanel = styled.div`
 export const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [major, setMajor] = useState('');
+  const [year, setYear] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
     axios
       .post('http://localhost:4000/api/users/auth/register', {
-        email,
-        password,
         firstName,
         lastName,
+        username,
+        email,
+        password,
+        major,
+        year,
       })
       .then((response) => {
         if (response && response.status === 200) {
@@ -127,6 +133,19 @@ export const Register = () => {
               <TextField
                 fullWidth
                 margin="normal"
+                label="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -153,6 +172,32 @@ export const Register = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Major"
+                value={major}
+                onChange={(e) => setMajor(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
+                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
+                }}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Graduation Year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
                 sx={{
                   '& .MuiOutlinedInput-root': { borderRadius: 12 },
                   '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
