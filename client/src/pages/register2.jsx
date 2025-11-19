@@ -20,6 +20,9 @@ export const Register = () => {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [major, setMajor] = useState();
+  const [year, setYear] = useState();
+  const [username, setUsername] = useState();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -27,8 +30,11 @@ export const Register = () => {
       .post('http://localhost:4000/api/users/auth/register', {
         firstName,
         lastName,
+        username,
         email,
         password,
+        year,
+        major,
       })
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
@@ -71,6 +77,36 @@ export const Register = () => {
               label="Last Name"
               name="lastName"
               onChange={(e) => setLastName(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              id="major"
+              label="Major"
+              name="major"
+              value={major}
+              onChange={(e) => setMajor(e.target.value)}
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              id="year"
+              label="Graduation Year"
+              name="year"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
             />
 
             <TextField
