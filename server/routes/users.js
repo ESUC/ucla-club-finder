@@ -23,7 +23,7 @@ const validPassword = (password) => {
 router.post('/auth/register', async (req, res) => {
   const { firstName, lastName, username, email, password, year, major} = req.body;
 
-  if (!email || !email.endsWith('@ucla.edu') || !email.endsWith('@g.ucla.edu')) {
+  if (!email || (!email.endsWith('@ucla.edu') && !email.endsWith('@g.ucla.edu'))) {
     return res.status(400).json({ error: 'You must register with a valid UCLA email.' });
   }
 
