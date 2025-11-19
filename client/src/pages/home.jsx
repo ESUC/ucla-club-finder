@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   TextField,
   Typography,
@@ -122,6 +123,8 @@ const SearchContainer = styled.div`
 
 export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [clubs, setClubs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Filter state
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -135,11 +138,20 @@ export const Home = () => {
 
   // TEMPORARY WILL CHANGE LATER
   const userId = '6627638285b11e9ed9d11fc9'; // john bruin
-  const clubId = '6909d80faf668433ff54eced'; // UPE
 
   const handleSearchChange = (event, newValue) => {
     setSearchQuery(newValue || '');
   };
+
+  useEffect(() => {
+    axios
+        .get(`http://localhost:4000/api/clubs/`)
+        .then((res) => {
+          setClubs(res.data);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err.message));
+  }, []);
 
   const filters = {
     types: selectedTypes,
@@ -147,6 +159,8 @@ export const Home = () => {
     days: selectedDays,
     sizes: selectedSizes,
   };
+
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="home-bg">
@@ -432,7 +446,7 @@ export const Home = () => {
               )}
             />
           </SearchContainer>
-          <CardGrid searchQuery={searchQuery} userId={userId} clubId={clubId} filters={filters} />
+          <CardGrid searchQuery={searchQuery} userId={userId} clubs={clubs} filters={filters} />
         </section>
       </div>
     </div>
