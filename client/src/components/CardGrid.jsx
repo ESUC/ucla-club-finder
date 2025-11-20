@@ -1,6 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import ClubCard from './ClubCard';
 
@@ -312,7 +311,7 @@ const CardGrid = ({ searchQuery = '', userId, clubs, filters = {} }) => {
 
         return true;
       });
-  }, [searchQuery, types, majors, days, sizes]);
+  }, [clubs, searchQuery, types, majors, days, sizes]);
 
   if (filtered.length === 0) {
     return (
