@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 
 const clubSchema = new Schema(
   {
+    abbreviation: {
+      type: String,
+      required: true,
+    },
     clubName: {
       type: String,
       required: true,
@@ -21,6 +25,14 @@ const clubSchema = new Schema(
       required: true,
     },
     size: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    img: {
       type: String,
       required: true,
     },

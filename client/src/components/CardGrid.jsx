@@ -24,6 +24,7 @@ const NoResults = styled.div`
 // Hard-coded data to mirror MongoDB schema fields for testing
 // Fields mirrored from server/models/clubModel.js: clubName, clubType, major, meetingDays, size
 // Additional frontend-only fields: abbreviation, description, img
+/*
 const clubs = [
   {
     abbreviation: 'UPE',
@@ -236,6 +237,7 @@ const clubs = [
     img: 'https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/swug.png',
   },
 ];
+*/
 
 const normalizeDay = (d) => {
   const x = d.trim().toLowerCase();
@@ -256,9 +258,9 @@ const sizePredicates = {
   '100+ Members': (n) => n >= 100,
 };
 
-const CardGrid = ({ searchQuery = '', userId, clubId, filters = {} }) => {
+const CardGrid = ({ searchQuery = '', userId, clubs, filters = {} }) => {
   const [openIndex, setOpenIndex] = useState(null);
-
+  
   const handleOpenModal = (index) => {
     setOpenIndex(index);
   };
@@ -309,7 +311,7 @@ const CardGrid = ({ searchQuery = '', userId, clubId, filters = {} }) => {
 
         return true;
       });
-  }, [searchQuery, types, majors, days, sizes]);
+  }, [clubs, searchQuery, types, majors, days, sizes]);
 
   if (filtered.length === 0) {
     return (
@@ -321,7 +323,7 @@ const CardGrid = ({ searchQuery = '', userId, clubId, filters = {} }) => {
       </NoResults>
     );
   }
-
+  
   return (
     <Grid>
       {filtered.map((c, idx) => (
@@ -339,9 +341,9 @@ const CardGrid = ({ searchQuery = '', userId, clubId, filters = {} }) => {
           onClose={handleCloseModal}
           key={c.abbreviation}
           userId={userId}
-          clubId={clubId}
+          clubId={c._id}
         >
-          Card {idx + 1}
+          Card {idx + 1};
         </ClubCard>
       ))}
     </Grid>
