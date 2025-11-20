@@ -8,6 +8,7 @@ import {
   Checkbox,
   InputAdornment,
   IconButton,
+  FormHelperText,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
@@ -77,7 +78,14 @@ export const Register = () => {
           console.log('Registration unsuccessful');
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.error('Registration error:', err);
+        if (err.response && err.response.data && err.response.data.error) {
+          alert(err.response.data.error);
+        } else {
+          alert('Registration failed. Please check your input and try again.');
+        }
+      });
   };
 
   return (
@@ -156,6 +164,9 @@ export const Register = () => {
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                 }}
               />
+              <FormHelperText sx={{ mt: -1, mb: 1, fontSize: '0.75rem', color: '#666' }}>
+                Must be a valid UCLA email (@ucla.edu or @g.ucla.edu)
+              </FormHelperText>
               <TextField
                 fullWidth
                 margin="normal"
@@ -179,6 +190,9 @@ export const Register = () => {
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                 }}
               />
+              <FormHelperText sx={{ mt: -1, mb: 1, fontSize: '0.75rem', color: '#666' }}>
+                Password must be at least 12 characters with uppercase, lowercase, number, and special character (@ $ ! % * ? &)
+              </FormHelperText>
               <TextField
                 fullWidth
                 margin="normal"
