@@ -1,4 +1,4 @@
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 import '../css/About.css';
 
 export const About = () => {

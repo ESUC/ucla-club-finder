@@ -1,0 +1,113 @@
+/* Account Pages Common Styles (Login, Register, Verify Password) */
+
+/* Page Container */
+.account-page-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background: #f5f8ff;
+}
+
+/* Form Container */
+.account-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+}
+
+.account-form-container-white {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 40px 16px;
+}
+
+/* Styled Container */
+.account-styled-container {
+  width: 100%;
+  max-width: 560px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
+  border: 1px solid #e6eef9;
+}
+
+/* Side Panel */
+.account-side-panel {
+  flex: 1;
+  background: #043873;
+}
+
+/* Outer Container (for Verify Password) */
+.account-outer-container {
+  background: white;
+  background: linear-gradient(to right bottom, #ffc400, #00d2ff);
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Material-UI TextField Overrides */
+.account-textfield .MuiOutlinedInput-root {
+  border-radius: 12px;
+}
+
+.account-textfield .MuiOutlinedInput-notchedOutline {
+  border-color: #A7CEFC;
+}
+
+.account-textfield:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #4F9CF9;
+}
+
+.account-textfield.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #4F9CF9;
+}
+
+/* Material-UI Button Overrides */
+.account-button {
+  background: #043873 !important;
+  color: #FFFFFF !important;
+  border-radius: 16px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+  box-shadow: 0 10px 20px rgba(79, 156, 249, 0.35) !important;
+  height: 54px !important;
+}
+
+.account-button:hover {
+  background: #062E63 !important;
+  box-shadow: 0 12px 24px rgba(79, 156, 249, 0.45) !important;
+}
+
+/* Typography Styles */
+.account-title {
+  color: #043873;
+  font-weight: 700;
+}
+
+.account-link {
+  color: #4F9CF9;
+  text-decoration-color: #A7CEFC;
+  text-decoration: none;
+}
+
+.account-link:hover {
+  text-decoration: underline;
+}
+
+/* Form Helper Text */
+.account-helper-text {
+  margin-top: -8px;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  color: #666;
+}
+

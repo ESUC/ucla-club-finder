@@ -4,7 +4,7 @@ import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 const PageContainer = styled.div`
   display: flex;
