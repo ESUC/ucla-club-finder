@@ -100,6 +100,26 @@
   color: #999;
 }
 
+/* Input with Icon */
+.account-input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.account-input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #717182;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.account-input-with-icon-padding {
+  padding-left: 2.5rem !important;
+}
+
 /* Password Input Wrapper */
 .account-password-wrapper {
   position: relative;
@@ -199,10 +219,7 @@
 }
 
 .account-subtitle {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
+  display: block;
   color: #4A5565;
   font-family: "DM Sans";
   font-size: 1rem;
@@ -287,6 +304,7 @@
   margin-top: 4px;
   text-align: center;
   display: block;
+  align-self: center;
 }
 
 .account-forgot:hover {
