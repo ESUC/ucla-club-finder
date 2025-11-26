@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Carousel from 'react-material-ui-carousel';
 
 import FlippableCard from '../components/FlippableCard';
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 export const SavedClubs = () => {
   const [currentIndex] = useState(0);

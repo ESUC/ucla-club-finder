@@ -1,19 +1,10 @@
 import { useState } from 'react';
 import { TextField, Button, Typography, Container, Box, InputAdornment } from '@mui/material';
 import { LockOpen as LockOpenIcon } from '@mui/icons-material';
-import styled from 'styled-components';
 import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
-
-const OuterContainer = styled.div`
-  background: white;
-  background: linear-gradient(to right bottom, #ffc400, #00d2ff);
-  height: 100vh;
-  width: 100vw;
-  justify-content: center;
-  align-items: center;
-`;
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import '../css/account.css';
 
 export const VerifyPassword = () => {
   const [password, setPassword] = useState('');
@@ -39,7 +30,7 @@ export const VerifyPassword = () => {
   return (
     <>
       <NavigationBar />
-      <OuterContainer>
+      <div className="account-outer-container">
         <Container
           maxWidth="xs"
           sx={{
@@ -118,7 +109,7 @@ export const VerifyPassword = () => {
             </Button>
           </Box>
         </Container>
-      </OuterContainer>
+      </div>
     </>
   );
 };
