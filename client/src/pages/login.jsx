@@ -1,15 +1,4 @@
 import { useState } from 'react';
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  FormControlLabel,
-  Checkbox,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -37,77 +26,64 @@ export const Login = () => {
   };
 
   return (
-    <>
+    <div className="login-page-wrapper">
       <NavigationBar />
-      <div className="account-page-container">
-        <div className="account-form-container">
-          <Container className="account-styled-container">
-            <Typography
-              variant="h5"
-              align="left"
-              gutterBottom
-              className="account-title"
-            >
-              Welcome to ESUC UCLA
-            </Typography>
-            <Typography variant="body2" align="left" style={{ marginBottom: '20px' }}>
-              Don't have an account?{' '}
-              <Link to="/auth/register" className="account-link">
-                Sign up
-              </Link>
-            </Typography>
-            <form onSubmit={handleLogin}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Email"
+      <div className="login-content-area">
+        <div className="login-container">
+          <h3 className="account-title">Welcome to ESUC UCLA</h3>
+          <h4 className="account-subtitle">Don't have an account? <Link to="/auth/register" className="account-link">Sign up</Link></h4>
+          <form className="account-form" onSubmit={handleLogin}>
+            <div className="account-input-wrapper">
+              <input
+                id="email"
+                type="email"
                 value={email}
+                className="account-input"
                 onChange={(e) => setEmail(e.target.value)}
-                className="account-textfield"
+                placeholder="Email"
               />
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Password"
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="account-textfield"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Remember me"
-                style={{ marginTop: '20px' }}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                type="submit"
-                className="account-button"
-                sx={{ mt: 2, mb: 2 }}
-              >
-                Login
-              </Button>
-              <Typography align="center" sx={{ mt: 1 }}>
-                {' '}
-                <Link to="/auth/forgot-password" className="account-link">
-                  Forgot password?
-                </Link>{' '}
-              </Typography>
-            </form>
-          </Container>
+            </div>
+            <div className="account-input-wrapper">
+              <div className="account-password-wrapper">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="account-input"
+                  placeholder="Password"
+                />
+                <button
+                  type="button"
+                  className="account-password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+            <div className="login-remember-container">
+              <label className="account-checkbox-label">
+                <input type="checkbox" className="account-checkbox" />
+                <span className="account-helper-text">Remember me</span>
+              </label>
+            </div>
+            <button type="submit" className="account-button">Login</button>
+            <Link to="/auth/forgot-password" className="account-forgot">Forgot password?</Link>
+          </form>
         </div>
-        <div className="account-side-panel" />
       </div>
-    </>
+    </div>
   );
 };
