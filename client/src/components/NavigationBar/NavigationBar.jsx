@@ -63,15 +63,15 @@ const NavigationBar = () => {
               {item.text}
             </Button>
           ))}
-          {isLoggedIn ? (
-            <Button
-              component={Link}
-              to="/saved-clubs"
-              className="navbar-user-button"
-              startIcon={<PersonIcon />}
-            >
-            </Button>
-          ) : (
+          <Button
+            component={Link}
+            to="/saved-clubs"
+            className="navbar-user-button"
+            startIcon={<PersonIcon />}
+            title="Saved Clubs"
+          >
+          </Button>
+          {!isLoggedIn && (
             <Button
               component={Link}
               to="/auth/login"
