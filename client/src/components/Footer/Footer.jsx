@@ -6,9 +6,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-column">
-          <h3 className="footer-heading">Clubfinder</h3>
+          <h3 className="footer-heading">ClubFinder</h3>
           <p className="footer-description">
-            Clubfinder helps students discover and connect with clubs and organizations. Join a community and make the most of your college experience.
+            ClubFinder helps students discover and connect with clubs and organizations. Join a community and make the most of your college experience.
           </p>
         </div>
         <div className="footer-column">

@@ -106,6 +106,7 @@
   box-shadow: 0 4px 12px rgba(79, 156, 249, 0.3);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .hero-button::before {
