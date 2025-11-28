@@ -13,7 +13,7 @@ export const App = () => {
     <div className="App">
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/" element={<About />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/forgot-password" element={<ForgotPassword />} />
