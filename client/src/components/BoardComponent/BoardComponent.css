@@ -1,10 +1,10 @@
 /* The Board Section */
 .board-section {
   background: #043873;
-  padding: 100px 40px;
+  padding: 80px 40px;
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 60px;
 }
 
 .board-title {
@@ -20,7 +20,7 @@
 .board-subsection {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -45,14 +45,14 @@
 .board-grid-executive {
   grid-template-columns: repeat(3, 1fr);
   max-width: 1400px;
-  margin: 40px auto 0;
+  margin: 24px auto 0;
   padding: 0 20px;
 }
 
 .board-grid-officers {
   grid-template-columns: repeat(3, 1fr);
   max-width: 1400px;
-  margin: 40px auto 0;
+  margin: 24px auto 0;
   padding: 0 20px;
 }
 

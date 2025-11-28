@@ -2,8 +2,8 @@ import './BoardComponent.css';
 
 const BoardComponent = () => {
   const executive = [
-    { name: 'Jerard Agravante', role: 'President', image: 'https://www.esuc.ucla.edu/assets/img/team/Jerard.svg' },
     { name: 'Justin Xu', role: 'External Vice President', image: 'https://www.esuc.ucla.edu/assets/img/team/Justin.svg' },
+    { name: 'Jerard Agravante', role: 'President', image: 'https://www.esuc.ucla.edu/assets/img/team/Jerard.svg' },
     { name: 'Clara Yee', role: 'Internal Vice President', image: 'https://www.esuc.ucla.edu/assets/img/team/Clara.svg' },
   ];
 

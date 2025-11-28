@@ -36,7 +36,7 @@ const ContactUs = () => {
         </div>
         <h2 className="contact-title">Contact Us</h2>
         <p className="contact-description">
-          Want to add your club to the Club Finder app? Having trouble with login or your account? Any questions? We're here to help!
+          Want to add your club to the ClubFinder app? Having trouble with login or your account? Any questions? We're here to help!
         </p>
       </div>
       <form className="contact-form" onSubmit={handleSubmit}>
