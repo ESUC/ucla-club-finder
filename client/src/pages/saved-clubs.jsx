@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
@@ -21,26 +21,19 @@ const getMockSavedClubs = () =>
     logo: null,
   }));
 
+// Mock profile - TODO: Fetch actual user profile from API
+const getMockProfile = () => ({
+  major: 'N/A',
+  year: 'N/A',
+});
+
 export const SavedClubs = () => {
   const [joinedClubs] = useState(getMockJoinedClubs);
   const [savedClubs] = useState(getMockSavedClubs);
-  const [userProfile, setUserProfile] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
-
-  useEffect(() => {
-    // TODO: Fetch actual user profile from API
-    // For now, using mock data - replace with actual API call
-    const mockProfile = {
-      major: 'N/A',
-      year: 'N/A',
-    };
-    setUserProfile(mockProfile);
-
-    // Check if major or year is 'N/A'
-    if (mockProfile.major === 'N/A' || mockProfile.year === 'N/A') {
-      setShowAlert(true);
-    }
-  }, []);
+  const mockProfile = getMockProfile();
+  const [showAlert, setShowAlert] = useState(
+    mockProfile.major === 'N/A' || mockProfile.year === 'N/A'
+  );
 
   return (
     <div className="saved-clubs-page">
