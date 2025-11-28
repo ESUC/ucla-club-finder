@@ -1,128 +1,68 @@
 import { useState } from 'react';
-import { TextField, Button, Typography, Container, InputAdornment } from '@mui/material';
-import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
-
-const PageContainer = styled.div`
-  display: flex;
-  min-height: 100vh;
-  width: 100vw;
-  background: #f5f8ff;
-`;
-
-const FormContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 16px;
-`;
-
-const StyledContainer = styled(Container)`
-  width: 100%;
-  max-width: 560px;
-  padding: 32px;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
-  border: 1px solid #e6eef9;
-`;
-
-const SidePanel = styled.div`
-  flex: 1;
-  background: #043873;
-`;
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
+import '../css/account.css';
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState('');
 
   const handlePassword = (e) => {
     e.preventDefault();
-    // axios.post('http://localhost:4000/api/users/auth/forgot-password', { email })
-    //   .then((response) => {
-    //     if (response && response.status === 200) {
-    //       window.location.href = '/auth/verify-password';
-    //       console.log(response);
-    //     } else {
-    //       console.log('Unsuccessful');
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
-    console.log('trigger');
+    axios
+      .post('http://localhost:4000/api/users/auth/forgot-password', { email })
+      .then((response) => {
+        if (response && response.status === 200) {
+          window.location.href = '/auth/verify-password';
+          console.log(response);
+        } else {
+          console.log('Unsuccessful');
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <>
+    <div className="login-page-wrapper">
       <NavigationBar />
-      <PageContainer>
-        <FormContainer>
-          <StyledContainer>
-            <Typography
-              variant="h5"
-              align="left"
-              gutterBottom
-              sx={{ color: '#043873', fontWeight: 700 }}
-            >
-              Forgot Password
-            </Typography>
-            <Typography variant="body2" align="left" style={{ marginBottom: '20px' }}>
-              Enter your email address and we'll send you a code to reset your password.{' '}
-              <Link to="/auth/login" style={{ color: '#4F9CF9', textDecorationColor: '#A7CEFC' }}>
-                Back to login
-              </Link>
-            </Typography>
-            <form onSubmit={handlePassword}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutlineIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                type="submit"
-                sx={{
-                  mt: 2,
-                  mb: 2,
-                  height: 54,
-                  background: '#043873',
-                  color: '#FFFFFF',
-                  borderRadius: '16px',
-                  textTransform: 'none',
-                  fontWeight: 600,
-                  letterSpacing: '.2px',
-                  boxShadow: '0 10px 20px rgba(79,156,249,0.35)',
-                  '&:hover': {
-                    background: '#062E63',
-                    boxShadow: '0 12px 24px rgba(79,156,249,0.45)',
-                  },
-                }}
-              >
-                Send Code
-              </Button>
-            </form>
-          </StyledContainer>
-        </FormContainer>
-        <SidePanel />
-      </PageContainer>
-    </>
+      <div className="login-content-area">
+        <div className="login-container">
+          <h3 className="account-title">Forgot Password</h3>
+          <h4 className="account-subtitle">
+            Enter your email address and we'll send you a code to reset your password. <Link to="/auth/login" className="account-link">Back to login</Link>
+          </h4>
+          <form className="account-form" onSubmit={handlePassword}>
+            <div className="account-input-wrapper">
+              <div className="account-input-with-icon">
+                <svg
+                  className="account-input-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  className="account-input account-input-with-icon-padding"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+              </div>
+            </div>
+            <button type="submit" className="account-button">Send Code</button>
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };
