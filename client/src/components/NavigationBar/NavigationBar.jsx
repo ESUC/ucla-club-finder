@@ -48,7 +48,7 @@ const NavigationBar = () => {
               e.target.style.display = 'none';
             }}
           />
-          <span className="navbar-logo-text">ClubFinder</span>
+          <span className="navbar-logo-text">esucla</span>
         </div>
         <Box className="navbar-buttons">
           {navItems.map((item) => (
