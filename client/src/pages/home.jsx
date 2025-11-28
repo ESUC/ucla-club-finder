@@ -18,6 +18,7 @@ import styled from 'styled-components';
 
 import CardGrid from '../components/CardGrid';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
 import '../css/Home.css';
 
 const searchSuggestions = [
@@ -449,6 +450,7 @@ export const Home = () => {
           <CardGrid searchQuery={searchQuery} userId={userId} clubs={clubs} filters={filters} />
         </section>
       </div>
+      <Footer />
     </div>
   );
 };

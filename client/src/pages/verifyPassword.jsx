@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
 import '../css/account.css';
 
 export const VerifyPassword = () => {
@@ -124,6 +125,7 @@ export const VerifyPassword = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

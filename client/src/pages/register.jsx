@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
 import '../css/account.css';
 
 export const Register = () => {
@@ -168,6 +169,7 @@ export const Register = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

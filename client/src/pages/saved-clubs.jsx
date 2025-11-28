@@ -4,6 +4,7 @@ import Carousel from 'react-material-ui-carousel';
 
 import FlippableCard from '../components/FlippableCard';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
 
 export const SavedClubs = () => {
   const [currentIndex] = useState(0);
@@ -24,6 +25,7 @@ export const SavedClubs = () => {
           ))}
         </Carousel>
       </Container>
+      <Footer />
     </>
   );
 };
