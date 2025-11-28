@@ -7,6 +7,7 @@ import { About } from './pages/about';
 import { SavedClubs } from './pages/saved-clubs';
 import { ForgotPassword } from './pages/forgotPassword';
 import { VerifyPassword } from './pages/verifyPassword';
+import EditProfile from './pages/edit-profile';
 
 export const App = () => {
   return (
@@ -21,6 +22,7 @@ export const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/saved-clubs" element={<SavedClubs />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Routes>
       </Router>
     </div>
