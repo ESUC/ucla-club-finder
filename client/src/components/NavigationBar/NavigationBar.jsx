@@ -1,14 +1,40 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import PersonIcon from '@mui/icons-material/Person';
 import './NavigationBar.css';
 
 const NavigationBar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if user is logged in by checking localStorage for token
+    const checkAuth = () => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    };
+
+    checkAuth();
+
+    // Listen for storage changes (for cross-tab updates)
+    window.addEventListener('storage', checkAuth);
+
+    // Check periodically for same-tab updates (e.g., after login)
+    const interval = setInterval(checkAuth, 500);
+
+    return () => {
+      window.removeEventListener('storage', checkAuth);
+      clearInterval(interval);
+    };
+  }, [location]);
+
+  // Build nav items conditionally
   const navItems = [
-    { text: 'Home', to: '/home' },
-    { text: 'Saved Clubs', to: '/saved-clubs' },
-    { text: 'About', icon: <InfoOutlinedIcon />, to: '/about' },
-    { text: 'Login', to: '/auth/login', isLogin: true },
+    { text: 'Home', to: '/about' },
+    { text: 'Clubs', to: '/home' },
+    ...(isLoggedIn ? [{ text: 'Saved Clubs', to: '/saved-clubs' }] : []),
   ];
 
   return (
@@ -26,30 +52,34 @@ const NavigationBar = () => {
           <span className="navbar-logo-text">esucla</span>
         </div>
         <Box className="navbar-buttons">
-          {navItems.map((item) => {
-            const isLogin = item.text === "Login";
-
-            return isLogin ? (
-              <Button
-                key={item.text}
-                component={Link}
-                to={item.to}
-                className="navbar-login-button"
-              >
-                {item.text}
-              </Button>
-            ) : (
-              <Button
-                key={item.text}
-                component={Link}
-                to={item.to}
-                startIcon={item.icon}
-                className="navbar-button"
-              >
-                {item.text}
-              </Button>
-            );
-          })}
+          {navItems.map((item) => (
+            <Button
+              key={item.text}
+              component={Link}
+              to={item.to}
+              startIcon={item.icon}
+              className="navbar-button"
+            >
+              {item.text}
+            </Button>
+          ))}
+          {isLoggedIn ? (
+            <Button
+              component={Link}
+              to="/saved-clubs"
+              className="navbar-user-button"
+              startIcon={<PersonIcon />}
+            >
+            </Button>
+          ) : (
+            <Button
+              component={Link}
+              to="/auth/login"
+              className="navbar-login-button"
+            >
+              Login
+            </Button>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

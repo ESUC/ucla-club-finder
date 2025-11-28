@@ -254,3 +254,79 @@
   outline: none !important;
 }
 
+/* User icon button styles */
+.navbar-user-button,
+.navbar-user-button.MuiButton-root,
+.navbar-user-button.MuiButtonBase-root {
+  color: #FFF !important;
+  background: transparent !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  font-family: 'DM Sans', 'Inter', 'Roboto', Arial, sans-serif !important;
+  font-size: 0.83rem !important;
+  padding: 10px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: auto !important;
+  width: 40px !important;
+  height: 40px !important;
+  transform: none !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  line-height: 1.5 !important;
+  letter-spacing: normal !important;
+  cursor: pointer !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  vertical-align: middle !important;
+  min-height: auto !important;
+  max-height: none !important;
+  outline: none !important;
+  will-change: auto !important;
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.navbar-user-button.MuiButton-root:hover,
+.navbar-user-button.MuiButtonBase-root:hover,
+.navbar-user-button.MuiButton-root:focus,
+.navbar-user-button.MuiButtonBase-root:focus,
+.navbar-user-button.MuiButton-root:active,
+.navbar-user-button.MuiButtonBase-root:active {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  padding: 10px !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+  height: 40px !important;
+  width: 40px !important;
+  min-height: auto !important;
+  max-height: none !important;
+  line-height: 1.5 !important;
+  outline: none !important;
+}
+
+.navbar-user-button .MuiButton-startIcon,
+.navbar-user-button.MuiButton-root .MuiButton-startIcon {
+  margin: 0 !important;
+  color: #FFF !important;
+  display: inline-flex !important;
+}
+
+.navbar-user-button:hover .MuiButton-startIcon,
+.navbar-user-button.MuiButton-root:hover .MuiButton-startIcon {
+  color: #64748b !important;
+}
+
