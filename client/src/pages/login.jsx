@@ -17,6 +17,8 @@ export const Login = () => {
       .post('http://localhost:4000/api/users/auth/login', { email, password })
       .then((response) => {
         if (response && response.status === 200) {
+          // Store token in localStorage to indicate user is logged in
+          localStorage.setItem('token', 'authenticated');
           window.location.href = '/home';
           console.log(response);
         } else {
