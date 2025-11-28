@@ -32,11 +32,13 @@ const userSchema = new Schema(
     },
     major: { 
       type: String, 
-      //required: true,
+      required: true,
+      default: 'N/A'
     },
     year: { 
       type: String, 
-      //required: true,
+      required: true,
+      default: 'N/A'
     },
     bio: { 
       type: String, 
