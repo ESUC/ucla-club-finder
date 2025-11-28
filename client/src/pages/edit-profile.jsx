@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
@@ -17,16 +17,10 @@ export const EditProfile = () => {
     year: 'N/A',
     bio: 'i def like engineering 😋',
   });
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(true); // Initialize based on initial formData
 
-  useEffect(() => {
-    // Check if major or year is 'N/A'
-    if (formData.major === 'N/A' || formData.year === 'N/A') {
-      setShowAlert(true);
-    } else {
-      setShowAlert(false);
-    }
-  }, [formData.major, formData.year]);
+  // Derive alert state from formData
+  const shouldShowAlert = formData.major === 'N/A' || formData.year === 'N/A';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +54,7 @@ export const EditProfile = () => {
           <h1 className="edit-profile-title">Edit Profile</h1>
         </div>
 
-        {showAlert && (
+        {shouldShowAlert && showAlert && (
           <div className="edit-profile-alert">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 9v4M12 17h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
