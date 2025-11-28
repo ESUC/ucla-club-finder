@@ -2,18 +2,18 @@ import './BoardComponent.css';
 
 const BoardComponent = () => {
   const executive = [
-    { name: 'Name Placeholder', role: 'President' },
-    { name: 'Name Placeholder', role: 'External Vice President' },
-    { name: 'Name Placeholder', role: 'Internal Vice President' },
+    { name: 'Jerard Agravante', role: 'President', image: 'https://www.esuc.ucla.edu/assets/img/team/Jerard.svg' },
+    { name: 'Justin Xu', role: 'External Vice President', image: 'https://www.esuc.ucla.edu/assets/img/team/Justin.svg' },
+    { name: 'Clara Yee', role: 'Internal Vice President', image: 'https://www.esuc.ucla.edu/assets/img/team/Clara.svg' },
   ];
 
   const officers = [
-    { name: 'Name Placeholder', role: 'Corporate Director' },
-    { name: 'Name Placeholder', role: 'Treasurer' },
-    { name: 'Name Placeholder', role: 'Webmaster' },
-    { name: 'Name Placeholder', role: 'Alumni Relations/Community Chair' },
-    { name: 'Name Placeholder', role: 'Publicity Chair' },
-    { name: 'Name Placeholder', role: 'Secretary' },
+    { name: 'Tyler Lam', role: 'Corporate Director', image: 'https://www.esuc.ucla.edu/assets/img/team/Tyler.svg' },
+    { name: 'Jennie Ren', role: 'Treasurer', image: 'https://www.esuc.ucla.edu/assets/img/team/Jennie.svg' },
+    { name: 'Lian Elsa Linton', role: 'Webmaster', image: 'https://www.esuc.ucla.edu/assets/img/team/Lian.svg' },
+    { name: "Aidan O'Leary", role: 'Alumni Relations & Community Chair', image: 'https://www.esuc.ucla.edu/assets/img/team/Aidan.svg' },
+    { name: 'Ela Defne Erkan', role: 'Publicity Chair', image: 'https://www.esuc.ucla.edu/assets/img/team/Defne.svg' },
+    { name: 'Chris Wang', role: 'Secretary', image: 'https://www.esuc.ucla.edu/assets/img/team/Chris.svg' },
   ];
 
   return (
@@ -27,10 +27,7 @@ const BoardComponent = () => {
           {executive.map((member, index) => (
             <div key={index} className="board-card">
               <div className="board-avatar">
-                <svg width="88" height="88" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                </svg>
+                <img src={member.image} alt={member.name} className="board-avatar-image" />
               </div>
               <p className="board-name">{member.name}</p>
               <p className="board-role">{member.role}</p>
@@ -46,10 +43,7 @@ const BoardComponent = () => {
           {officers.map((member, index) => (
             <div key={index} className="board-card">
               <div className="board-avatar">
-                <svg width="88" height="88" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                </svg>
+                <img src={member.image} alt={member.name} className="board-avatar-image" />
               </div>
               <p className="board-name">{member.name}</p>
               <p className="board-role">{member.role}</p>
