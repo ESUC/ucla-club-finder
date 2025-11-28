@@ -1,4 +1,5 @@
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
 import '../css/About.css';
 
 export const About = () => {
@@ -29,9 +30,7 @@ export const About = () => {
           ))}
         </ul>
       </section>
-      <footer>
-        <p>&copy; 2023 My ESUC @ UCLA</p>
-      </footer>
+      <Footer />
     </div>
   );
 };

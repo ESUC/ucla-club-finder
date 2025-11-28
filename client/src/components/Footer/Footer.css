@@ -1,0 +1,130 @@
+.footer {
+  background: #043873;
+  color: #ffffff;
+  padding: 60px 40px 24px;
+  width: 100%;
+  border-top: 1px solid #1e5aa8;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-heading {
+  font-family: "DM Sans";
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.footer-description {
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #e0e0e0;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 280px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-link {
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-divider {
+  width: 100%;
+  height: 1px;
+  background: #1e5aa8;
+  margin: 32px 0 24px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-language {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer-language:hover {
+  color: #ffffff;
+}
+
+.footer-language svg {
+  color: #e0e0e0;
+}
+
+.footer-copyright {
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 40px 24px 20px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
+
