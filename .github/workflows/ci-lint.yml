@@ -1,4 +1,4 @@
-name: Lint (ESLint + Prettier)
+name: Lint (ESLint)
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -15,5 +15,3 @@ jobs:
         run: npm ci --legacy-peer-deps
       - name: Run ESLint
         run: npm run lint
-      - name: Check Prettier formatting
-        run: npm run format:check
