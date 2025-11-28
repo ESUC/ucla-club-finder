@@ -8,6 +8,7 @@ import { SavedClubs } from './pages/saved-clubs';
 import { ForgotPassword } from './pages/forgotPassword';
 import { VerifyPassword } from './pages/verifyPassword';
 import EditProfile from './pages/edit-profile';
+import ContactUs from './pages/contact-us';
 
 export const App = () => {
   return (
@@ -23,6 +24,7 @@ export const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/saved-clubs" element={<SavedClubs />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
       </Router>
     </div>
