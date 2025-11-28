@@ -1,32 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import ClubCarousel from '../components/ClubCarousel/ClubCarousel';
 import './SavedClubs.css';
 
+// Mock data - TODO: Fetch actual clubs from API
+const getMockJoinedClubs = () =>
+  Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    name: `Joined Club ${i + 1}`,
+    logo: null,
+  }));
+
+const getMockSavedClubs = () =>
+  Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    name: `Club ${i + 1}`,
+    logo: null,
+  }));
+
 export const SavedClubs = () => {
-  const [joinedClubs, setJoinedClubs] = useState([]);
-  const [savedClubs, setSavedClubs] = useState([]);
-
-  useEffect(() => {
-    // TODO: Fetch actual clubs from API
-    // For now, using placeholder data
-    const mockJoinedClubs = Array.from({ length: 20 }, (_, i) => ({
-      id: i + 1,
-      name: `Joined Club ${i + 1}`,
-      logo: null,
-    }));
-
-    const mockSavedClubs = Array.from({ length: 20 }, (_, i) => ({
-      id: i + 1,
-      name: `Club ${i + 1}`,
-      logo: null,
-    }));
-
-    setJoinedClubs(mockJoinedClubs);
-    setSavedClubs(mockSavedClubs);
-  }, []);
+  const [joinedClubs] = useState(getMockJoinedClubs);
+  const [savedClubs] = useState(getMockSavedClubs);
 
   return (
     <div className="saved-clubs-page">
