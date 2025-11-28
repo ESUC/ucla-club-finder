@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Login } from './pages/login';
 import { Register } from './pages/register';
@@ -7,13 +7,14 @@ import { About } from './pages/about';
 import { SavedClubs } from './pages/saved-clubs';
 import { ForgotPassword } from './pages/forgotPassword';
 import { VerifyPassword } from './pages/verifyPassword';
+import EditProfile from './pages/edit-profile';
 
 export const App = () => {
   return (
     <div className="App">
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/" element={<About />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/forgot-password" element={<ForgotPassword />} />
@@ -21,6 +22,7 @@ export const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/saved-clubs" element={<SavedClubs />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Routes>
       </Router>
     </div>

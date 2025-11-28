@@ -1,0 +1,258 @@
+/* Club Carousel Section */
+.club-carousel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.carousel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  height: auto;
+}
+
+.carousel-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: #043873;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.carousel-count {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #6a7282;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.carousel-arrow {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  color: #043873;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-arrow:hover {
+  background: #043873;
+  color: #ffffff;
+  border-color: #043873;
+  box-shadow: 0 4px 12px rgba(4, 56, 115, 0.2);
+}
+
+.carousel-arrow:active:not(.disabled) {
+  transform: scale(0.95);
+}
+
+.carousel-arrow.disabled,
+.carousel-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.carousel-arrow.disabled:hover,
+.carousel-arrow:disabled:hover {
+  background: #ffffff;
+  color: #043873;
+  border-color: #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.carousel-container {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 transparent;
+}
+
+.carousel-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.carousel-container::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  padding: 0;
+  height: 240px;
+  align-items: flex-start;
+}
+
+/* Club Card */
+.club-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 220px;
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.club-card-image {
+  background: #043873;
+  border-radius: 16px;
+  height: 180px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.club-logo-placeholder {
+  width: 100px;
+  height: 100px;
+  background: #ffffff;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.club-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.club-card-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #364153;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+  height: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .carousel-title,
+  .carousel-count {
+    font-size: 24px;
+  }
+
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .club-card {
+    width: 160px;
+    height: 200px;
+  }
+
+  .club-card-image {
+    height: 160px;
+  }
+
+  .club-logo-placeholder,
+  .club-logo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .club-card-name {
+    font-size: 14px;
+  }
+
+  .carousel-track {
+    gap: 20px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel-title,
+  .carousel-count {
+    font-size: 20px;
+  }
+
+  .carousel-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .carousel-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .club-card {
+    width: 140px;
+    height: 180px;
+  }
+
+  .club-card-image {
+    height: 140px;
+  }
+
+  .club-logo-placeholder,
+  .club-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .club-card-name {
+    font-size: 13px;
+  }
+
+  .carousel-track {
+    gap: 16px;
+    height: 200px;
+  }
+}
+
