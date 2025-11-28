@@ -5,6 +5,9 @@
   display: flex;
   flex-direction: column;
   gap: 60px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .board-title {

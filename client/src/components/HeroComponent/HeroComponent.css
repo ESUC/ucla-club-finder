@@ -7,6 +7,9 @@
   min-height: auto;
   display: flex;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 65px;
 }
 
 .hero-graphic {

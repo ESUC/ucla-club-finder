@@ -2,6 +2,9 @@
 .about-description-section {
   padding: 100px 160px;
   background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .about-description-content {
@@ -57,6 +60,12 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1400px) {
+  .about-description-section {
+    padding: 100px 80px;
+  }
+}
+
 @media (max-width: 968px) {
   .about-description-section {
     padding: 80px 40px;
