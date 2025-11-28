@@ -51,6 +51,72 @@
   height: 24px;
 }
 
+.saved-clubs-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #fff4e6;
+  border: 2px solid #ffa726;
+  border-radius: 12px;
+  color: #e65100;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+
+.saved-clubs-alert svg:first-child {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: #e65100;
+}
+
+.saved-clubs-alert-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.saved-clubs-alert-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #e65100;
+}
+
+.saved-clubs-alert-message {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  color: #e65100;
+  line-height: 1.4;
+}
+
+.saved-clubs-alert-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e65100;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.saved-clubs-alert-close:hover {
+  background: rgba(230, 81, 0, 0.1);
+}
+
+.saved-clubs-alert-close svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* Responsive Design */
 @media (max-width: 968px) {
   .saved-clubs-content {

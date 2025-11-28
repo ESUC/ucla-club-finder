@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
@@ -13,10 +13,20 @@ export const EditProfile = () => {
     username: 'costcosnumberonecustomer',
     email: 'costcosnumberonecustomer@ucla.edu',
     pronouns: 'she/her',
-    major: 'food engineering',
-    graduationYear: '99',
+    major: 'N/A',
+    year: 'N/A',
     bio: 'i def like engineering 😋',
   });
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    // Check if major or year is 'N/A'
+    if (formData.major === 'N/A' || formData.year === 'N/A') {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [formData.major, formData.year]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +59,29 @@ export const EditProfile = () => {
           </button>
           <h1 className="edit-profile-title">Edit Profile</h1>
         </div>
+
+        {showAlert && (
+          <div className="edit-profile-alert">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 9v4M12 17h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+            </svg>
+            <div className="edit-profile-alert-content">
+              <p className="edit-profile-alert-title">Profile Update Required</p>
+              <p className="edit-profile-alert-message">
+                Please update your Major and Graduation Year below.
+              </p>
+            </div>
+            <button
+              className="edit-profile-alert-close"
+              onClick={() => setShowAlert(false)}
+              aria-label="Close alert"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        )}
 
         <form className="edit-profile-form" onSubmit={handleSubmit}>
           <div className="edit-profile-field">
@@ -119,11 +152,11 @@ export const EditProfile = () => {
           </div>
 
           <div className="edit-profile-field">
-            <label className="edit-profile-label">Graduation Year</label>
+            <label className="edit-profile-label">Year</label>
             <input
               type="text"
-              name="graduationYear"
-              value={formData.graduationYear}
+              name="year"
+              value={formData.year}
               onChange={handleInputChange}
               className="edit-profile-input"
             />
