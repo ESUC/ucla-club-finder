@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { TextField, Button, Typography, Container, InputAdornment } from "@mui/material";
-import { PersonOutline as PersonOutlineIcon } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { TextField, Button, Typography, Container, InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -39,25 +39,41 @@ const SidePanel = styled.div`
   background: #043873;
 `;
 
-export const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+export const ResetPassword = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleSendCode = async (e) => {
+  const email = localStorage.getItem("resetEmail");
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/auth/forgot-password");
+    }
+  }, [email, navigate]);
+
+  const handleReset = async (e) => {
     e.preventDefault();
     setErrors({});
     setSubmitting(true);
 
     try {
-      await axios.post(`${API_BASE}/auth/forgot-password`, { email });
+      await axios.post(`${API_BASE}/auth/reset-password`, {
+        email,
+        password,
+        confirmPassword,
+      });
 
-      // Store email for next steps so user never retypes it
-      localStorage.setItem("resetEmail", email);
+      // Clear stored email after success
+      //localStorage.removeItem("resetEmail");
 
-      navigate("/auth/verify-code");
+      navigate("/auth/login");
     } catch (err) {
       const apiErrors = err?.response?.data?.errors;
       setErrors(apiErrors || { general: "Something went wrong." });
@@ -73,39 +89,74 @@ export const ForgotPassword = () => {
         <FormContainer>
           <StyledContainer>
             <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
-              Forgot Password
+              Reset Password
             </Typography>
 
             <Typography variant="body2" align="left" style={{ marginBottom: "20px" }}>
-              Enter your email address and we&apos;ll send you a code to reset your password.{" "}
+              Enter a new password.{" "}
               <Link to="/auth/login" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>
                 Back to login
               </Link>
             </Typography>
 
-            <form onSubmit={handleSendCode}>
+            <form onSubmit={handleReset}>
               <TextField
                 fullWidth
                 margin="normal"
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={Boolean(errors.email)}
-                helperText={errors.email || ""}
+                label="New password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={Boolean(errors.password)}
+                helperText={errors.password || ""}
                 InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutlineIcon />
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword((s) => !s)}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
                     </InputAdornment>
                   ),
                 }}
                 sx={{
                   "& .MuiOutlinedInput-root": { borderRadius: 12 },
-                  "& .MuiOutlinedInput-notchedOutline": { borderColor: "#A7CEFC" },
-                  "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#4F9CF9" },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#4F9CF9" },
                 }}
               />
+
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Confirm new password"
+                type={showConfirm ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                error={Boolean(errors.confirmPassword)}
+                helperText={errors.confirmPassword || ""}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowConfirm((s) => !s)}>
+                        {showConfirm ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": { borderRadius: 12 },
+                }}
+              />
+
+              {errors.code && (
+                <Typography sx={{ color: "red", mt: 1 }}>
+                  {errors.code}
+                </Typography>
+              )}
+
+              {errors.email && (
+                <Typography sx={{ color: "red", mt: 1 }}>
+                  {errors.email}
+                </Typography>
+              )}
 
               {errors.general && (
                 <Typography sx={{ color: "red", mt: 1 }}>
@@ -135,7 +186,7 @@ export const ForgotPassword = () => {
                   },
                 }}
               >
-                {submitting ? "Sending..." : "Send Code"}
+                {submitting ? "Updating..." : "Update Password"}
               </Button>
             </form>
           </StyledContainer>

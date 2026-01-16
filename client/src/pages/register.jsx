@@ -1,3 +1,5 @@
+
+
 import { useState } from 'react';
 import {
   TextField,
@@ -56,9 +58,11 @@ export const Register = () => {
   const [major, setMajor] = useState('');
   const [year, setYear] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState('');
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log("submit");
     axios
       .post('http://localhost:4000/api/users/auth/register', {
         firstName,
@@ -70,14 +74,13 @@ export const Register = () => {
         year,
       })
       .then((response) => {
-        if (response && response.status === 200) {
-          window.location.href = '/auth/login';
-          console.log(response);
-        } else {
-          console.log('Registration unsuccessful');
-        }
+        window.location.href = '/auth/login';
+        setError(''); // clear error
+
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrors(err?.response?.data?.errors || { general: 'Registration failed' });
+      });
   };
 
   return (
@@ -136,6 +139,8 @@ export const Register = () => {
                 label="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                error={!!errors.username}
+                helperText={errors.username || ''}
                 sx={{
                   '& .MuiOutlinedInput-root': { borderRadius: 12 },
                   '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
@@ -143,12 +148,15 @@ export const Register = () => {
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                 }}
               />
+
               <TextField
                 fullWidth
                 margin="normal"
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email || ''}
                 sx={{
                   '& .MuiOutlinedInput-root': { borderRadius: 12 },
                   '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
@@ -156,6 +164,7 @@ export const Register = () => {
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
                 }}
               />
+
               <TextField
                 fullWidth
                 margin="normal"
@@ -163,6 +172,8 @@ export const Register = () => {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={!!errors.password}
+                helperText={errors.password || ''}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -198,6 +209,8 @@ export const Register = () => {
                 label="Graduation Year"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
+                error = {!!errors.year}
+                helperText = {errors.year || ''}
                 sx={{
                   '& .MuiOutlinedInput-root': { borderRadius: 12 },
                   '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },

@@ -1,3 +1,5 @@
+
+
 import { useState } from 'react';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import styled from 'styled-components';
@@ -16,6 +18,7 @@ const OuterContainer = styled.div`
 `;
 
 export const Register = () => {
+  console.log("REGISTER PAGE 2 RENDER");
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();

@@ -50,20 +50,19 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
     axios
       .post('http://localhost:4000/api/users/auth/login', { email, password })
       .then((response) => {
-        if (response && response.status === 200) {
           window.location.href = '/home';
-          console.log(response);
-        } else {
-          console.log('Login unsuccessful');
-        }
+          setError(''); // clear error
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrors(err?.response?.data?.errors || { general: 'Registration failed' });
+      });
   };
 
   return (
@@ -96,6 +95,8 @@ export const Login = () => {
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email || ''}
                 sx={{
                   '& .MuiOutlinedInput-root': { borderRadius: 12 },
                   '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
@@ -110,6 +111,8 @@ export const Login = () => {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={!!errors.password}
+                helperText={errors.password || ''}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

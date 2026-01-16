@@ -7,6 +7,7 @@ const cors = require('cors');
 const app = express();
 const clubRoutes = require('./routes/clubs');
 const userRoutes = require('./routes/users');
+const userAuthRoutes = require('./routes/userAuth');
 const mongoose = require('mongoose');
 
 //middleware
@@ -21,10 +22,11 @@ app.use((req, res, next) => {
 // routes for the backend
 app.use('/api/clubs/', clubRoutes);
 app.use('/api/users/', userRoutes);
+app.use('/api/userAuth/', userAuthRoutes);
 
 // connect to db
 mongoose
-  .connect(process.env.MONG_URI)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log('connected to db and listening on port', process.env.PORT);

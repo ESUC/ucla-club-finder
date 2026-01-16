@@ -14,52 +14,114 @@ const router = express.Router();
 // })
 // POST a new club
 
-const validPassword = (password) => {
-  //checks that password conditions met
-  const valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
-  return valid.test(password);
-};
+const { validatePassword } = require("../services/validatePassword");
+
+const validateYear = (year) => {
+  if(!/^(2026|2027|2028|2029)$/.test(year)){
+    return 1;
+  }
+  return 0;
+}
+
 
 router.post('/auth/register', async (req, res) => {
-  const { firstName, lastName, username, email, password, year, major} = req.body;
+  console.log("REGISTER BODY:", req.body);
+  const { firstName, lastName, username, email, password, year, major } = req.body;
+  const errors = {};
 
-  if (!email || !email.endsWith('@ucla.edu') || !email.endsWith('@g.ucla.edu')) {
-    return res.status(400).json({ error: 'You must register with a valid UCLA email.' });
+  if (!email || (!email.endsWith('@ucla.edu') && !email.endsWith('@g.ucla.edu'))) {
+    errors.email = 'You must register with a UCLA email.';
+  }
+  if(!year || validateYear(year)){
+    errors.year = "Please enter a valid graduation year";
+  }
+  if(!firstName){
+    errors.firstName = "Please enter first name"
+  }
+  if(!lastName){
+    errors.lastName = "Please enter last name"
+  }
+  if(!major){
+    errors.major = "Please enter major"
+  }
+  const passwordErrors = validatePassword(password);
+  if (passwordErrors.length > 0) {
+    return res.status(400).json({
+      errors: {
+        password: passwordErrors.join(" ")
+      }
+    });
   }
 
-  if (!validPassword(password)) {
-    return res.status(400).json({ error: 'Invalid Passcode' });
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ errors });
   }
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt); //hashes the password
-  console.log(hash);
+
 
   try {
-    const user = await User.create({ firstName, lastName, username, email, password: hash, year, major});
+    const user = await User.create({ firstName, lastName, username, email, password: hash, year, major });
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    if (error.code === 11000) {
+      const dupField = Object.keys(error.keyValue)[0]; //email or username is in database
+      return res.status(400).json({ errors: { [dupField]: `${dupField} already exists` } });
+    }
+    res.status(400).json({ error: "Incorrect password" });
   }
   //year validation
   //major should be a drop down
   //update the reasong for password fail/ specs for correct pasword
   //res.json({mssg: 'registered a user'})
 });
+router.post("/auth/login", async (req, res) => {
+  console.log("LOGIN HIT ✅");
+  console.log("LOGIN BODY:", req.body);
 
-router.post('/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email: email });
-  if (user) {
-    console.log(user);
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (passwordMatch) {
-      res.status(200).json('Correct!');
-    } else {
-      res.status(400).json({ error: error.message });
+  try {
+    const { email, password } = req.body;
+    const errors = {};
+
+    // 1) Basic checks
+    if (!email || String(email).trim() === "") {
+      errors.email = "Please enter your email.";
     }
-  } else {
-    res.json('No record existed');
+    if (!password || String(password).trim() === "") {
+      errors.password = "Please enter your password.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      console.log("LOGIN STOP 🚫 missing fields", errors);
+      return res.status(400).json({ errors });
+    }
+
+    // 2) Normalize email (prevents case/space issues)
+    const normalizedEmail = String(email).trim().toLowerCase();
+    console.log("LOGIN STEP ✅ normalizedEmail:", normalizedEmail);
+
+    // 3) Find user
+    const user = await User.findOne({ email: normalizedEmail });
+    if (!user) {
+      console.log("LOGIN STOP 🚫 no user found");
+      return res.status(404).json({ errors: { email: "No account found with that email." } });
+    }
+    console.log("LOGIN STEP ✅ user found:", user._id.toString());
+
+    // 4) Check password
+    const passwordMatch = await bcrypt.compare(String(password), user.password);
+    if (!passwordMatch) {
+      console.log("LOGIN STOP 🚫 wrong password");
+      return res.status(400).json({ errors: { password: "Incorrect password." } });
+    }
+
+    console.log("LOGIN SUCCESS ✅");
+    return res.status(200).json({ message: "Login successful." });
+
+  } catch (err) {
+    console.error("LOGIN ERROR 💥", err);
+    return res.status(500).json({ errors: { general: "Server error." } });
   }
 });
 
