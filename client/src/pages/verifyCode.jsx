@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { TextField, Button, Typography, Container, InputAdornment } from "@mui/material";
-import { PersonOutline as PersonOutlineIcon } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { TextField, Button, Typography, Container } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -39,25 +38,30 @@ const SidePanel = styled.div`
   background: #043873;
 `;
 
-export const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+export const VerifyCode = () => {
+  const [code, setCode] = useState("");
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSendCode = async (e) => {
+  const email = localStorage.getItem("resetEmail");
+
+  useEffect(() => {
+    // If user came here directly or refreshed and email is missing
+    if (!email) {
+      navigate("/auth/forgot-password");
+    }
+  }, [email, navigate]);
+
+  const handleVerify = async (e) => {
     e.preventDefault();
     setErrors({});
     setSubmitting(true);
 
     try {
-      await axios.post(`${API_BASE}/auth/forgot-password`, { email });
-
-      // Store email for next steps so user never retypes it
-      localStorage.setItem("resetEmail", email);
-
-      navigate("/auth/verify-code");
+      await axios.post(`${API_BASE}/auth/verify-code`, { email, code });
+      navigate("/auth/reset-password");
     } catch (err) {
       const apiErrors = err?.response?.data?.errors;
       setErrors(apiErrors || { general: "Something went wrong." });
@@ -73,39 +77,35 @@ export const ForgotPassword = () => {
         <FormContainer>
           <StyledContainer>
             <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
-              Forgot Password
+              Verify Code
             </Typography>
 
             <Typography variant="body2" align="left" style={{ marginBottom: "20px" }}>
-              Enter your email address and we&apos;ll send you a code to reset your password.{" "}
-              <Link to="/auth/login" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>
-                Back to login
+              Enter the code we sent to your email.{" "}
+              <Link to="/auth/forgot-password" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>
+                Resend?
               </Link>
             </Typography>
 
-            <form onSubmit={handleSendCode}>
+            <form onSubmit={handleVerify}>
               <TextField
                 fullWidth
                 margin="normal"
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={Boolean(errors.email)}
-                helperText={errors.email || ""}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutlineIcon />
-                    </InputAdornment>
-                  ),
-                }}
+                label="6-digit code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                error={Boolean(errors.code)}
+                helperText={errors.code || ""}
                 sx={{
                   "& .MuiOutlinedInput-root": { borderRadius: 12 },
-                  "& .MuiOutlinedInput-notchedOutline": { borderColor: "#A7CEFC" },
-                  "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#4F9CF9" },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#4F9CF9" },
                 }}
               />
+
+              {errors.email && (
+                <Typography sx={{ color: "red", mt: 1 }}>
+                  {errors.email}
+                </Typography>
+              )}
 
               {errors.general && (
                 <Typography sx={{ color: "red", mt: 1 }}>
@@ -135,8 +135,14 @@ export const ForgotPassword = () => {
                   },
                 }}
               >
-                {submitting ? "Sending..." : "Send Code"}
+                {submitting ? "Verifying..." : "Verify"}
               </Button>
+
+              <Typography align="center" sx={{ mt: 1 }}>
+                <Link to="/auth/login" style={{ color: "#4F9CF9", textDecoration: "none" }}>
+                  Back to login
+                </Link>
+              </Typography>
             </form>
           </StyledContainer>
         </FormContainer>

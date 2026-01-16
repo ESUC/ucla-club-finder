@@ -42,6 +42,22 @@ const userSchema = new Schema(
       type: String, 
       default: '', 
     },
+    passwordResetCodeHash: {
+      type: String,
+      default: null
+    },
+    passwordResetExpiresAt: {
+      type: Date,
+      default: null
+    },
+    passwordResetVerified: { 
+      type: Boolean, 
+      default: false 
+    },
+    passwordResetLastSentAt: { 
+      type: Date, 
+      default: null 
+    },
     savedClubs: [
       {
         type: mongoose.Schema.ObjectId,
