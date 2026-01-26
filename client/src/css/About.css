@@ -1,33 +1,6 @@
-/* Set up flex container for the about section */
-.about-container {
-  display: flex;
-  flex-direction: column; /* Arrange children vertically */
-}
-
-/* Set header to take up remaining space */
-header {
-  flex: 1;
-}
-
-/* Set up header container with space between items */
-.header-container {
-  display: flex;
-  justify-content: space-between; /* Space out items, pushing NavigationBar to the right */
-  align-items: center; /* Align items vertically */
-}
-
-/* Target the NavigationBar component */
-NavigationBar {
-  /* Styles for NavigationBar */
-}
-
-/* Styles for links within NavigationBar */
-NavigationBar a {
-  color: black !important; /* Set the link color to black */
-  text-decoration: none !important; /* Remove the underline */
-}
-
-/* Specify color for visited links within NavigationBar */
-NavigationBar a:visited {
-  color: black !important; /* Set the color of visited links to black */
+.about-page {
+  min-height: 100vh;
+  background: #ffffff;
+  width: 100%;
+  overflow-x: hidden;
 }

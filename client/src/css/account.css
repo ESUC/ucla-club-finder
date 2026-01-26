@@ -1,0 +1,333 @@
+/* Account Pages Common Styles (Login, Register, Verify Password) */
+
+/* Page Container */
+.account-page-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: #f5f8ff;
+}
+
+/* Form Container */
+.account-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+}
+
+.account-form-container-white {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 40px 16px;
+}
+
+/* Styled Container */
+.account-styled-container {
+  width: 100%;
+  max-width: 560px;
+  padding: 32px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
+  border: 1px solid #e6eef9;
+}
+
+/* Side Panel */
+.account-side-panel {
+  flex: 1;
+  background: #043873;
+}
+
+/* Outer Container (for Verify Password) */
+.account-outer-container {
+  background: white;
+  background: linear-gradient(to right bottom, #ffc400, #00d2ff);
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* Input Styles */
+.account-input-wrapper {
+  margin: 8px 0;
+  width: 100%;
+}
+
+.account-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #101828;
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.account-input {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+  background: #F3F3F5;
+  color: #717182;
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.account-input:hover {
+  border-color: #d0d0d0;
+  background-color: #f5f5f5;
+}
+
+.account-input:focus {
+  outline: none;
+  border-color: #d0d0d0;
+  background-color: #ffffff;
+}
+
+.account-input::placeholder {
+  color: #999;
+}
+
+/* Input with Icon */
+.account-input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.account-input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #717182;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.account-input-with-icon-padding {
+  padding-left: 2.5rem !important;
+}
+
+/* Password Input Wrapper */
+.account-password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.account-password-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.account-password-input {
+  padding-right: 2.5rem;
+}
+
+.account-password-toggle:hover {
+  color: #4F9CF9;
+}
+
+.account-password-toggle:focus {
+  outline: none;
+}
+
+/* Checkbox Styles */
+.account-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.account-checkbox {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #F3F3F5;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  accent-color: #043873;
+}
+
+/* Button Styles */
+.account-button {
+  display: flex;
+  width: 100%;
+  height: 44px;
+  padding: 0.5rem 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: #043873;
+  border: none;
+  color: #FFF;
+  text-align: center;
+  font-family: "DM Sans";
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 12px 0;
+}
+
+.account-button:hover {
+  background: #062E63;
+  /* box-shadow: 0 12px 24px rgba(79, 156, 249, 0.45); */
+}
+
+.account-button:active {
+  transform: translateY(1px);
+}
+
+/* Typography Styles */
+.account-title {
+  color: #101828;
+  font-family: "DM Sans";
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.account-subtitle {
+  display: block;
+  color: #4A5565;
+  font-family: "DM Sans";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.account-link {
+  color: #2B7FFF;
+  font-family: "DM Sans";
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 500;
+  line-height: inherit;
+  text-decoration-color: #A7CEFC;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-left: 4px;
+}
+
+.account-link:hover {
+  text-decoration: underline;
+}
+
+/* Form Helper Text */
+.account-helper-text {
+  color: #364153;
+  font-family: "DM Sans";
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+}
+
+/* Legal Text */
+.account-legal-text {
+  color: #4A5565;
+  font-family: "DM Sans";
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  margin: 12px 0;
+  text-align: left;
+}
+
+/* Login Page Wrapper */
+.login-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.login-content-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px 40px 20px;
+  background: #ffffff;
+  margin-top: 65px;
+}
+
+/* Login Container */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.login-remember-container {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.account-forgot {
+  color: #2B7FFF;
+  font-family: "DM Sans";
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+  text-decoration-color: #A7CEFC;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-top: 4px;
+  text-align: center;
+  display: block;
+  align-self: center;
+}
+
+.account-forgot:hover {
+  text-decoration: underline;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
