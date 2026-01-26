@@ -1,0 +1,332 @@
+/* NavigationBar Styles */
+
+/* Remove all ::before and ::after pseudo-elements */
+.navbar-appbar::before,
+.navbar-appbar.MuiAppBar-root::before,
+.navbar-appbar::after,
+.navbar-appbar.MuiAppBar-root::after,
+.navbar-toolbar::before,
+.navbar-toolbar.MuiToolbar-root::before,
+.navbar-toolbar::after,
+.navbar-toolbar.MuiToolbar-root::after,
+.navbar-logo::before,
+.navbar-logo-image::before,
+.navbar-logo-text::before,
+.navbar-buttons::before,
+.navbar-buttons.MuiBox-root::before,
+.navbar-button::before,
+.navbar-button.MuiButton-root::before,
+.navbar-button::after,
+.navbar-button.MuiButton-root::after,
+.navbar-login-button::before,
+.navbar-login-button.MuiButton-root::before,
+.navbar-login-button::after,
+.navbar-login-button.MuiButton-root::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Disable Material-UI ripple effect */
+.navbar-button .MuiTouchRipple-root,
+.navbar-login-button .MuiTouchRipple-root {
+  display: none !important;
+}
+
+/* Reset Material-UI AppBar defaults */
+.navbar-appbar,
+.navbar-appbar.MuiAppBar-root {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #043873 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  min-height: auto !important;
+  position: fixed !important;
+}
+
+/* Reset Material-UI Toolbar defaults */
+.navbar-toolbar,
+.navbar-toolbar.MuiToolbar-root {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  max-width: 1900px;
+  width: 100%;
+  height: 65px !important;
+  min-height: 65px !important;
+  padding: 16px 45px 16px 100px !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.navbar-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px;
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  font-family: 'Inter', 'Roboto', Arial, sans-serif !important;
+  letter-spacing: -0.5px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  line-height: normal !important;
+}
+
+.navbar-logo-image {
+  width: 42px !important;
+  height: auto !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 65/57 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  display: block !important;
+}
+
+.navbar-logo-text {
+  color: #FFF !important;
+  font-family: Inter !important;
+  font-size: 20px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: normal !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.navbar-buttons,
+.navbar-buttons.MuiBox-root {
+  display: flex !important;
+  gap: 4px !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* Reset Material-UI Button defaults */
+.navbar-button,
+.navbar-button.MuiButton-root,
+.navbar-button.MuiButtonBase-root {
+  color: #FFF !important;
+  font-weight: 500 !important;
+  font-family: 'DM Sans', 'Inter', 'Roboto', Arial, sans-serif !important;
+  text-transform: none !important;
+  font-size: 0.83rem !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  line-height: 1.5 !important;
+  letter-spacing: normal !important;
+  cursor: pointer !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  vertical-align: middle !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  outline: none !important;
+  will-change: auto !important;
+  overflow: visible !important;
+}
+
+.navbar-button:hover,
+.navbar-button.MuiButton-root:hover,
+.navbar-button.MuiButtonBase-root:hover,
+.navbar-button:focus,
+.navbar-button.MuiButton-root:focus,
+.navbar-button.MuiButtonBase-root:focus,
+.navbar-button:active,
+.navbar-button.MuiButton-root:active,
+.navbar-button.MuiButtonBase-root:active {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  padding: 10px 16px !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  line-height: 1.5 !important;
+  outline: none !important;
+}
+
+.navbar-button .MuiButton-startIcon,
+.navbar-button.MuiButton-root .MuiButton-startIcon {
+  margin-right: 6px !important;
+  margin-left: 0 !important;
+  color: #FFF !important;
+  display: inline-flex !important;
+}
+
+.navbar-button:hover .MuiButton-startIcon,
+.navbar-button.MuiButton-root:hover .MuiButton-startIcon {
+  color: #64748b !important;
+}
+
+/* Reset Material-UI Button defaults for login button */
+.navbar-login-button,
+.navbar-login-button.MuiButton-root,
+.navbar-login-button.MuiButtonBase-root {
+  color: #043873 !important;
+  background: #FFE492 !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  font-family: 'DM Sans', 'Inter', 'Roboto', Arial, sans-serif !important;
+  font-size: 0.83rem !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  line-height: 1.5 !important;
+  letter-spacing: normal !important;
+  cursor: pointer !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  vertical-align: middle !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  outline: none !important;
+  will-change: auto !important;
+  overflow: visible !important;
+}
+
+.navbar-login-button.MuiButton-root:hover,
+.navbar-login-button.MuiButtonBase-root:hover,
+.navbar-login-button.MuiButton-root:focus,
+.navbar-login-button.MuiButtonBase-root:focus,
+.navbar-login-button.MuiButton-root:active,
+.navbar-login-button.MuiButtonBase-root:active {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  padding: 10px 16px !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  line-height: 1.5 !important;
+  outline: none !important;
+}
+
+/* User icon button styles */
+.navbar-user-button,
+.navbar-user-button.MuiButton-root,
+.navbar-user-button.MuiButtonBase-root {
+  color: #FFF !important;
+  background: transparent !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  font-family: 'DM Sans', 'Inter', 'Roboto', Arial, sans-serif !important;
+  font-size: 0.83rem !important;
+  padding: 10px !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: auto !important;
+  width: 40px !important;
+  height: 40px !important;
+  transform: none !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  line-height: 1.5 !important;
+  letter-spacing: normal !important;
+  cursor: pointer !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  vertical-align: middle !important;
+  min-height: auto !important;
+  max-height: none !important;
+  outline: none !important;
+  will-change: auto !important;
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.navbar-user-button.MuiButton-root:hover,
+.navbar-user-button.MuiButtonBase-root:hover,
+.navbar-user-button.MuiButton-root:focus,
+.navbar-user-button.MuiButtonBase-root:focus,
+.navbar-user-button.MuiButton-root:active,
+.navbar-user-button.MuiButtonBase-root:active {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  padding: 10px !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+  height: 40px !important;
+  width: 40px !important;
+  min-height: auto !important;
+  max-height: none !important;
+  line-height: 1.5 !important;
+  outline: none !important;
+}
+
+.navbar-user-button .MuiButton-startIcon,
+.navbar-user-button.MuiButton-root .MuiButton-startIcon {
+  margin: 0 !important;
+  color: #FFF !important;
+  display: inline-flex !important;
+}
+
+.navbar-user-button:hover .MuiButton-startIcon,
+.navbar-user-button.MuiButton-root:hover .MuiButton-startIcon {
+  color: #64748b !important;
+}
+

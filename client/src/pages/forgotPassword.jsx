@@ -67,7 +67,7 @@ export const ForgotPassword = () => {
   };
 
   return (
-    <>
+    <div className="login-page-wrapper">
       <NavigationBar />
       <PageContainer>
         <FormContainer>

@@ -15,7 +15,7 @@ const userSchema = new Schema(
     username: { 
       type: String, 
       unique: true, 
-      required: true,
+      //required: true,
     },
     email: {
       type: String,
@@ -33,10 +33,12 @@ const userSchema = new Schema(
     major: { 
       type: String, 
       required: true,
+      default: 'N/A'
     },
     year: { 
       type: String, 
       required: true,
+      default: 'N/A'
     },
     bio: { 
       type: String, 
