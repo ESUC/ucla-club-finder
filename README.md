@@ -61,6 +61,27 @@ Notes
 - Secrets live in `server/.env` (ignored by git). Never commit real credentials.
 - If a secret was ever pushed, rotate it and scrub repo history.
 
+## Email Verification Sender Setup (Club Email)
+
+Verification emails are sent using SMTP creds (do not commit secrets).
+
+### Required env vars
+EMAIL_USER=
+EMAIL_PASS=
+
+### Gmail example
+Step 1 — Log into the Gmail
+Step 2 — Turn on 2-Step Verification (required)
+Step 3 — Manage Google Account
+Step 4 — Search "App Password"
+Step 5 - Name "UCLA Club Finder App"
+Step 6 - Type Password in EMAIL_PASS
+Step 7 - Type Email in EMAIL_USER
+
+### After setting env vars
+Restart/redeploy the backend so the new variables take effect.
+
+
 ### 4) Project scripts
 
 Server
