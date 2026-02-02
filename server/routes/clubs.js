@@ -55,9 +55,9 @@ router.post('/', async (req, res) => {
   if (req.app.locals.useClubsFallback) {
     return res.status(503).json({ error: 'Database unavailable. Clubs are read from clubs.json.' });
   }
-  const { abbreviation, clubName, clubType, major, meetingDays, size, description, img } = req.body;
+  const { abbreviation, clubName, clubType, major, meetingDays, size, description, img, url } = req.body;
   try {
-    const club = await Club.create({ abbreviation, clubName, clubType, major, meetingDays, size, description, img });
+    const club = await Club.create({ abbreviation, clubName, clubType, major, meetingDays, size, description, img, url });
     res.status(200).json({ message: "Club successfully created"});
   } catch (error) {
     res.status(400).json({ error: error.message });

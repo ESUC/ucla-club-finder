@@ -195,8 +195,9 @@ const ClubCard = ({
   description,
   clubType,
   major,
-  meetingDays,
-  size,
+  url,
+  //meetingDays,
+  //size,
 }) => {
   // Star state: derived from savedClubIds; optional callback to refetch after toggle
   const isFavorited = savedClubIds.some((id) => String(id) === String(clubId));
@@ -293,14 +294,9 @@ const ClubCard = ({
                   Major: <span style={{ color: '#334155', fontWeight: 500 }}>{major}</span>
                 </div>
               )}
-              {meetingDays && (
+              {url && (
                 <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Meeting Days: <span style={{ color: '#334155', fontWeight: 500 }}>{meetingDays}</span>
-                </div>
-              )}
-              {size && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '12px' }}>
-                  Size: <span style={{ color: '#334155', fontWeight: 500 }}>{size} members</span>
+                  Club Website: <span style={{ color: '#334155', fontWeight: 500 }}><a href={url}>{url}</a></span>
                 </div>
               )}
               <div style={{ color: '#64748b', fontSize: '0.9rem' }}>
