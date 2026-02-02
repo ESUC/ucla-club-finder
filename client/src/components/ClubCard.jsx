@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
@@ -190,6 +189,8 @@ const ClubCard = ({
   title,
   userId,
   clubId,
+  savedClubIds = [],
+  onSaveSuccess,
   fullName,
   description,
   clubType,
@@ -197,18 +198,23 @@ const ClubCard = ({
   meetingDays,
   size,
 }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
+  // Star state: derived from savedClubIds; optional callback to refetch after toggle
+  const isFavorited = savedClubIds.some((id) => String(id) === String(clubId));
 
   const handleToggleFavorite = () => {
+    if (!userId) {
+      console.log('User ID not available - please log in to save clubs');
+      return;
+    }
     if (isFavorited) {
       axios
         .delete(`http://localhost:4000/api/users/save/${clubId}`, { data: { userId } })
-        .then(() => setIsFavorited(false))
+        .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     } else {
       axios
         .post(`http://localhost:4000/api/users/save/${clubId}`, { userId })
-        .then(() => setIsFavorited(true))
+        .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     }
   };

@@ -10,22 +10,24 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleLogin = (e) => {
     e.preventDefault();
     axios
       .post('http://localhost:4000/api/users/auth/login', { email, password })
-      .then((response) => {
-        if (response && response.status === 200) {
-          // Store token in localStorage to indicate user is logged in
-          localStorage.setItem('token', 'authenticated');
-          window.location.href = '/home';
-          console.log(response);
-        } else {
-          console.log('Login unsuccessful');
+      .then((res) => {
+        const data = res?.data;
+        if (data?.userId) {
+          localStorage.setItem('token', data.userId);
+          if (data?.email) localStorage.setItem('userEmail', data.email);
         }
+        window.location.href = '/home';
+        setErrors({});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrors(err?.response?.data?.errors || { general: 'Login failed. Check email and password.' });
+      });
   };
 
   return (
@@ -45,6 +47,9 @@ export const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
               />
+              {errors?.email && (
+                <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.email}</p>
+              )}
             </div>
             <div className="account-input-wrapper">
               <div className="account-password-wrapper">
@@ -75,13 +80,13 @@ export const Login = () => {
                   )}
                 </button>
               </div>
+              {errors?.password && (
+                <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.password}</p>
+              )}
             </div>
-            <div className="login-remember-container">
-              <label className="account-checkbox-label">
-                <input type="checkbox" className="account-checkbox" />
-                <span className="account-helper-text">Remember me</span>
-              </label>
-            </div>
+            {errors?.general && (
+              <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.general}</p>
+            )}
             <button type="submit" className="account-button">Login</button>
             <Link to="/auth/forgot-password" className="account-forgot">Forgot password?</Link>
           </form>
