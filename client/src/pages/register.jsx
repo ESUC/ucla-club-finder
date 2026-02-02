@@ -1,3 +1,5 @@
+
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -14,10 +16,12 @@ export const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log("submit");
     axios
       .post('http://localhost:4000/api/users/auth/register', {
         firstName,
@@ -26,21 +30,12 @@ export const Register = () => {
         email,
         password,
       })
-      .then((response) => {
-        if (response && response.status === 200) {
-          window.location.href = '/auth/login';
-          console.log(response);
-        } else {
-          console.log('Registration unsuccessful');
-        }
+      .then((_response) => {
+        window.location.href = '/auth/login';
+        setErrors({});
       })
       .catch((err) => {
-        console.error('Registration error:', err);
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          alert('Registration failed. Please check your input and try again.');
-        }
+        setErrors(err?.response?.data?.errors || { general: 'Registration failed. Check your input.' });
       });
   };
 
@@ -93,6 +88,9 @@ export const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
               />
+              {errors?.email && (
+                <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.email}</p>
+              )}
             </div>
             <div className="account-input-wrapper">
               <div className="account-password-wrapper">
@@ -165,6 +163,17 @@ export const Register = () => {
               <Link to="/" className="account-link">Terms of Use</Link> and 
               <Link to="/" className="account-link">Privacy Policy</Link>
             </p>
+            {errors?.general && (
+              <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.general}</p>
+            )}
+            {(errors?.firstName || errors?.lastName || errors?.username) && (
+              <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>
+                {errors.firstName || errors.lastName || errors.username}
+              </p>
+            )}
+            {errors?.password && (
+              <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.password}</p>
+            )}
             <button type="submit" className="account-button">Create an account</button>
           </form>
         </div>
