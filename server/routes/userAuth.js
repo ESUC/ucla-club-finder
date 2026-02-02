@@ -1,12 +1,21 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
+const mongoose = require("mongoose")
 const User = require("../models/userModel")
 
 const { sendResetCodeEmail } = require("../services/mailer");
 const { validatePassword } = require("../services/validatePassword");
 
 const router = express.Router()
+
+function requireDb(res) {
+  if (mongoose.connection.readyState !== 1) {
+    res.status(503).json({ errors: { general: "Database unavailable. Check MongoDB connection and Atlas IP whitelist (Network Access)." } });
+    return false;
+  }
+  return true;
+}
 
 function generate6DigitCode() {
     return String(crypto.randomInt(100000, 1000000)); // always 6 digits
@@ -18,6 +27,7 @@ function isValidEmail(email) {
 }
 
 router.post("/auth/forgot-password", async (req, res) => {
+    if (!requireDb(res)) return;
     console.log("FORGOT-PASSWORD HIT ✅", req.body);
     try {
         const { email } = req.body;
@@ -88,6 +98,7 @@ router.post("/auth/forgot-password", async (req, res) => {
 });
 
 router.post("/auth/verify-code", async (req, res) => {
+    if (!requireDb(res)) return;
     try {
         const { email, code } = req.body;
 
@@ -149,6 +160,7 @@ router.post("/auth/verify-code", async (req, res) => {
 
 
 router.post("/auth/reset-password", async (req, res) => {
+    if (!requireDb(res)) return;
     try {
         const { email, password, confirmPassword } = req.body;
 
