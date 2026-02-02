@@ -14,6 +14,7 @@ export const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setErrors({});
     axios
       .post('http://localhost:4000/api/users/auth/login', { email, password })
       .then((res) => {
@@ -23,10 +24,13 @@ export const Login = () => {
           if (data?.email) localStorage.setItem('userEmail', data.email);
         }
         window.location.href = '/home';
-        setErrors({});
       })
       .catch((err) => {
-        setErrors(err?.response?.data?.errors || { general: 'Login failed. Check email and password.' });
+        const data = err?.response?.data;
+        const apiErrors = data?.errors;
+        const isObj = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors);
+        const general = data?.error || (isObj ? apiErrors.general : null);
+        setErrors(isObj ? { ...apiErrors, ...(general ? { general } : {}) } : { general: general || err?.message || 'Login failed. Check email and password. Is the server running on port 4000?' });
       });
   };
 

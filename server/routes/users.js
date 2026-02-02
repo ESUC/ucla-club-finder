@@ -22,6 +22,19 @@ function isValidObjectId(id) {
 
 const { validatePassword } = require("../services/validatePassword");
 
+// Return 503 if MongoDB is not connected (avoids 10s buffer timeout)
+function requireDb(res) {
+  if (mongoose.connection.readyState !== 1) {
+    res.status(503).json({
+      errors: {
+        general: "Database unavailable. Check MongoDB connection and Atlas IP whitelist (Network Access).",
+      },
+    });
+    return false;
+  }
+  return true;
+}
+
 const validateYear = (year) => {
   if(!/^(2026|2027|2028|2029)$/.test(year)){
     return 1;
@@ -31,6 +44,7 @@ const validateYear = (year) => {
 
 
 router.post('/auth/register', async (req, res) => {
+  if (!requireDb(res)) return;
   console.log("REGISTER BODY:", req.body);
   const { firstName, lastName, username, email, password, year, major } = req.body;
   const errors = {};
@@ -74,7 +88,8 @@ router.post('/auth/register', async (req, res) => {
       const dupField = Object.keys(error.keyValue)[0]; //email or username is in database
       return res.status(400).json({ errors: { [dupField]: `${dupField} already exists` } });
     }
-    res.status(400).json({ error: "Incorrect password" });
+    console.error('REGISTER ERROR', error);
+    return res.status(500).json({ errors: { general: error.message || 'Registration failed. Please try again.' } });
   }
   //year validation
   //major should be a drop down
@@ -82,6 +97,7 @@ router.post('/auth/register', async (req, res) => {
   //res.json({mssg: 'registered a user'})
 });
 router.post("/auth/login", async (req, res) => {
+  if (!requireDb(res)) return;
   console.log("LOGIN HIT ✅");
   console.log("LOGIN BODY:", req.body);
 
@@ -138,6 +154,7 @@ router.post("/auth/login", async (req, res) => {
 });
 
 router.get('/saved/:userId', async (req, res) => {
+  if (!requireDb(res)) return;
   const { userId } = req.params;
   try {
     const user = await User.findById(userId).populate('savedClubs');
@@ -151,6 +168,7 @@ router.get('/saved/:userId', async (req, res) => {
 });
 
 router.post('/save/:clubId', async (req, res) => {
+  if (!requireDb(res)) return;
   const { clubId } = req.params;
   const { userId } = req.body;
   if (!isValidObjectId(clubId)) {
@@ -173,6 +191,7 @@ router.post('/save/:clubId', async (req, res) => {
 });
 
 router.delete('/save/:clubId', async (req, res) => {
+  if (!requireDb(res)) return;
   const { clubId } = req.params;
   const { userId } = req.body;
   if (!isValidObjectId(clubId)) {

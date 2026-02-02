@@ -68,7 +68,7 @@ export const SavedClubs = () => {
           </svg>
           <span>Edit Profile</span>
         </Link>
-        <ClubCarousel title="The Clubs I Am In" clubs={joinedClubs} />
+        {/* <ClubCarousel title="The Clubs I Am In" clubs={joinedClubs} /> */}
         <ClubCarousel title="Saved Clubs" clubs={savedClubs} />
       </div>
       <Footer />

@@ -21,7 +21,7 @@ export const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log("submit");
+    setErrors({});
     axios
       .post('http://localhost:4000/api/users/auth/register', {
         firstName,
@@ -32,10 +32,13 @@ export const Register = () => {
       })
       .then((_response) => {
         window.location.href = '/auth/login';
-        setErrors({});
       })
       .catch((err) => {
-        setErrors(err?.response?.data?.errors || { general: 'Registration failed. Check your input.' });
+        const data = err?.response?.data;
+        const apiErrors = data?.errors;
+        const isObj = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors);
+        const general = data?.error || (isObj ? apiErrors.general : null);
+        setErrors(isObj ? { ...apiErrors, ...(general ? { general } : {}) } : { general: general || err?.message || 'Registration failed. Check your input. Is the server running on port 4000?' });
       });
   };
 
