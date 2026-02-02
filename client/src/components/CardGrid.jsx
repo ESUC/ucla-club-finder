@@ -258,7 +258,7 @@ const sizePredicates = {
   '100+ Members': (n) => n >= 100,
 };
 
-const CardGrid = ({ searchQuery = '', userId, clubs, filters = {} }) => {
+const CardGrid = ({ searchQuery = '', userId, clubs, filters = {}, savedClubIds = [], onSaveSuccess }) => {
   const [openIndex, setOpenIndex] = useState(null);
   
   const handleOpenModal = (index) => {
@@ -342,6 +342,8 @@ const CardGrid = ({ searchQuery = '', userId, clubs, filters = {} }) => {
           key={c.abbreviation}
           userId={userId}
           clubId={c._id}
+          savedClubIds={savedClubIds}
+          onSaveSuccess={onSaveSuccess}
         >
           Card {idx + 1};
         </ClubCard>

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
 
 const API_BASE = "http://localhost:4000/api/userAuth";
 
@@ -59,8 +59,10 @@ export const ForgotPassword = () => {
 
       navigate("/auth/verify-code");
     } catch (err) {
-      const apiErrors = err?.response?.data?.errors;
-      setErrors(apiErrors || { general: "Something went wrong." });
+      const data = err?.response?.data;
+      const apiErrors = data?.errors;
+      const message = data?.error || (apiErrors && apiErrors.general);
+      setErrors(apiErrors || { general: message || "Something went wrong. Check that the server is running and your email exists." });
     } finally {
       setSubmitting(false);
     }
@@ -142,6 +144,6 @@ export const ForgotPassword = () => {
         </FormContainer>
         <SidePanel />
       </PageContainer>
-    </>
+    </div>
   );
 };

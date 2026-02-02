@@ -6,21 +6,19 @@ import './NavigationBar.css';
 
 const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const location = useLocation();
 
   useEffect(() => {
-    // Check if user is logged in by checking localStorage for token
     const checkAuth = () => {
       const token = localStorage.getItem('token');
+      const email = localStorage.getItem('userEmail') || '';
       setIsLoggedIn(!!token);
+      setUserEmail(email);
     };
 
     checkAuth();
-
-    // Listen for storage changes (for cross-tab updates)
     window.addEventListener('storage', checkAuth);
-
-    // Check periodically for same-tab updates (e.g., after login)
     const interval = setInterval(checkAuth, 500);
 
     return () => {
@@ -29,12 +27,17 @@ const NavigationBar = () => {
     };
   }, [location]);
 
-  // Build nav items conditionally
   const navItems = [
     { text: 'Home', to: '/about' },
     { text: 'Clubs', to: '/home' },
     ...(isLoggedIn ? [{ text: 'Saved Clubs', to: '/saved-clubs' }] : []),
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
+    window.location.href = '/auth/login';
+  };
 
   return (
     <AppBar position="fixed" className="navbar-appbar">
@@ -62,15 +65,29 @@ const NavigationBar = () => {
               {item.text}
             </Button>
           ))}
-          <Button
-            component={Link}
-            to="/saved-clubs"
-            className="navbar-user-button"
-            startIcon={<PersonIcon />}
-            title="Saved Clubs"
-          >
-          </Button>
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <>
+              <div className="navbar-user-area" title={userEmail || 'Logged in'}>
+                <Button
+                  component={Link}
+                  to="/saved-clubs"
+                  className="navbar-user-button"
+                  startIcon={<PersonIcon />}
+                >
+                  Saved
+                </Button>
+                <span className="navbar-logged-in-tooltip">
+                  {userEmail ? `Logged in as ${userEmail}` : 'Logged in'}
+                </span>
+              </div>
+              <Button
+                className="navbar-login-button navbar-logout-button"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
             <Button
               component={Link}
               to="/auth/login"

@@ -1,7 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const User = require('../models/userModel');
 const router = express.Router();
+
+function isValidObjectId(id) {
+  if (!id || typeof id !== 'string') return false;
+  return mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === id;
+}
 
 // GET all clubs
 // router.get('/', (req, res) => {
@@ -32,17 +38,17 @@ router.post('/auth/register', async (req, res) => {
   if (!email || (!email.endsWith('@ucla.edu') && !email.endsWith('@g.ucla.edu'))) {
     errors.email = 'You must register with a UCLA email.';
   }
-  if(!year || validateYear(year)){
-    errors.year = "Please enter a valid graduation year";
+  if (!firstName || String(firstName).trim() === '') {
+    errors.firstName = "Please enter first name";
   }
-  if(!firstName){
-    errors.firstName = "Please enter first name"
+  if (!lastName || String(lastName).trim() === '') {
+    errors.lastName = "Please enter last name";
   }
-  if(!lastName){
-    errors.lastName = "Please enter last name"
-  }
-  if(!major){
-    errors.major = "Please enter major"
+  // year/major optional: use defaults if missing so client can omit them
+  const yearVal = year && String(year).trim() ? String(year).trim() : 'N/A';
+  const majorVal = major && String(major).trim() ? String(major).trim() : 'N/A';
+  if (yearVal !== 'N/A' && validateYear(yearVal)) {
+    errors.year = "Please enter a valid graduation year (2026–2029)";
   }
   const passwordErrors = validatePassword(password);
   if (passwordErrors.length > 0) {
@@ -58,11 +64,10 @@ router.post('/auth/register', async (req, res) => {
   }
 
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt); //hashes the password
-
+  const hash = bcrypt.hashSync(password, salt);
 
   try {
-    const user = await User.create({ firstName, lastName, username, email, password: hash, year, major });
+    const user = await User.create({ firstName, lastName, username, email, password: hash, year: yearVal, major: majorVal });
     res.status(200).json(user);
   } catch (error) {
     if (error.code === 11000) {
@@ -116,9 +121,16 @@ router.post("/auth/login", async (req, res) => {
       return res.status(400).json({ errors: { password: "Incorrect password." } });
     }
 
-    console.log("LOGIN SUCCESS ✅");
-    return res.status(200).json({ message: "Login successful." });
+    // 5) Update last sign-in in MongoDB
+    user.lastLoginAt = new Date();
+    await user.save();
 
+    console.log("LOGIN SUCCESS ✅");
+    return res.status(200).json({
+      message: "Login successful.",
+      userId: user._id.toString(),
+      email: user.email || null,
+    });
   } catch (err) {
     console.error("LOGIN ERROR 💥", err);
     return res.status(500).json({ errors: { general: "Server error." } });
@@ -141,6 +153,9 @@ router.get('/saved/:userId', async (req, res) => {
 router.post('/save/:clubId', async (req, res) => {
   const { clubId } = req.params;
   const { userId } = req.body;
+  if (!isValidObjectId(clubId)) {
+    return res.status(400).json({ error: 'Invalid club ID' });
+  }
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -160,6 +175,9 @@ router.post('/save/:clubId', async (req, res) => {
 router.delete('/save/:clubId', async (req, res) => {
   const { clubId } = req.params;
   const { userId } = req.body;
+  if (!isValidObjectId(clubId)) {
+    return res.status(400).json({ error: 'Invalid club ID' });
+  }
   try {
     const user = await User.findById(userId);
     if (!user) {
