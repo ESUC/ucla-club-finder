@@ -60,6 +60,10 @@ const userSchema = new Schema(
       type: Date, 
       default: null 
     },
+    lastLoginAt: {
+      type: Date,
+      default: null,
+    },
     savedClubs: [
       {
         type: mongoose.Schema.ObjectId,

@@ -126,6 +126,8 @@ export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [savedClubIdsRaw, setSavedClubIdsRaw] = useState([]);
+  const savedClubIds = userId ? savedClubIdsRaw : [];
 
   // Filter state
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -137,21 +139,51 @@ export const Home = () => {
     setter((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
   };
 
-  // TEMPORARY WILL CHANGE LATER
-  const userId = '6627638285b11e9ed9d11fc9'; // john bruin
+  // userId from login: stored in localStorage as 'token' (actual userId)
+  const userId = localStorage.getItem('token') || null;
+
+  // Fetch user's saved club IDs when logged in (so star state is correct)
+  useEffect(() => {
+    if (!userId) return;
+    axios
+      .get(`http://localhost:4000/api/users/saved/${userId}`)
+      .then((res) => {
+        const list = res?.data ?? [];
+        setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
+      })
+      .catch(() => setSavedClubIdsRaw([]));
+  }, [userId]);
 
   const handleSearchChange = (event, newValue) => {
     setSearchQuery(newValue || '');
   };
 
   useEffect(() => {
+    // TEMPORARY FIX: Add timeout and error handling
+    const timeoutId = setTimeout(() => {
+      console.log('⏱️ Loading timeout - showing page anyway');
+      setLoading(false);
+    }, 3000); // Stop loading after 3 seconds even if API fails
+
+    console.log('🔍 Fetching clubs from API...');
     axios
         .get(`http://localhost:4000/api/clubs/`)
         .then((res) => {
-          setClubs(res.data);
+          console.log('✅ Clubs fetched successfully:', res.data?.length || 0, 'clubs');
+          setClubs(res.data || []);
           setLoading(false);
+          clearTimeout(timeoutId);
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => {
+          console.error('❌ API Error:', err.message);
+          console.error('Full error:', err);
+          // Set empty array on error so page still renders
+          setClubs([]);
+          setLoading(false);
+          clearTimeout(timeoutId);
+        });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const filters = {
@@ -161,7 +193,22 @@ export const Home = () => {
     sizes: selectedSizes,
   };
 
-  if (loading) return <div>Loading...</div>
+  if (loading) {
+    return (
+      <div className="home-bg">
+        <NavigationBar />
+        <div className="home-header">
+          <Typography variant="h3" align="center" className="home-title">
+            Student Clubs and Organizations
+          </Typography>
+        </div>
+        <div style={{ padding: '40px', textAlign: 'center' }}>
+          <Typography>Loading clubs...</Typography>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="home-bg">
@@ -535,7 +582,23 @@ export const Home = () => {
               )}
             />
           </SearchContainer>
-          <CardGrid searchQuery={searchQuery} userId={userId} clubs={clubs} filters={filters} />
+          <CardGrid
+            searchQuery={searchQuery}
+            userId={userId}
+            clubs={clubs}
+            filters={filters}
+            savedClubIds={savedClubIds}
+            onSaveSuccess={() => {
+              if (!userId) return;
+              axios
+                .get(`http://localhost:4000/api/users/saved/${userId}`)
+                .then((res) => {
+                  const list = res?.data ?? [];
+                  setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
+                })
+                .catch(() => {});
+            }}
+          />
         </section>
       </div>
       <Footer />

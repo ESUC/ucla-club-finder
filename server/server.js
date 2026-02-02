@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const express = require('express');
 const cors = require('cors');
@@ -24,26 +25,39 @@ app.use('/api/clubs/', clubRoutes);
 app.use('/api/users/', userRoutes);
 app.use('/api/userAuth/', userAuthRoutes);
 
-// connect to db
-if (!process.env.MONG_URI) {
-  console.error('ERROR: MONG_URI is not defined in your .env file');
-  console.error('Please create a .env file in the server directory with your MongoDB connection string.');
-  console.error('See env.example for the required format.');
+// Load env from server directory and trim (avoids "not defined" when run from other folders)
+const MONGO_URI = process.env.MONGO_URI?.trim();
+const PORT = (process.env.PORT && process.env.PORT.trim()) || '4000';
+
+if (!MONGO_URI) {
+  console.error('ERROR: MONGO_URI is not defined in your .env file');
+  console.error('Create server/.env with MONGO_URI=your-atlas-connection-string (use MONGO_URI with an O).');
   process.exit(1);
 }
 
-if (!process.env.PORT) {
-  console.error('ERROR: PORT is not defined in your .env file');
-  process.exit(1);
-}
+// Allow app to run without MongoDB: clubs will be served from server/clubs.json
+app.locals.useClubsFallback = false;
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(MONGO_URI, { serverSelectionTimeoutMS: 15000 })
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log('connected to db and listening on port', process.env.PORT);
+    app.locals.useClubsFallback = false;
+    app.listen(PORT, () => {
+      console.log('Connected to MongoDB and listening on port', PORT);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error('\n--- MongoDB connection failed ---');
+    console.error(error.message);
+    if (error.message.includes('whitelist')) {
+      console.error('\n→ Atlas: Network Access → IP Access List → add your IP or 0.0.0.0/0');
+    } else {
+      console.error('\n→ Check: cluster not paused, correct username/password in .env, Database Access permissions.');
+    }
+    console.error('\n→ Starting server anyway: clubs will be served from server/clubs.json');
+    console.error('---\n');
+    app.locals.useClubsFallback = true;
+    app.listen(PORT, () => {
+      console.log('Server listening on port', PORT, '(no database)');
+    });
   });

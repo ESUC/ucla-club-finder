@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 const OuterContainer = styled.div`
   background: white;

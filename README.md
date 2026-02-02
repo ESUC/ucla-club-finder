@@ -16,7 +16,7 @@ cd server
 cp env.example .env
 # set:
 # PORT=4000
-# MONG_URI=your-mongodb-uri
+# MONGO_URI=your-mongodb-uri
 ```
 
 2. Install and run
