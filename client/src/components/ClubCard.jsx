@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
@@ -198,12 +199,13 @@ const ClubCard = ({
   meetingDays,
   size,
 }) => {
+  const navigate = useNavigate();
   // Star state: derived from savedClubIds; optional callback to refetch after toggle
   const isFavorited = savedClubIds.some((id) => String(id) === String(clubId));
 
   const handleToggleFavorite = () => {
     if (!userId) {
-      console.log('User ID not available - please log in to save clubs');
+      navigate('/auth/login');
       return;
     }
     if (isFavorited) {
