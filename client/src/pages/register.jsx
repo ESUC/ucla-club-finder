@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField } from '@mui/material';
 import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
@@ -81,27 +80,17 @@ export const Register = () => {
               />
             </div>
             <div className="account-input-wrapper">
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Email"
+              <input
+                id="email"
                 type="email"
                 value={email}
+                className="account-input"
                 onChange={(e) => setEmail(e.target.value)}
-                error={!!(errors && errors.email)}
-                helperText={errors?.email || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: '0.5rem',
-                    backgroundColor: '#F3F3F5',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                    '&.Mui-focused': { backgroundColor: '#ffffff' },
-                  },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(0,0,0,0)' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#d0d0d0' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#d0d0d0' },
-                }}
+                placeholder="Email"
               />
+              {errors?.email && (
+                <p style={{ color: '#d32f2f', fontSize: '0.9rem', marginTop: 8 }}>{errors.email}</p>
+              )}
             </div>
             <div className="account-input-wrapper">
               <div className="account-password-wrapper">

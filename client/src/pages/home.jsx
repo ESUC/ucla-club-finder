@@ -127,7 +127,6 @@ export const Home = () => {
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [savedClubIdsRaw, setSavedClubIdsRaw] = useState([]);
-  const savedClubIds = userId ? savedClubIdsRaw : [];
 
   // Filter state
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -135,13 +134,16 @@ export const Home = () => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
 
+  // userId from login: stored in localStorage as 'token' (actual userId) – must be before savedClubIds
+  const userId = localStorage.getItem('token') || null;
+  const savedClubIds = userId ? savedClubIdsRaw : [];
+
   const toggleValue = (value, list, setter) => {
     setter((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
   };
 
-  // userId from login: stored in localStorage as 'token' (actual userId)
-  const userId = localStorage.getItem('token') || null;
-
+  // TEMPORARY: Get userId from localStorage if logged in, otherwise null (clubs still display)
+  // const userId = localStorage.getItem('token') ? '6627638285b11e9ed9d11fc9' : null;
   // Fetch user's saved club IDs when logged in (so star state is correct)
   useEffect(() => {
     if (!userId) return;
