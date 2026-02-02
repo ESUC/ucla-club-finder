@@ -30,7 +30,6 @@ const NavigationBar = () => {
   const navItems = [
     { text: 'Home', to: '/about' },
     { text: 'Clubs', to: '/home' },
-    ...(isLoggedIn ? [{ text: 'Saved Clubs', to: '/saved-clubs' }] : []),
   ];
 
   const handleLogout = () => {
@@ -72,9 +71,9 @@ const NavigationBar = () => {
                   component={Link}
                   to="/saved-clubs"
                   className="navbar-user-button"
-                  startIcon={<PersonIcon />}
+                  aria-label="Saved clubs"
                 >
-                  Saved
+                  <PersonIcon />
                 </Button>
                 <span className="navbar-logged-in-tooltip">
                   {userEmail ? `Logged in as ${userEmail}` : 'Logged in'}
