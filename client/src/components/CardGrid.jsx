@@ -334,8 +334,9 @@ const CardGrid = ({ searchQuery = '', userId, clubs, filters = {}, savedClubIds 
           description={c.description}
           clubType={c.clubType}
           major={c.major}
-          meetingDays={c.meetingDays}
-          size={c.size}
+          //meetingDays={c.meetingDays}
+          //size={c.size}
+          url={c.url}
           isBoxOpen={openIndex === c.__index}
           onOpen={() => handleOpenModal(c.__index)}
           onClose={handleCloseModal}
