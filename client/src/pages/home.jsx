@@ -20,7 +20,6 @@ import CardGrid from '../components/CardGrid';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import '../css/Home.css';
-import ProfileInfo from '../components/ProfileInfo/ProfileInfo'; // added
 
 const searchSuggestions = [
   'Computer Science',
