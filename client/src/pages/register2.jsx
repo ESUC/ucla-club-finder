@@ -1,10 +1,12 @@
+
+
 import { useState } from 'react';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import styled from 'styled-components';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 const OuterContainer = styled.div`
   background: white;
@@ -16,6 +18,7 @@ const OuterContainer = styled.div`
 `;
 
 export const Register = () => {
+  console.log("REGISTER PAGE 2 RENDER");
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();

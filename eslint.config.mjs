@@ -9,7 +9,7 @@ import importPlugin from 'eslint-plugin-import';
 export default [
   // Ignore build artifacts and server files
   {
-    ignores: ['**/node_modules/**', 'build/**', 'dist/**', 'coverage/**', 'server/**'],
+    ignores: ['**/node_modules/**', '**/build/**', '**/dist/**', '**/coverage/**', 'server/**'],
   },
   js.configs.recommended,
 
