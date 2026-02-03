@@ -1,0 +1,202 @@
+.profile-component {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 0;
+    flex-direction: column;
+    gap: 42px;
+    font-size: clamp(14px, 1.1vw, 18px);
+}
+
+.profile-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 68.571px;
+  align-self: stretch;
+}
+
+.profile-user {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24.286px;
+}
+
+.profile-picture {
+  display: flex;
+  height: 320px;
+  align-items: flex-start;
+  border-radius: 95869696px;
+}
+
+.profile-picture-container {
+  display: flex;
+  width: 320px;
+  height: 320px;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: 95869696px;
+  background: #043873;
+}
+
+.profile-icon {
+  width: 137.143px;
+  height: 137.143px;
+}
+
+.profile-username {
+  display: flex;
+  padding: 0 595px 2.571px 0;
+  padding-right: 0;
+  align-items: center;
+  align-self: stretch;
+  color: #043873;
+  font-family: "DM Sans";
+  font-size: 3.2em;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1; /* 104.545% */
+}
+
+.club-stats {
+  display: flex;
+  height: 137.143px;
+  align-items: flex-start;
+  gap: 80.429px;
+  align-self: stretch;
+}
+
+.club-saved {
+  display: flex;
+  width: 108.437px;
+  height: 137.143px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
+}
+
+.club-joined {
+  display: flex;
+  width: 111.562px;
+  height: 137.143px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
+}
+
+.number-saved {
+  display: flex;
+  padding: 0 19.473px 14px 19.473px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  color: #043873;
+  font-family: "DM Sans";
+  font-size: 3em;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 65.714px; /* 115% */
+}
+
+.number-joined {
+  display: flex;
+  padding: 0 19.473px 14px 19.473px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  color: #043873;
+  font-family: "DM Sans";
+  font-size: 3em;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 65.714px; /* 115% */
+}
+
+.stat-label {
+  color: #6A7282;
+  text-align: center;
+  font-family: "DM Sans";
+  font-size: 1.8em;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 57.1px; /* 142.75% */
+  letter-spacing: -0.43px;
+}
+
+.profile-description {
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.profile-year {
+  display: flex;
+  padding-right: 0;
+  align-items: center;
+  align-self: stretch;
+  color: #4A5565;
+  font-family: "DM Sans";
+  font-size: 1.7em;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2; /* 164.286% */
+}
+
+.profile-bio {
+  display: flex;
+  padding-right: 0;
+  align-items: center;
+  align-self: stretch;
+  color: #043873;
+  font-family: "DM Sans";
+  font-size: 1.7em;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.2; /* 164.286% */
+}
+
+.edit-profile-button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  height: 5em;
+  width: 100%;
+  padding: 0 1.5em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  border-radius: 22.857px;
+  border: 2.857px solid rgba(4, 56, 115, 0.20);
+  background: #FFF;
+}
+
+.edit-profile-icon {
+  width: 45.714px;
+  height: 45.714px;
+  stroke-width: 3.81px;
+  stroke: #043873;
+  display: block;
+  flex-shrink: 0;
+}
+
+.edit-profile-text {
+  color: #043873;
+  font-family: "DM Sans";
+  font-size: 2.0em;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 65.714px; /* 164.286% */
+}
