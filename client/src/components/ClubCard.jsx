@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
@@ -190,25 +190,34 @@ const ClubCard = ({
   title,
   userId,
   clubId,
+  savedClubIds = [],
+  onSaveSuccess,
   fullName,
   description,
   clubType,
   major,
-  meetingDays,
-  size,
+  url,
+  //meetingDays,
+  //size,
 }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
+  const navigate = useNavigate();
+  // Star state: derived from savedClubIds; optional callback to refetch after toggle
+  const isFavorited = savedClubIds.some((id) => String(id) === String(clubId));
 
   const handleToggleFavorite = () => {
+    if (!userId) {
+      navigate('/auth/login');
+      return;
+    }
     if (isFavorited) {
       axios
         .delete(`http://localhost:4000/api/users/save/${clubId}`, { data: { userId } })
-        .then(() => setIsFavorited(false))
+        .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     } else {
       axios
         .post(`http://localhost:4000/api/users/save/${clubId}`, { userId })
-        .then(() => setIsFavorited(true))
+        .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     }
   };
@@ -287,14 +296,9 @@ const ClubCard = ({
                   Major: <span style={{ color: '#334155', fontWeight: 500 }}>{major}</span>
                 </div>
               )}
-              {meetingDays && (
+              {url && (
                 <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Meeting Days: <span style={{ color: '#334155', fontWeight: 500 }}>{meetingDays}</span>
-                </div>
-              )}
-              {size && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '12px' }}>
-                  Size: <span style={{ color: '#334155', fontWeight: 500 }}>{size} members</span>
+                  Club Website: <span style={{ color: '#334155', fontWeight: 500 }}><a href={url}>{url}</a></span>
                 </div>
               )}
               <div style={{ color: '#64748b', fontSize: '0.9rem' }}>

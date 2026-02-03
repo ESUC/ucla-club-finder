@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
+    "nodemailer": "^7.0.12",
     "react-router-dom": "^6.26.0"
   },
   "engines": {

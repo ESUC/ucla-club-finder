@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
-const uri = process.env.MONG_URI;
+const uri = process.env.MONGO_URI;
 const dbName = 'ClubFinder';
 const collectionName = 'clubs';
 
