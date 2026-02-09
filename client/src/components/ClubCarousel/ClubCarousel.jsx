@@ -70,15 +70,15 @@ const ClubCarousel = ({ title, clubs = [] }) => {
         <div className="carousel-container" ref={carouselRef}>
           <div className="carousel-track">
             {clubs.map((club) => (
-              <div key={club.id} className="club-card">
+              <div key={club._id} className="club-card">
                 <div className="club-card-image">
-                  {club.logo ? (
-                    <img src={club.logo} alt={club.name} className="club-logo" />
+                  {club.img ? (
+                    <img src={club.img} className="club-logo" />
                   ) : (
                     <div className="club-logo-placeholder"></div>
                   )}
                 </div>
-                <p className="club-card-name">{club.name}</p>
+                <p className="club-card-name">{club.abbreviation}</p>
               </div>
             ))}
           </div>
