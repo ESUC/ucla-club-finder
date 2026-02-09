@@ -1,25 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import ClubCarousel from '../components/ClubCarousel/ClubCarousel';
 import './SavedClubs.css';
-
-// Mock data - TODO: Fetch actual clubs from API
-const getMockJoinedClubs = () =>
-  Array.from({ length: 20 }, (_, i) => ({
-    id: i + 1,
-    name: `Joined Club ${i + 1}`,
-    logo: null,
-  }));
-
-const getMockSavedClubs = () =>
-  Array.from({ length: 20 }, (_, i) => ({
-    id: i + 1,
-    name: `Club ${i + 1}`,
-    logo: null,
-  }));
 
 // Mock profile - TODO: Fetch actual user profile from API
 const getMockProfile = () => ({
@@ -28,12 +15,22 @@ const getMockProfile = () => ({
 });
 
 export const SavedClubs = () => {
-  const [joinedClubs] = useState(getMockJoinedClubs);
-  const [savedClubs] = useState(getMockSavedClubs);
+  const [savedClubs, setSavedClubs] = useState([]);
   const mockProfile = getMockProfile();
+  const [userProfile, setUserProfile] = useState([]);
+  const userId = localStorage.getItem('token') || null;
+  const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(
     mockProfile.major === 'N/A' || mockProfile.year === 'N/A'
   );
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/api/users/saved/${userId}`)
+      .then((res) => setSavedClubs(res.data))
+      .catch((err) => console.log(err.message))
+      .finally(() => setLoading(false));
+  }, [userId]);
 
   return (
     <div className="saved-clubs-page">
@@ -68,8 +65,18 @@ export const SavedClubs = () => {
           </svg>
           <span>Edit Profile</span>
         </Link>
-        {/* <ClubCarousel title="The Clubs I Am In" clubs={joinedClubs} /> */}
-        <ClubCarousel title="Saved Clubs" clubs={savedClubs} />
+        {loading ? (
+          <p>Loading...</p>
+        ) : savedClubs.length === 0 ? (
+          <div className="no-saved-clubs-box">
+            <p>No saved clubs yet.</p>
+            <Link to="/clubs" className="go-to-clubs-button">
+              Browse Clubs
+            </Link>
+          </div>
+        ) : (
+          <ClubCarousel title="Saved Clubs" clubs={savedClubs} />
+        )}
       </div>
       <Footer />
     </div>
