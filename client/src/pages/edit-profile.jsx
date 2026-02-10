@@ -40,15 +40,11 @@ export const EditProfile = () => {
   const userId = localStorage.getItem('token') || null;
   const [formData, setFormData] = useState(defaultFormData);
   const [showAlert, setShowAlert] = useState(false);
-  const [profileLoaded, setProfileLoaded] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!userId) {
-      setProfileLoaded(true);
-      return;
-    }
+    if (!userId) return;
     axios
       .get(`http://localhost:4000/api/users/profile/${userId}`)
       .then((res) => {
@@ -65,8 +61,7 @@ export const EditProfile = () => {
         });
         setShowAlert(needsProfileUpdate(d.major, d.year));
       })
-      .catch(() => setFormData(defaultFormData))
-      .finally(() => setProfileLoaded(true));
+      .catch(() => setFormData(defaultFormData));
   }, [userId]);
 
   const shouldShowAlert = needsProfileUpdate(formData.major, formData.year);

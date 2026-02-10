@@ -36,10 +36,12 @@ export const SavedClubs = () => {
 
   useEffect(() => {
     if (!userId) {
-      setLoading(false);
-      setSavedClubs([]);
-      setShowAlert(false);
-      setProfileUpdateMessage('');
+      queueMicrotask(() => {
+        setLoading(false);
+        setSavedClubs([]);
+        setShowAlert(false);
+        setProfileUpdateMessage('');
+      });
       return;
     }
     axios
