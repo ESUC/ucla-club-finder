@@ -1,26 +1,75 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import './EditProfile.css';
 
+const defaultFormData = {
+  firstName: '',
+  lastName: '',
+  username: '',
+  email: '',
+  pronouns: '',
+  major: 'N/A',
+  year: 'N/A',
+  bio: '',
+};
+
+function isNA(v) {
+  const s = v == null ? '' : String(v).trim();
+  return s === '' || s === 'N/A';
+}
+
+function needsProfileUpdate(major, year) {
+  return isNA(major) || isNA(year);
+}
+
+function getProfileUpdateMessage(major, year) {
+  const needMajor = isNA(major);
+  const needYear = isNA(year);
+  if (needMajor && needYear) return 'Please update your Major and Graduation Year below.';
+  if (needMajor) return 'Please update your Major below.';
+  if (needYear) return 'Please update your Graduation Year below.';
+  return '';
+}
+
 export const EditProfile = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    firstName: 'Palina',
-    lastName: 'Wang',
-    username: 'costcosnumberonecustomer',
-    email: 'costcosnumberonecustomer@ucla.edu',
-    pronouns: 'she/her',
-    major: 'N/A',
-    year: 'N/A',
-    bio: 'i def like engineering 😋',
-  });
-  const [showAlert, setShowAlert] = useState(true); // Initialize based on initial formData
+  const userId = localStorage.getItem('token') || null;
+  const [formData, setFormData] = useState(defaultFormData);
+  const [showAlert, setShowAlert] = useState(false);
+  const [profileLoaded, setProfileLoaded] = useState(false);
+  const [saveError, setSaveError] = useState(null);
+  const [saving, setSaving] = useState(false);
 
-  // Derive alert state from formData
-  const shouldShowAlert = formData.major === 'N/A' || formData.year === 'N/A';
+  useEffect(() => {
+    if (!userId) {
+      setProfileLoaded(true);
+      return;
+    }
+    axios
+      .get(`http://localhost:4000/api/users/profile/${userId}`)
+      .then((res) => {
+        const d = res.data || {};
+        setFormData({
+          firstName: d.firstName ?? '',
+          lastName: d.lastName ?? '',
+          username: d.username ?? '',
+          email: d.email ?? '',
+          pronouns: d.pronouns ?? '',
+          major: d.major ?? 'N/A',
+          year: d.year ?? 'N/A',
+          bio: d.bio ?? '',
+        });
+        setShowAlert(needsProfileUpdate(d.major, d.year));
+      })
+      .catch(() => setFormData(defaultFormData))
+      .finally(() => setProfileLoaded(true));
+  }, [userId]);
+
+  const shouldShowAlert = needsProfileUpdate(formData.major, formData.year);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,9 +81,21 @@ export const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Implement API call to save profile changes
-    console.log('Profile updated:', formData);
-    // Navigate back or show success message
+    if (!userId) return;
+    setSaveError(null);
+    setSaving(true);
+    axios
+      .put(`http://localhost:4000/api/users/profile/${userId}`, formData)
+      .then(() => {
+        setShowAlert(needsProfileUpdate(formData.major, formData.year));
+        navigate('/saved-clubs');
+      })
+      .catch((err) => {
+        const data = err.response?.data;
+        const msg = data?.errors?.general ?? data?.error ?? (data?.errors && Object.values(data.errors).join(' ')) ?? 'Failed to save profile.';
+        setSaveError(typeof msg === 'string' ? msg : 'Failed to save profile.');
+      })
+      .finally(() => setSaving(false));
   };
 
   const handleCancel = () => {
@@ -62,7 +123,7 @@ export const EditProfile = () => {
             <div className="edit-profile-alert-content">
               <p className="edit-profile-alert-title">Profile Update Required</p>
               <p className="edit-profile-alert-message">
-                Please update your Major and Graduation Year below.
+                {getProfileUpdateMessage(formData.major, formData.year)}
               </p>
             </div>
             <button
@@ -74,6 +135,13 @@ export const EditProfile = () => {
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
+          </div>
+        )}
+
+        {saveError && (
+          <div className="edit-profile-alert edit-profile-error" role="alert">
+            <p>{saveError}</p>
+            <button type="button" className="edit-profile-alert-close" onClick={() => setSaveError(null)} aria-label="Dismiss">×</button>
           </div>
         )}
 
@@ -171,8 +239,8 @@ export const EditProfile = () => {
             <button type="button" className="edit-profile-cancel-button" onClick={handleCancel}>
               Cancel
             </button>
-            <button type="submit" className="edit-profile-save-button">
-              Save Changes
+            <button type="submit" className="edit-profile-save-button" disabled={saving}>
+              {saving ? 'Saving…' : 'Save Changes'}
             </button>
           </div>
         </form>
