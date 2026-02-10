@@ -22,6 +22,10 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
+    pronouns: {
+      type: String,
+      default: '',
+    },
     password: {
       type: String,
       required: true,

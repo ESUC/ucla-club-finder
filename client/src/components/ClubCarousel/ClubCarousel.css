@@ -16,7 +16,7 @@
 
 .carousel-title {
   font-family: 'DM Sans', sans-serif;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 500;
   color: #043873;
   margin: 0;
@@ -26,7 +26,7 @@
 
 .carousel-count {
   font-family: 'DM Sans', sans-serif;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 400;
   color: #6a7282;
   line-height: 1.2;
@@ -177,7 +177,7 @@
 @media (max-width: 968px) {
   .carousel-title,
   .carousel-count {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .carousel-arrow {
@@ -218,7 +218,7 @@
 @media (max-width: 640px) {
   .carousel-title,
   .carousel-count {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .carousel-arrow {

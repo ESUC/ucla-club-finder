@@ -6,30 +6,67 @@ import axios from 'axios';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import ClubCarousel from '../components/ClubCarousel/ClubCarousel';
+import ProfileInfo from '../components/ProfileInfo/ProfileInfo';
 import './SavedClubs.css';
 
-// Mock profile - TODO: Fetch actual user profile from API
-const getMockProfile = () => ({
-  major: 'N/A',
-  year: 'N/A',
-});
+function isNA(v) {
+  const s = v == null ? '' : String(v).trim();
+  return s === '' || s === 'N/A';
+}
+
+function needsProfileUpdate(major, year) {
+  return isNA(major) || isNA(year);
+}
+
+function getProfileUpdateMessage(major, year) {
+  const needMajor = isNA(major);
+  const needYear = isNA(year);
+  if (needMajor && needYear) return 'Please update your Major and Year in your profile.';
+  if (needMajor) return 'Please update your Major in your profile.';
+  if (needYear) return 'Please update your Graduation Year in your profile.';
+  return '';
+}
 
 export const SavedClubs = () => {
   const [savedClubs, setSavedClubs] = useState([]);
-  const mockProfile = getMockProfile();
-  const [userProfile, setUserProfile] = useState([]);
   const userId = localStorage.getItem('token') || null;
   const [loading, setLoading] = useState(true);
-  const [showAlert, setShowAlert] = useState(
-    mockProfile.major === 'N/A' || mockProfile.year === 'N/A'
-  );
+  const [showAlert, setShowAlert] = useState(false);
+  const [profileUpdateMessage, setProfileUpdateMessage] = useState('');
 
   useEffect(() => {
+    if (!userId) {
+      queueMicrotask(() => {
+        setLoading(false);
+        setSavedClubs([]);
+        setShowAlert(false);
+        setProfileUpdateMessage('');
+      });
+      return;
+    }
     axios
       .get(`http://localhost:4000/api/users/saved/${userId}`)
-      .then((res) => setSavedClubs(res.data))
-      .catch((err) => console.log(err.message))
+      .then((res) => {
+        const list = Array.isArray(res.data) ? res.data : [];
+        setSavedClubs(list);
+      })
+      .catch(() => setSavedClubs([]))
       .finally(() => setLoading(false));
+  }, [userId]);
+
+  useEffect(() => {
+    if (!userId) return;
+    axios
+      .get(`http://localhost:4000/api/users/profile/${userId}`)
+      .then((res) => {
+        const { major, year } = res.data || {};
+        setShowAlert(needsProfileUpdate(major, year));
+        setProfileUpdateMessage(getProfileUpdateMessage(major, year));
+      })
+      .catch(() => {
+        setShowAlert(false);
+        setProfileUpdateMessage('');
+      });
   }, [userId]);
 
   return (
@@ -44,7 +81,7 @@ export const SavedClubs = () => {
             <div className="saved-clubs-alert-content">
               <p className="saved-clubs-alert-title">Profile Update Required</p>
               <p className="saved-clubs-alert-message">
-                Please update your Major and Year in your profile.
+                {profileUpdateMessage}
               </p>
             </div>
             <button
@@ -58,19 +95,13 @@ export const SavedClubs = () => {
             </button>
           </div>
         )}
-        <Link to="/edit-profile" className="saved-clubs-edit-button">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#043873" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-          </svg>
-          <span>Edit Profile</span>
-        </Link>
+        <ProfileInfo />
         {loading ? (
           <p>Loading...</p>
         ) : savedClubs.length === 0 ? (
           <div className="no-saved-clubs-box">
             <p>No saved clubs yet.</p>
-            <Link to="/clubs" className="go-to-clubs-button">
+            <Link to="/home" className="go-to-clubs-button">
               Browse Clubs
             </Link>
           </div>
