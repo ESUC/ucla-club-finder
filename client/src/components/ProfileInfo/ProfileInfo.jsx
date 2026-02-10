@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './ProfileInfo.css';
 
 const ProfileInfo = () => {
@@ -36,15 +37,14 @@ const ProfileInfo = () => {
         <span className="profile-bio">i def like engineering 😋</span>
       </div>
       
-      {/* // button */}
-      <button className="edit-profile-button">
+      <Link to="/edit-profile" className="edit-profile-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46" fill="none">
           <path d="M22.8572 41.9046C33.3769 41.9046 41.9048 33.3767 41.9048 22.8569C41.9048 12.3372 33.3769 3.80933 22.8572 3.80933C12.3375 3.80933 3.80957 12.3372 3.80957 22.8569C3.80957 33.3767 12.3375 41.9046 22.8572 41.9046Z" stroke="#043873" strokeWidth="3.80952" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M22.8569 15.238V22.8571" stroke="#043873" strokeWidth="3.80952" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M22.8569 30.4758H22.8761" stroke="#043873" strokeWidth="3.80952" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
         <span className="edit-profile-text">Edit Profile</span>
-      </button>
+      </Link>
     </div>
   );
 }
