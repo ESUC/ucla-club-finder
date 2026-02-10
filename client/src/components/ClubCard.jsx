@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
+import ClubPopUp from './ClubPopUp';
 
 const CardContainer = styled(Card)`
   width: 280px;
@@ -268,41 +269,7 @@ const ClubCard = ({
 
         {createPortal(
           //added details for when the card is clicked
-          <Box isOpen={isBoxOpen} onClick={onClose}>
-            <Content onClick={(e) => e.stopPropagation()}>
-              <h1 style={{ color: '#0f172a', marginBottom: '12px', fontSize: '1.25rem' }}>
-                {displayFullName}
-              </h1>
-              <div style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '8px' }}>{title}</div>
-              <p style={{ color: '#64748b', lineHeight: '1.6', marginBottom: '16px' }}>
-                {description || `${displayFullName} - A student organization dedicated to fostering innovation, collaboration, and professional development in engineering at UCLA.`}
-              </p>
-              {clubType && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Type: <span style={{ color: '#334155', fontWeight: 500 }}>{clubType}</span>
-                </div>
-              )}
-              {major && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Major: <span style={{ color: '#334155', fontWeight: 500 }}>{major}</span>
-                </div>
-              )}
-              {meetingDays && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Meeting Days: <span style={{ color: '#334155', fontWeight: 500 }}>{meetingDays}</span>
-                </div>
-              )}
-              {size && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '12px' }}>
-                  Size: <span style={{ color: '#334155', fontWeight: 500 }}>{size} members</span>
-                </div>
-              )}
-              <div style={{ color: '#64748b', fontSize: '0.9rem' }}>
-                Contact: {title.toLowerCase()}@ucla.edu
-              </div>
-              <BoxClose onClick={onClose}>×</BoxClose>
-            </Content>
-          </Box>,
+          <ClubPopUp isOpen={isBoxOpen} onClose={onClose} club={clubId ? { photo: img, title, fullName: displayFullName, description, clubType, major, meetingDays, size } : null} />,
           document.body
         )}
       </CardContainer>
