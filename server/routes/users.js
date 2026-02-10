@@ -153,6 +153,54 @@ router.post("/auth/login", async (req, res) => {
   }
 });
 
+router.get('/profile/:userId', async (req, res) => {
+  if (!requireDb(res)) return;
+  const { userId } = req.params;
+  if (!isValidObjectId(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
+  try {
+    const user = await User.findById(userId).select('firstName lastName username email pronouns major year bio');
+    if (!user) {
+      return res.status(404).json({ error: 'No user detected' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.put('/profile/:userId', async (req, res) => {
+  if (!requireDb(res)) return;
+  const { userId } = req.params;
+  const { firstName, lastName, username, email, pronouns, major, year, bio } = req.body;
+  if (!isValidObjectId(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'No user detected' });
+    }
+    if (firstName != null) user.firstName = String(firstName).trim();
+    if (lastName != null) user.lastName = String(lastName).trim();
+    if (username != null) user.username = String(username).trim();
+    if (email != null) user.email = String(email).trim().toLowerCase();
+    if (pronouns != null) user.pronouns = String(pronouns).trim();
+    if (major != null) user.major = String(major).trim() || 'N/A';
+    if (year != null) user.year = String(year).trim() || 'N/A';
+    if (bio != null) user.bio = String(bio).trim();
+    await user.save();
+    res.status(200).json(user);
+  } catch (error) {
+    if (error.code === 11000) {
+      const dupField = Object.keys(error.keyValue)[0];
+      return res.status(400).json({ errors: { [dupField]: `${dupField} already in use` } });
+    }
+    res.status(400).json({ error: error.message });
+  }
+});
+
 router.get('/saved/:userId', async (req, res) => {
   if (!requireDb(res)) return;
   const { userId } = req.params;
