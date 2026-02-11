@@ -5,6 +5,7 @@ import axios from 'axios';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import '../css/account.css';
+import { API_BASE } from '../config';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export const Login = () => {
     e.preventDefault();
     setErrors({});
     axios
-      .post('http://localhost:4000/api/users/auth/login', { email, password })
+      .post(`${API_BASE}/api/users/auth/login`, { email, password })
       .then((res) => {
         const data = res?.data;
         if (data?.userId) {

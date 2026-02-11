@@ -7,6 +7,8 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
 
+import { API_BASE } from '../config';
+
 const CardContainer = styled(Card)`
   width: 280px;
   height: 350px;
@@ -211,12 +213,12 @@ const ClubCard = ({
     }
     if (isFavorited) {
       axios
-        .delete(`http://localhost:4000/api/users/save/${clubId}`, { data: { userId } })
+        .delete(`${API_BASE}/api/users/save/${clubId}`, { data: { userId } })
         .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     } else {
       axios
-        .post(`http://localhost:4000/api/users/save/${clubId}`, { userId })
+        .post(`${API_BASE}/api/users/save/${clubId}`, { userId })
         .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     }

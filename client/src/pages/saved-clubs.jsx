@@ -7,6 +7,7 @@ import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import ClubCarousel from '../components/ClubCarousel/ClubCarousel';
 import ProfileInfo from '../components/ProfileInfo/ProfileInfo';
+import { API_BASE } from '../config';
 import './SavedClubs.css';
 
 function isNA(v) {
@@ -45,7 +46,7 @@ export const SavedClubs = () => {
       return;
     }
     axios
-      .get(`http://localhost:4000/api/users/saved/${userId}`)
+      .get(`${API_BASE}/api/users/saved/${userId}`)
       .then((res) => {
         const list = Array.isArray(res.data) ? res.data : [];
         setSavedClubs(list);
@@ -57,7 +58,7 @@ export const SavedClubs = () => {
   useEffect(() => {
     if (!userId) return;
     axios
-      .get(`http://localhost:4000/api/users/profile/${userId}`)
+      .get(`${API_BASE}/api/users/profile/${userId}`)
       .then((res) => {
         const { major, year } = res.data || {};
         setShowAlert(needsProfileUpdate(major, year));

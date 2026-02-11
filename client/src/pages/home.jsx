@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import CardGrid from '../components/CardGrid';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
+import { API_BASE } from '../config';
 import '../css/Home.css';
 
 const searchSuggestions = [
@@ -148,7 +149,7 @@ export const Home = () => {
   useEffect(() => {
     if (!userId) return;
     axios
-      .get(`http://localhost:4000/api/users/saved/${userId}`)
+      .get(`${API_BASE}/api/users/saved/${userId}`)
       .then((res) => {
         const list = res?.data ?? [];
         setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
@@ -169,7 +170,7 @@ export const Home = () => {
 
     console.log('🔍 Fetching clubs from API...');
     axios
-        .get(`http://localhost:4000/api/clubs/`)
+        .get(`${API_BASE}/api/clubs/`)
         .then((res) => {
           console.log('✅ Clubs fetched successfully:', res.data?.length || 0, 'clubs');
           setClubs(res.data || []);
@@ -593,7 +594,7 @@ export const Home = () => {
             onSaveSuccess={() => {
               if (!userId) return;
               axios
-                .get(`http://localhost:4000/api/users/saved/${userId}`)
+                .get(`${API_BASE}/api/users/saved/${userId}`)
                 .then((res) => {
                   const list = res?.data ?? [];
                   setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
