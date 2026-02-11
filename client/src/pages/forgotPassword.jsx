@@ -5,8 +5,9 @@ import axios from "axios";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import Footer from "../components/Footer/Footer";
 import "../css/account.css";
+import { API_BASE } from "../config";
 
-const API_BASE = "http://localhost:4000/api/userAuth";
+const AUTH_API_BASE = `${API_BASE}/api/userAuth`;
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ export const ForgotPassword = () => {
     setSubmitting(true);
 
     try {
-      await axios.post(`${API_BASE}/auth/forgot-password`, { email });
+      await axios.post(`${AUTH_API_BASE}/auth/forgot-password`, { email });
 
       localStorage.setItem("resetEmail", email);
       navigate("/auth/verify-code");

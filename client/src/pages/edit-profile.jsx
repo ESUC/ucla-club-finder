@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
+import { API_BASE } from '../config';
 import './EditProfile.css';
 
 const defaultFormData = {
@@ -46,7 +47,7 @@ export const EditProfile = () => {
   useEffect(() => {
     if (!userId) return;
     axios
-      .get(`http://localhost:4000/api/users/profile/${userId}`)
+      .get(`${API_BASE}/api/users/profile/${userId}`)
       .then((res) => {
         const d = res.data || {};
         setFormData({
@@ -80,7 +81,7 @@ export const EditProfile = () => {
     setSaveError(null);
     setSaving(true);
     axios
-      .put(`http://localhost:4000/api/users/profile/${userId}`, formData)
+      .put(`${API_BASE}/api/users/profile/${userId}`, formData)
       .then(() => {
         setShowAlert(needsProfileUpdate(formData.major, formData.year));
         navigate('/saved-clubs');
