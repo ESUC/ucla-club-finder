@@ -7,6 +7,7 @@ import axios from 'axios';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import '../css/account.css';
+import { API_BASE } from '../config';
 
 export const Register = () => {
   const [firstName, setFirstName] = useState('');
@@ -23,7 +24,7 @@ export const Register = () => {
     e.preventDefault();
     setErrors({});
     axios
-      .post('http://localhost:4000/api/users/auth/register', {
+      .post(`${API_BASE}/api/users/auth/register`, {
         firstName,
         lastName,
         username,
