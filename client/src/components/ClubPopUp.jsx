@@ -12,7 +12,7 @@ const Overlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 700px;
+  width: 750px;
   height: 700px;
   max-width: 90vw;
   border-radius: 16px;
@@ -31,9 +31,9 @@ const Header = styled.div`
 `;
 
 const ClubPhoto = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+  width: 65px;
+  height: 65px;
+  border-radius: 9px;
   object-fit: cover;
 `;
 
@@ -44,14 +44,15 @@ const ClubNameContainer = styled.div`
 `;
 
 const ClubName = styled.div`
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
 `;
 
 const ClubAcronym = styled.div`
   background: #ffc107;
   color: #0f172a;
   font-weight: 500;
+  align-self: flex-start;
   font-size: 0.75rem;
   padding: 2px 6px;
   border-radius: 12px;
@@ -77,21 +78,23 @@ const CloseButton = styled.button`
 const InfoSection = styled.div`
   background: ${(props) => props.bg || '#f1f5f9'};
   margin: 12px;
-  height: 70px;
+  height: 80px;
   border-radius: 12px;
   padding: 16px;
   gap: 14.68px;
 `;
 
 const SectionTitle = styled.div`
-  font-weight: 600;
+  font-weight: 900;
   color: #0f172a;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   margin-bottom: 4px;
 `;
 
 const SectionContent = styled.div`
-  font-size: 0.85rem;
+  margin-top: 8px;
+  align-self: stretch;
+  font-size: 0.9rem;
   color: #334155;
 `;
 
@@ -99,7 +102,7 @@ const CTASection = styled.div`
   background: linear-gradient(135deg, #1a3a5d, #0f172a);
   color: #fff;
   border-radius: 12px;
-  height: 70px;
+  height: 90px;
   margin: 12px 16px;
   padding: 16px;
 `;
