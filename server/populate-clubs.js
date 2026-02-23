@@ -3,7 +3,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const Club = require('./models/clubModel');
 
-const uri = process.env.MONG_URI;
+const uri = process.env.MONGO_URI;
 
 async function main() {
 

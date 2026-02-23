@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
 import ClubPopUp from './ClubPopUp';
+
+import { API_BASE } from '../config';
 
 const CardContainer = styled(Card)`
   width: 280px;
@@ -138,51 +139,6 @@ const Abbreviation = styled.div`
   letter-spacing: 0.5px;
 `;
 
-const Box = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  transition: all 0.4s;
-  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.isOpen ? 1 : 0)};
-  z-index: 1000;
-`;
-
-const Content = styled.div`
-  position: absolute;
-  background: white;
-  width: 400px;
-  max-width: 90vw;
-  padding: 2em;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-`;
-
-const BoxClose = styled.button`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  color: #64748b;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f1f5f9;
-    color: #1a365d;
-  }
-`;
-
 const ClubCard = ({
   isBoxOpen,
   onOpen,
@@ -191,25 +147,34 @@ const ClubCard = ({
   title,
   userId,
   clubId,
+  savedClubIds = [],
+  onSaveSuccess,
   fullName,
   description,
   clubType,
   major,
-  meetingDays,
-  size,
+  url,
+  //meetingDays,
+  //size,
 }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
+  const navigate = useNavigate();
+  // Star state: derived from savedClubIds; optional callback to refetch after toggle
+  const isFavorited = savedClubIds.some((id) => String(id) === String(clubId));
 
   const handleToggleFavorite = () => {
+    if (!userId) {
+      navigate('/auth/login');
+      return;
+    }
     if (isFavorited) {
       axios
-        .delete(`http://localhost:4000/api/users/save/${clubId}`, { data: { userId } })
-        .then(() => setIsFavorited(false))
+        .delete(`${API_BASE}/api/users/save/${clubId}`, { data: { userId } })
+        .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     } else {
       axios
-        .post(`http://localhost:4000/api/users/save/${clubId}`, { userId })
-        .then(() => setIsFavorited(true))
+        .post(`${API_BASE}/api/users/save/${clubId}`, { userId })
+        .then(() => onSaveSuccess?.())
         .catch((err) => console.log(err.message));
     }
   };
@@ -267,11 +232,7 @@ const ClubCard = ({
           <Abbreviation>{title}</Abbreviation>
         </FooterSection>
 
-        {createPortal(
-          //added details for when the card is clicked
-          <ClubPopUp isOpen={isBoxOpen} onClose={onClose} club={clubId ? { photo: img, title, fullName: displayFullName, description, clubType, major, meetingDays, size } : null} />,
-          document.body
-        )}
+        <ClubPopUp isOpen={isBoxOpen} onClose={onClose} club={clubId ? { photo: img, title, fullName: displayFullName, description, clubType, major, link: url } : null} />
       </CardContainer>
     </>
   );

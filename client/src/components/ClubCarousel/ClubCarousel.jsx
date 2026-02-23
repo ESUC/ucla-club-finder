@@ -69,16 +69,16 @@ const ClubCarousel = ({ title, clubs = [] }) => {
         </button>
         <div className="carousel-container" ref={carouselRef}>
           <div className="carousel-track">
-            {clubs.map((club) => (
-              <div key={club.id} className="club-card">
+            {clubs.map((club, index) => (
+              <div key={club._id || club.id || index} className="club-card">
                 <div className="club-card-image">
-                  {club.logo ? (
-                    <img src={club.logo} alt={club.name} className="club-logo" />
+                  {(club.img || club.logo) ? (
+                    <img src={club.img || club.logo} alt={club.abbreviation || club.name || ''} className="club-logo" />
                   ) : (
                     <div className="club-logo-placeholder"></div>
                   )}
                 </div>
-                <p className="club-card-name">{club.name}</p>
+                <p className="club-card-name">{club.abbreviation || club.name || club.clubName || 'Club'}</p>
               </div>
             ))}
           </div>
