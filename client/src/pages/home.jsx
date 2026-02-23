@@ -64,6 +64,7 @@ const StyledAutocomplete = styled(Autocomplete)`
     font-family: 'Inter', 'Roboto', Arial, sans-serif;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    
 
     &:hover {
       border-color: #0f172a;
@@ -553,6 +554,7 @@ export const Home = () => {
                     '& .MuiOutlinedInput-root': {
                       '& fieldset': {
                         border: 'none',
+                        width: '75%',
                       },
                     },
                   }}
@@ -567,14 +569,15 @@ export const Home = () => {
                     marginTop: '8px',
                     border: '1px solid #e2e8f0',
                     '& .MuiAutocomplete-option': {
-                      padding: '12px 16px',
+                      padding: '12px 12px',
+                      width: '75%',
                       fontSize: '0.95rem',
                       '&:hover': {
                         backgroundColor: '#f8fafc',
                       },
                       '&[aria-selected="true"]': {
                         backgroundColor: 'transparent',
-                        color: '#0f172a',
+                        color: '#99A1AF',
                         '&:hover': {
                           backgroundColor: '#f8fafc',
                         },
