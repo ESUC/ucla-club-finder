@@ -4,6 +4,7 @@ import axios from 'axios';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Footer from '../components/Footer/Footer';
 import '../css/account.css';
+import { API_BASE } from '../config';
 
 export const VerifyPassword = () => {
   const [password, setPassword] = useState('');
@@ -15,7 +16,7 @@ export const VerifyPassword = () => {
   const handlePassword = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:4000/api/users/auth/verify-password', { code, password })
+      .post(`${API_BASE}/api/users/auth/verify-password`, { code, password })
       .then((response) => {
         if (response && response.status === 200) {
           window.location.href = '/auth/login';

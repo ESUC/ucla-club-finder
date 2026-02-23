@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
+    "nodemailer": "^7.0.12",
     "react-router-dom": "^6.26.0"
   },
   "engines": {
@@ -8,8 +11,9 @@
     "npm": ">=9"
   },
   "devDependencies": {
+    "concurrently": "^9.1.0",
     "@eslint/js": "^9.39.1",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -23,7 +27,10 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -1,10 +1,13 @@
+
+
 import { useState } from 'react';
 import { TextField, Button, Typography, Box } from '@mui/material';
 import styled from 'styled-components';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import { API_BASE } from '../config';
 
 const OuterContainer = styled.div`
   background: white;
@@ -16,6 +19,7 @@ const OuterContainer = styled.div`
 `;
 
 export const Register = () => {
+  console.log("REGISTER PAGE 2 RENDER");
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
@@ -27,7 +31,7 @@ export const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:4000/api/users/auth/register', {
+      .post(`${API_BASE}/api/users/auth/register`, {
         firstName,
         lastName,
         username,
