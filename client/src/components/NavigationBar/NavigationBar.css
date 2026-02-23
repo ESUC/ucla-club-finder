@@ -32,7 +32,7 @@
   display: none !important;
 }
 
-/* Reset Material-UI AppBar defaults */
+/* Reset Material-UI AppBar defaults - no transform/position change on hover */
 .navbar-appbar,
 .navbar-appbar.MuiAppBar-root {
   padding: 0 !important;
@@ -44,9 +44,12 @@
   border-radius: 0 !important;
   min-height: auto !important;
   position: fixed !important;
+  transform: none !important;
+  top: 0 !important;
+  transition: none !important;
 }
 
-/* Reset Material-UI Toolbar defaults */
+/* Reset Material-UI Toolbar defaults - fixed height, no movement */
 .navbar-toolbar,
 .navbar-toolbar.MuiToolbar-root {
   display: flex !important;
@@ -62,6 +65,8 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 .navbar-logo {
@@ -120,7 +125,7 @@
   left: 0 !important;
 }
 
-/* Reset Material-UI Button defaults */
+/* Reset Material-UI Button defaults - fixed border so hover doesn't shift layout */
 .navbar-button,
 .navbar-button.MuiButton-root,
 .navbar-button.MuiButtonBase-root {
@@ -131,11 +136,11 @@
   font-size: 0.83rem !important;
   padding: 10px 16px !important;
   border-radius: 8px !important;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
   min-width: auto !important;
   transform: none !important;
   margin: 0 !important;
-  border: none !important;
+  border: 2px solid transparent !important;
   background: transparent !important;
   box-shadow: none !important;
   text-decoration: none !important;
@@ -152,6 +157,7 @@
   outline: none !important;
   will-change: auto !important;
   overflow: visible !important;
+  box-sizing: border-box !important;
 }
 
 .navbar-button:hover,
@@ -167,7 +173,7 @@
   color: #0f172a !important;
   transform: none !important;
   box-shadow: none !important;
-  border: none !important;
+  border: 2px solid transparent !important;
   text-decoration: none !important;
   position: relative !important;
   top: 0 !important;
@@ -195,7 +201,7 @@
   color: #64748b !important;
 }
 
-/* Reset Material-UI Button defaults for login button */
+/* Reset Material-UI Button defaults for login button - fixed border to prevent shift */
 .navbar-login-button,
 .navbar-login-button.MuiButton-root,
 .navbar-login-button.MuiButtonBase-root {
@@ -207,11 +213,11 @@
   font-size: 0.83rem !important;
   padding: 10px 16px !important;
   border-radius: 8px !important;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
   min-width: auto !important;
   transform: none !important;
   margin: 0 !important;
-  border: none !important;
+  border: 2px solid transparent !important;
   box-shadow: none !important;
   text-decoration: none !important;
   line-height: 1.5 !important;
@@ -227,6 +233,7 @@
   outline: none !important;
   will-change: auto !important;
   overflow: visible !important;
+  box-sizing: border-box !important;
 }
 
 .navbar-login-button.MuiButton-root:hover,
@@ -239,7 +246,7 @@
   color: #0f172a !important;
   transform: none !important;
   box-shadow: none !important;
-  border: none !important;
+  border: 2px solid transparent !important;
   text-decoration: none !important;
   position: relative !important;
   top: 0 !important;
@@ -254,7 +261,7 @@
   outline: none !important;
 }
 
-/* User icon button styles */
+/* User icon button styles - fixed border to prevent shift */
 .navbar-user-button,
 .navbar-user-button.MuiButton-root,
 .navbar-user-button.MuiButtonBase-root {
@@ -266,13 +273,13 @@
   font-size: 0.83rem !important;
   padding: 10px !important;
   border-radius: 8px !important;
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
   min-width: auto !important;
   width: 40px !important;
   height: 40px !important;
   transform: none !important;
   margin: 0 !important;
-  border: none !important;
+  border: 2px solid transparent !important;
   box-shadow: none !important;
   text-decoration: none !important;
   line-height: 1.5 !important;
@@ -290,6 +297,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  box-sizing: border-box !important;
 }
 
 .navbar-user-button.MuiButton-root:hover,
@@ -302,7 +310,7 @@
   color: #0f172a !important;
   transform: none !important;
   box-shadow: none !important;
-  border: none !important;
+  border: 2px solid transparent !important;
   text-decoration: none !important;
   position: relative !important;
   top: 0 !important;
@@ -328,5 +336,49 @@
 .navbar-user-button:hover .MuiButton-startIcon,
 .navbar-user-button.MuiButton-root:hover .MuiButton-startIcon {
   color: #64748b !important;
+}
+
+/* User area: profile button + email on hover */
+.navbar-user-area {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.navbar-logged-in-tooltip {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 8px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'DM Sans', 'Inter', 'Roboto', Arial, sans-serif;
+  border-radius: 8px;
+  white-space: nowrap;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-user-area:hover .navbar-logged-in-tooltip {
+  opacity: 1;
+}
+
+.navbar-logout-button.navbar-login-button.MuiButton-root:hover,
+.navbar-logout-button.navbar-login-button.MuiButtonBase-root:hover {
+  background-color: #dc2626 !important;
+  color: #fff !important;
+  transform: none !important;
+  border: 2px solid transparent !important;
 }
 

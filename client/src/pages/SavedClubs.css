@@ -8,10 +8,10 @@
 }
 
 .saved-clubs-content {
-  padding: 40px 24px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 24px;
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -19,15 +19,15 @@
 .saved-clubs-edit-button {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 24px;
+  gap: 10px;
+  padding: 10px 16px;
   background: #ffffff;
-  border: 2px solid rgba(4, 56, 115, 0.2);
-  border-radius: 12px;
+  border: 1.5px solid rgba(4, 56, 115, 0.2);
+  border-radius: 8px;
   text-decoration: none;
   color: #043873;
   font-family: 'DM Sans', sans-serif;
-  font-size: 18px;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: all 0.2s ease;
   width: fit-content;
@@ -47,18 +47,30 @@
 
 .saved-clubs-edit-button svg {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
+}
+
+.saved-clubs-edit-link {
+  color: #043873;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.saved-clubs-edit-link:hover {
+  text-decoration: underline;
 }
 
 .saved-clubs-alert {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px 20px;
+  gap: 10px;
+  padding: 12px 16px;
   background: #fff4e6;
-  border: 2px solid #ffa726;
-  border-radius: 12px;
+  border: 1px solid #ffa726;
+  border-radius: 8px;
   color: #e65100;
   font-family: 'DM Sans', sans-serif;
   position: relative;
@@ -66,9 +78,9 @@
 
 .saved-clubs-alert svg:first-child {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
   color: #e65100;
 }
 
@@ -76,22 +88,22 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .saved-clubs-alert-title {
-  font-size: 16px;
+  font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
   color: #e65100;
 }
 
 .saved-clubs-alert-message {
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 400;
   margin: 0;
   color: #e65100;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .saved-clubs-alert-close {
@@ -113,8 +125,27 @@
 }
 
 .saved-clubs-alert-close svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
+}
+
+.no-saved-clubs-box {
+  background: #f5f7fb;
+  border: 1px solid #dbe3f0;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.go-to-clubs-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #043873;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
 }
 
 /* Responsive Design */
