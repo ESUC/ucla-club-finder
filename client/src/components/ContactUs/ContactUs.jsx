@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios';
+import { API_BASE } from '../../config';
 import './ContactUs.css';
 
 const ContactUs = () => {
@@ -11,6 +13,9 @@ const ContactUs = () => {
     message: '',
   });
 
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState(null);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -19,10 +24,50 @@ const ContactUs = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setStatus(null);
+
+    const payload = {
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      email: formData.email.trim(),
+      subject: formData.subject.trim(),
+      clubName: formData.clubName.trim(),
+      message: formData.message.trim(),
+    };
+
+    if (!payload.email || !payload.message) {
+      setStatus({ type: 'error', message: 'Please enter your email and a message.' });
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      await axios.post(`${API_BASE}/api/users/contact`, payload);
+      setStatus({ type: 'success', message: 'Message sent! We will get back to you soon.' });
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        subject: '',
+        clubName: '',
+        message: '',
+      });
+    } catch (err) {
+      const data = err?.response?.data;
+      const apiErrors = data?.errors;
+      const general =
+        (apiErrors && (apiErrors.general || apiErrors.email || apiErrors.message)) ||
+        data?.error ||
+        err?.message;
+      setStatus({
+        type: 'error',
+        message: general || 'Failed to send message. Please try again.',
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -90,7 +135,15 @@ const ContactUs = () => {
           className="form-textarea"
           rows="4"
         />
-        <button type="submit" className="form-button">Send Message</button>
+        {status && (
+          <p className={`contact-status contact-status-${status.type}`}>
+            {status.message}
+          </p>
+        )}
+
+        <button type="submit" className="form-button" disabled={submitting}>
+          {submitting ? 'Sending…' : 'Send Message'}
+        </button>
       </form>
     </section>
   );

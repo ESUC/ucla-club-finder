@@ -1,191 +1,45 @@
 [
-    {
-      "abbreviation": "UPE",
-      "clubName": "Upsilon Pi Epsilon",
-      "clubType": "Professional",
-      "major": "Computer Science",
-      "description": "Upsilon Pi Epsilon - Computer Science Honors Society",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "BSG",
-      "clubName": "Bruin Spacecraft Group",
-      "clubType": "Project-based",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "Bruin Space - Aerospace engineering and space exploration",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bsg.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "ASME",
-      "clubName": "American Society of Mechanical Engineers",
-      "clubType": "Professional",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "American Society of Mechanical Engineers at UCLA",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/asme.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "AIAA",
-      "clubName": "American Institute of Aeronautics and Astronautics",
-      "clubType": "Professional",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "American Institute of Aeronautics and Astronautics",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aiaa.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "DBF",
-      "clubName": "Design Build Fly",
-      "clubType": "Project-based",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "Design Build Fly - Aerospace design competition team",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/dbf.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "IEEE",
-      "clubName": "Institute of Electrical and Electronics Engineers",
-      "clubType": "Professional",
-      "major": "Electrical Engineering",
-      "description": "Institute of Electrical and Electronics Engineers",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ieee.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "QWER Hacks",
-      "clubName": "QWER Hacks",
-      "clubType": "Equity, Diversity, & Inclusion",
-      "major": "Computer Science",
-      "description": "QWER Hacks - LGBTQ+ hackathon organization",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/qwerhacks.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "MRS",
-      "clubName": "Materials Research Society",
-      "clubType": "Professional",
-      "major": "Materials",
-      "description": "Materials Research Society - Materials science and engineering",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/mrs.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "AIChe",
-      "clubName": "American Institute of Chemical Engineers",
-      "clubType": "Professional",
-      "major": "Chemical",
-      "description": "American Institute of Chemical Engineers",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aiche.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "ITE",
-      "clubName": "Institute of Transportation Engineers",
-      "clubType": "Professional",
-      "major": "Civil/Environmental Engineering",
-      "description": "Institute of Transportation Engineers",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ite.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "3D4E",
-      "clubName": "3D4E",
-      "clubType": "Project-based",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "3D4E - 3D printing and additive manufacturing",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/3d4e.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "MentorSEAS",
-      "clubName": "MentorSEAS",
-      "clubType": "Education & Outreach",
-      "major": "Engineering",
-      "description": "MentorSEAS - Engineering mentorship program",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/mentorseas.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "UAS@UCLA",
-      "clubName": "UAS at UCLA",
-      "clubType": "Project-based",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "UAS@UCLA - Unmanned Aerial Systems team",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/uas.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "BMES",
-      "clubName": "Biomedical Engineering Society",
-      "clubType": "Professional",
-      "major": "Bioengineering",
-      "description": "Biomedical Engineering Society",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bmes.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "Rocket Project",
-      "clubName": "Rocket Project",
-      "clubType": "Project-based",
-      "major": "Mechanical/Aerospace Engineering",
-      "description": "Rocket Project - Rocket design and launch team",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/rocketproject.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "SWE",
-      "clubName": "Society of Women Engineers",
-      "clubType": "Equity, Diversity, & Inclusion",
-      "major": "Engineering",
-      "description": "Society of Women Engineers",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/swe.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "ACM@UCLA",
-      "clubName": "Association for Computing Machinery",
-      "clubType": "Project-based",
-      "major": "Computer Science",
-      "description": "Association for Computing Machinery at UCLA",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/acm.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "SOLES|SHPE@ULA",
-      "clubName": "SOLES and SHPE at UCLA",
-      "clubType": "Equity, Diversity, & Inclusion",
-      "major": "Engineering",
-      "description": "SOLES and SHPE - Society of Latino Engineers and Scientists",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/soles.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "EWB",
-      "clubName": "Engineers Without Borders",
-      "clubType": "Education & Outreach",
-      "major": "Civil/Environmental Engineering",
-      "description": "Engineers Without Borders - International development projects",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ewb.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "IEEE-WIE",
-      "clubName": "IEEE Women in Engineering",
-      "clubType": "Equity, Diversity, & Inclusion",
-      "major": "Electrical Engineering",
-      "description": "IEEE Women in Engineering",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ieee-wie.png",
-      "url": "https://www.esuc.ucla.edu/"
-    },
-    {
-      "abbreviation": "SWUG",
-      "clubName": "Software Undergraduate Group",
-      "clubType": "Project-based",
-      "major": "Computer Science",
-      "description": "Software Undergraduate Group",
-      "img": "https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/swug.png",
-      "url": "https://www.esuc.ucla.edu/"
-    }
+  {"abbreviation":"ESUC","clubName":"Engineering Society at UCLA","clubType":"General","major":"General","description":"The oldest engineering club on campus, ESUC serves as the umbrella organization for all clubs and holds large-scale events such as the StartUp Fair, Engineering Welcome Day and Engineers Week.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/esuc.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"Engineering Ambassadors","clubName":"Engineering Ambassadors","clubType":"Education & Outreach","major":"General","description":"Aiming to showcase the engineering undergraduate experience to prospective students and alumni by giving tours and serving as liaisons at external events.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/amb.png","url":"https://seasoasa.ucla.edu/tours"},
+  {"abbreviation":"NSBE","clubName":"National Society of Black Engineers","clubType":"Equity, Diversity, & Inclusion","major":"General","description":"Community outreach, professional development and academic development among minority students in engineering, math, and science related fields.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/nsbe.png","url":"https://nsbebruins.wixsite.com/nsbe"},
+  {"abbreviation":"AISES","clubName":"American Indian Science and Engineering Society","clubType":"Equity, Diversity, & Inclusion","major":"General","description":"An organization dedicated to providing students of indigenous peoples of North America and the Pacific Islands with academic, professional development, social and networking opportunities.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aises.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"SOLES","clubName":"Society of Latino Engineers and Scientists","clubType":"Equity, Diversity, & Inclusion","major":"General","description":"Empowering the Hispanic community to impact the world through STEM awareness, access, support and development.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/soles.png","url":"https://uclasoles.org/"},
+  {"abbreviation":"PIES","clubName":"Pilipinos in Engineering and Sciences","clubType":"Equity, Diversity, & Inclusion","major":"General","description":"Pilipinos In Engineering addresses the concerns of and provides resources, social, academic and networking opportunities for Pilipino engineering and science students at UCLA.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/pies.png","url":"https://piesucla.wixsite.com/pies"},
+  {"abbreviation":"SWE","clubName":"Society of Women Engineers","clubType":"Equity, Diversity, & Inclusion","major":"General","description":"UCLA SWE aims to bring professional development opportunities to UCLA while advocating for the creation of an equal platform for all in engineering.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/swe.png","url":"https://www.sweucla.com/"},
+  {"abbreviation":"BEAM","clubName":"Building and Encouraging Active Minds","clubType":"Education & Outreach","major":"General","description":"Bringing STEM activities to underserved K-8 schools in Los Angeles.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/beam.png","url":"https://beam.ucla.edu/"},
+  {"abbreviation":"Tau Beta Pi","clubName":"Tau Beta Pi","clubType":"Professional","major":"General","description":"National engineering honor society offering free drop-in tutoring and review sessions for lower division math and science courses, organizing engineering competitions, and planning mentorship and outreach events.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/tbp.png","url":"https://tbp.seas.ucla.edu"},
+  {"abbreviation":"Theta Tau","clubName":"Theta Tau","clubType":"Professional","major":"General","description":"A co-ed, professional engineering fraternity dedicated to the principles of brotherhood, professionalism, and service.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/thetatau.png","url":"http://www.thetataubruins.org/"},
+  {"abbreviation":"Makerspace","clubName":"Engineering 1 / Makerspace","clubType":"General","major":"General","description":"UCLA Samueli Makerspace and Engineering 1 resources for hands-on prototyping and fabrication.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/esuc.png","url":"https://samueli.ucla.edu/"},
+  {"abbreviation":"BMES","clubName":"Biomedical Engineering Society","clubType":"Professional","major":"Bioengineering","description":"Bringing together bioengineering undergraduates, graduate students, faculty, and alumni with academic, career, and social events.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bmes.png","url":"http://bmes.seas.ucla.edu/"},
+  {"abbreviation":"CruX","clubName":"CruX","clubType":"Project-based","major":"Bioengineering","description":"Dedicated to raising awareness and interest in the field of neurotechnology as well as providing undergraduate students with opportunities to build skills, network, and work on brain-computer interface projects relevant to the industry.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/crux.png","url":"https://www.cruxucla.com/"},
+  {"abbreviation":"AIChe","clubName":"American Institute of Chemical Engineers","clubType":"Professional","major":"Chemical and Biomolecular Engineering","description":"Connecting chemical engineering students with industry professionals, faculty, and peers through networking, career, and mentorship events. In Chem-E Car, students design, build, and test a vehicle powered by chemical reactions.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aiche.png","url":"http://aiche.seas.ucla.edu/"},
+  {"abbreviation":"ASCE","clubName":"American Society of Civil Engineers","clubType":"Professional","major":"Civil and Environmental Engineering","description":"Offering opportunities to network with industry as well as hands-on experience in projects covering all areas of civil engineering.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/asce.png","url":"http://www.ascebruins.org/"},
+  {"abbreviation":"Chi Epsilon at UCLA","clubName":"Chi Epsilon at UCLA","clubType":"Professional","major":"Civil and Environmental Engineering","description":"The national civil engineering honor society upholding member scholarship, character, practicality, and sociability.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/chiepsilon.png","url":"https://uclachiepsilon.github.io/"},
+  {"abbreviation":"ITE","clubName":"Institute of Transportation Engineers at UCLA","clubType":"Professional","major":"Civil and Environmental Engineering","description":"Provides opportunities to meet and interact with transportation engineering professionals through field trips, speaker sessions, and conferences.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ite.png","url":"https://iteucla.square.site/"},
+  {"abbreviation":"EWB","clubName":"Engineers Without Borders","clubType":"Education & Outreach","major":"Civil and Environmental Engineering","description":"Engaging innovative students in volunteer opportunities, locally and abroad, to play a role in designing and implementing sustainable engineering development programs.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ewb.png","url":"https://www.ewb-ucla.org/"},
+  {"abbreviation":"MRS","clubName":"Materials Research Society","clubType":"Professional","major":"Materials Science and Engineering","description":"Events focusing on research, meeting/networking with alumni, finding summer internships and research opportunities, and meeting fellow classmates interested in materials science and engineering.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/mrs.png","url":"http://www.seas.ucla.edu/mrs/"},
+  {"abbreviation":"ASME","clubName":"American Society of Mechanical Engineers","clubType":"Professional","major":"Mechanical and Aerospace Engineering","description":"Offering professional development, academic and social opportunities for students interested in mechanical engineering. Facilitates hands-on combat robotics and underwater robotics teams.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/asme.png","url":"http://asmebruins.com/"},
+  {"abbreviation":"Bruin Formula Racing","clubName":"Bruin Formula Racing","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"Design, assemble, test, and race an open-wheel Formula style race vehicle in international competition.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bruinracing.png","url":"https://www.bruinformula.com/"},
+  {"abbreviation":"Bruin Racing Baja","clubName":"Bruin Racing Baja","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"Design, assemble, test, and race an off-road race vehicle in national competition.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bruinracing.png","url":"https://www.bruinracing.com/baja/"},
+  {"abbreviation":"Bruin Supermileage","clubName":"Bruin Supermileage","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"Providing experience designing, manufacturing, and racing fuel-efficient prototype gasoline-powered vehicles.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bruinracing.png","url":"https://www.bruinracing.com/supermileage"},
+  {"abbreviation":"AIAA","clubName":"American Institute of Aeronautics and Astronautics","clubType":"Professional","major":"Mechanical and Aerospace Engineering","description":"Offering company info sessions, workshops, aerospace manufacturing facility tours, and hands-on opportunities with the UCLA Rocket Project, Design/Build/Fly, and Unmanned Aerial Systems.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aiaa.png","url":"http://aiaa.seas.ucla.edu/"},
+  {"abbreviation":"Design Build Fly","clubName":"Design Build Fly at UCLA","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"An annual engineering competition in which students must design and fabricate a radio-controlled airplane to meet a set of performance requirements.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/dbf.png","url":"https://dbfatucla.github.io/DBFatUCLA/"},
+  {"abbreviation":"Rocket Project","clubName":"Rocket Project at UCLA","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"The largest rocket engineering project at UCLA.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/rocketproject.png","url":"http://rocketproject.seas.ucla.edu/"},
+  {"abbreviation":"Uncrewed Aerial Systems at UCLA","clubName":"Uncrewed Aerial Systems at UCLA","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"UAS@UCLA - Unmanned Aerial Systems team.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/uas.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"Bruin Spacecraft Group","clubName":"Bruin Spacecraft Group","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"Providing students hands-on experience in space engineering and technology by building and launching high altitude balloons and low Earth orbit satellites as well as developing scientific payloads for space research.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bsg.png","url":"https://bruinspace.com/"},
+  {"abbreviation":"3D4E","clubName":"3D Printing for Everyone","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"3D4E (3D Printing for Everyone) is an intercollegiate network of 3D printing and rapid-prototyping enthusiasts that hosts 3D modeling workshops and projects.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/3d4e.png","url":"http://3d4eatucla.github.io/"},
+  {"abbreviation":"BES","clubName":"Bruin Earth Solutions","clubType":"Project-based","major":"Mechanical and Aerospace Engineering","description":"BHS is a student-run environmental club that is fighting the effects of climate change and environmental issues through sustainability projects that can make a quantifiable impact.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/bruinearth.png","url":"http://bruinhomesolutions.com/"},
+  {"abbreviation":"ACM","clubName":"Association for Computing Machinery","clubType":"Project-based","major":"Computer Science","description":"Hack. Build. Innovate! Meet fellow developers and land your dream job.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/acm.png","url":"http://www.uclaacm.com/"},
+  {"abbreviation":"GLITCH","clubName":"GLITCH","clubType":"Project-based","major":"Computer Science","description":"GLITCH at UCLA - gaming and interactive media community.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/glitch.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"LA Hacks","clubName":"LA Hacks","clubType":"Project-based","major":"Computer Science","description":"LA Hacks - one of the largest collegiate hackathons in Los Angeles.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/lahacks.png","url":"https://lahacks.com/"},
+  {"abbreviation":"UPE","clubName":"Upsilon Pi Epsilon","clubType":"Professional","major":"Computer Science","description":"The international honor society in the computing and information disciplines, offering career development events, mentorship opportunities, and tutoring.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/upe.png","url":"https://upe.seas.ucla.edu/"},
+  {"abbreviation":"Nova","clubName":"Nova Tech for Good","clubType":"Project-based","major":"Computer Science","description":"Nova for Good creates high-impact technology that empowers nonprofits to better serve their communities.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/nova.png","url":"http://novaforgood.org/"},
+  {"abbreviation":"Linux Users Group","clubName":"Linux Users Group","clubType":"Project-based","major":"Computer Science","description":"Linux Users Group at UCLA - open source and systems programming.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/lug.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"HKN","clubName":"Eta Kappa Nu","clubType":"Professional","major":"Electrical and Computer Engineering","description":"The UCLA chapter of the nationally recognized electrical and computer engineering honor society hosts free academic tutoring, social events, and professional job fairs.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/hkn.png","url":"http://hkn.ee.ucla.edu/"},
+  {"abbreviation":"exploretech","clubName":"exploretech.la","clubType":"Education & Outreach","major":"Electrical and Computer Engineering","description":"exploretech.la hosts an annual event bringing high schoolers from Title I, underserved communities throughout the Greater Los Angeles area to UCLA for a day of workshops, panels, and exhibitions hoping to inspire the next generation of engineers and brilliant minds.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/exploretech.png","url":"http://www.exploretech.la/"},
+  {"abbreviation":"Out in STEM at UCLA","clubName":"Out in STEM at UCLA","clubType":"Equity, Diversity, & Inclusion","major":"Electrical and Computer Engineering","description":"Out in STEM (oSTEM) at UCLA - LGBTQ+ community in STEM.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ostem.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"Quantum Computing Student Association","clubName":"Quantum Computing Student Association","clubType":"Project-based","major":"Electrical and Computer Engineering","description":"Quantum Computing Student Association at UCLA - quantum computing and quantum information.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/qcsa.png","url":"https://www.esuc.ucla.edu/"},
+  {"abbreviation":"AI Safety","clubName":"AI Safety at UCLA","clubType":"Project-based","major":"Electrical and Computer Engineering","description":"AI Safety at UCLA - students interested in AI and computer science working on AI safety and alignment.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/aisafety.png","url":"http://aisafetyatucla.org/"},
+  {"abbreviation":"IEEE","clubName":"Institute of Electrical and Electronics Engineers","clubType":"Professional","major":"Electrical and Computer Engineering","description":"Enabling fun hands-on projects, professional development, and academic support for students interested in electrical engineering.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ieee.png","url":"http://ieeebruins.com/"},
+  {"abbreviation":"WATT","clubName":"Women Advancing Technology Through Teamwork at UCLA","clubType":"Equity, Diversity, & Inclusion","major":"Electrical and Computer Engineering","description":"Women Advancing Technology Through Teamwork (WATT), is a technical advocacy group for women and minorities in Electrical Engineering, operating as a branch of IEEE.","img":"https://www.esuc.ucla.edu/winter-orgs/assets/img/orgs/ieee-wie.png","url":"http://www.ieeewatt.ucla.edu/"}
 ]

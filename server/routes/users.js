@@ -21,6 +21,7 @@ function isValidObjectId(id) {
 // POST a new club
 
 const { validatePassword } = require("../services/validatePassword");
+const { sendContactEmail } = require("../services/mailer");
 
 // Return 503 if MongoDB is not connected (avoids 10s buffer timeout)
 function requireDb(res) {
@@ -36,12 +37,39 @@ function requireDb(res) {
 }
 
 const validateYear = (year) => {
-  if(!/^(2026|2027|2028|2029)$/.test(year)){
+  if (!/^(2026|2027|2028|2029)$/.test(year)) {
     return 1;
   }
   return 0;
-}
+};
 
+router.post('/contact', async (req, res) => {
+  try {
+    const { firstName, lastName, email, subject, clubName, message } = req.body || {};
+    const errors = {};
+
+    if (!email || String(email).trim() === '') {
+      errors.email = 'Please enter your email.';
+    }
+    if (!message || String(message).trim() === '') {
+      errors.message = 'Please enter a message.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
+
+    await sendContactEmail({ firstName, lastName, email, subject, clubName, message });
+    return res.status(200).json({ message: 'Message sent successfully.' });
+  } catch (err) {
+    console.error('CONTACT FORM ERROR 💥', err);
+    return res.status(500).json({
+      errors: {
+        general: 'Failed to send message. Please try again later.',
+      },
+    });
+  }
+});
 
 router.post('/auth/register', async (req, res) => {
   if (!requireDb(res)) return;
