@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import axios from 'axios';
+import ClubPopUp from './ClubPopUp';
 
 import { API_BASE } from '../config';
 
@@ -139,51 +139,6 @@ const Abbreviation = styled.div`
   letter-spacing: 0.5px;
 `;
 
-const Box = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  transition: all 0.4s;
-  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.isOpen ? 1 : 0)};
-  z-index: 1000;
-`;
-
-const Content = styled.div`
-  position: absolute;
-  background: white;
-  width: 400px;
-  max-width: 90vw;
-  padding: 2em;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-`;
-
-const BoxClose = styled.button`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  color: #64748b;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f1f5f9;
-    color: #1a365d;
-  }
-`;
-
 const ClubCard = ({
   isBoxOpen,
   onOpen,
@@ -277,40 +232,7 @@ const ClubCard = ({
           <Abbreviation>{title}</Abbreviation>
         </FooterSection>
 
-        {createPortal(
-          //added details for when the card is clicked
-          <Box isOpen={isBoxOpen} onClick={onClose}>
-            <Content onClick={(e) => e.stopPropagation()}>
-              <h1 style={{ color: '#0f172a', marginBottom: '12px', fontSize: '1.25rem' }}>
-                {displayFullName}
-              </h1>
-              <div style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '8px' }}>{title}</div>
-              <p style={{ color: '#64748b', lineHeight: '1.6', marginBottom: '16px' }}>
-                {description || `${displayFullName} - A student organization dedicated to fostering innovation, collaboration, and professional development in engineering at UCLA.`}
-              </p>
-              {clubType && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Type: <span style={{ color: '#334155', fontWeight: 500 }}>{clubType}</span>
-                </div>
-              )}
-              {major && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Major: <span style={{ color: '#334155', fontWeight: 500 }}>{major}</span>
-                </div>
-              )}
-              {url && (
-                <div style={{ color: '#0f172a', fontWeight: 600, marginBottom: '6px' }}>
-                  Club Website: <span style={{ color: '#334155', fontWeight: 500 }}><a href={url}>{url}</a></span>
-                </div>
-              )}
-              <div style={{ color: '#64748b', fontSize: '0.9rem' }}>
-                Contact: {title.toLowerCase()}@ucla.edu
-              </div>
-              <BoxClose onClick={onClose}>×</BoxClose>
-            </Content>
-          </Box>,
-          document.body
-        )}
+        <ClubPopUp isOpen={isBoxOpen} onClose={onClose} club={clubId ? { photo: img, title, fullName: displayFullName, description, clubType, major, link: url } : null} />
       </CardContainer>
     </>
   );
