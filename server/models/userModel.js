@@ -22,6 +22,10 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
+    pronouns: {
+      type: String,
+      default: '',
+    },
     password: {
       type: String,
       required: true,
@@ -43,6 +47,26 @@ const userSchema = new Schema(
     bio: { 
       type: String, 
       default: '', 
+    },
+    passwordResetCodeHash: {
+      type: String,
+      default: null
+    },
+    passwordResetExpiresAt: {
+      type: Date,
+      default: null
+    },
+    passwordResetVerified: { 
+      type: Boolean, 
+      default: false 
+    },
+    passwordResetLastSentAt: { 
+      type: Date, 
+      default: null 
+    },
+    lastLoginAt: {
+      type: Date,
+      default: null,
     },
     savedClubs: [
       {
