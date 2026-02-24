@@ -98,7 +98,7 @@ export const SavedClubs = () => {
         )}
         <ProfileInfo />
         {loading ? (
-          <p>Loading...</p>
+          <p className="saved-clubs-loading">Loading saved clubs…</p>
         ) : savedClubs.length === 0 ? (
           <div className="no-saved-clubs-box">
             <p>No saved clubs yet.</p>
