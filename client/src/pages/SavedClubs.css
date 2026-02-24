@@ -148,18 +148,17 @@
   text-decoration: none;
 }
 
-/* Responsive Design */
-@media (max-width: 968px) {
-  .saved-clubs-content {
-    padding: 32px 20px;
-    gap: 40px;
-  }
+.saved-clubs-loading {
+  margin: 0;
+  color: #6A7282;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
 }
 
-@media (max-width: 640px) {
-  .saved-clubs-content {
-    padding: 24px 16px;
-    gap: 32px;
-  }
+.no-saved-clubs-box p {
+  margin: 0;
+  color: #043873;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
 }
 
