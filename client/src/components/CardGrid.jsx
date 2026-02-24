@@ -310,7 +310,8 @@ const CardGrid = ({ searchQuery = '', userId, clubs, filters = {}, savedClubIds 
         if (!matchesSize) return false;
 
         return true;
-      });
+      })
+      .sort((a, b) => a.abbreviation.localeCompare(b.abbreviation)); // sort clubs by abbreviation
   }, [clubs, searchQuery, types, majors, days, sizes]);
 
   if (filtered.length === 0) {
