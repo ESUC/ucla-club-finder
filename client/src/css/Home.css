@@ -34,12 +34,11 @@ header {
 
 .home-header {
   display: flex;
-  width: fit-content;
+  width: 100%;
   height: 200px;
   padding: 92px 400px 148px 400px;
   align-items: center;
   background: #043873;
-  width: max-content;
 }
 
 .home-title {
@@ -53,7 +52,6 @@ header {
   line-height: normal;
   letter-spacing: -1.44px;
   margin-bottom: 40px;
-
 }
 
 .home-underline {
