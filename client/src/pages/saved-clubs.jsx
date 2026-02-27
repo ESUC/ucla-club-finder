@@ -96,7 +96,7 @@ export const SavedClubs = () => {
             </button>
           </div>
         )}
-        <ProfileInfo />
+        <ProfileInfo savedCount={savedClubs.length} />
         {loading ? (
           <p>Loading...</p>
         ) : savedClubs.length === 0 ? (
