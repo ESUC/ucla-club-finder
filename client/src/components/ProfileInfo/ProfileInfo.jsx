@@ -1,7 +1,42 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+import { API_BASE } from "../../config";
 import './ProfileInfo.css';
 
-const ProfileInfo = () => {
+const defaultFormData = {
+  username: '',
+  major: 'N/A',
+  year: 'N/A',
+  bio: '',
+};
+
+const formatMajorYear = (major, year) => {
+  if (!year || year === "N/A") return major;
+  const shortYear = year.length === 4 ? year.slice(-2) : year;
+  return `${major} '${shortYear}`;
+};
+
+const ProfileInfo = ({ savedCount = 0 }) => {
+  const userId = localStorage.getItem('token') || null;
+  const [formData, setFormData] = useState(defaultFormData);
+
+  useEffect(() => {
+    if (!userId) return;
+    axios
+      .get(`${API_BASE}/api/users/profile/${userId}`)
+      .then((res) => {
+        const d = res.data || {};
+        setFormData({
+          username: d.username ?? '',
+          major: d.major ?? 'N/A',
+          year: d.year ?? 'N/A',
+          bio: d.bio ?? '',
+        });
+      })
+  }, [userId]);
+
   return (
     <div className="profile-component">
       {/* main section */}
@@ -17,24 +52,26 @@ const ProfileInfo = () => {
         </div>
         {/* user */}
         <div className="profile-user">
-          <h2 className="profile-username">costcosnumberonecustomer</h2>
+          <h2 className="profile-username">{formData.username}</h2>
           <div className="club-stats"> 
             <div className="club-saved">
-              <span className="number-saved">20</span>
+              <span className="number-saved">{savedCount}</span>
               <span className="stat-label">saved</span>
             </div>
-            <div className="club-joined">
+
+            {/* <div className="club-joined">
               <span className="number-joined">20</span>
               <span className="stat-label">joined</span>
-            </div>
+            </div> */}
+
           </div>
         </div>
       </div>
       
       {/* // description */}
       <div className="profile-description">
-        <span className="profile-year">food engineering '99</span>
-        <span className="profile-bio">i def like engineering 😋</span>
+        <span className="profile-year">{formatMajorYear(formData.major, formData.year)}</span>
+        <span className="profile-bio">{formData.bio}</span>
       </div>
       
       <Link to="/edit-profile" className="edit-profile-button">
