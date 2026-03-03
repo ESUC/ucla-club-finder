@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+>>>>>>> origin/main
 import {
   TextField,
   Typography,
@@ -17,7 +22,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from 'styled-components';
 
 import CardGrid from '../components/CardGrid';
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
+import { API_BASE } from '../config';
 import '../css/Home.css';
 
 const searchSuggestions = [
@@ -62,6 +69,7 @@ const StyledAutocomplete = styled(Autocomplete)`
     font-family: 'Inter', 'Roboto', Arial, sans-serif;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    
 
     &:hover {
       border-color: #0f172a;
@@ -123,7 +131,11 @@ const SearchContainer = styled.div`
 
 export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [clubs, setClubs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [savedClubIdsRaw, setSavedClubIdsRaw] = useState([]);
 
+<<<<<<< HEAD
     useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return; // not logged in
@@ -146,22 +158,98 @@ export const Home = () => {
   // TEMPORARY WILL CHANGE LATER
   const userId = '6627638285b11e9ed9d11fc9'; // john bruin
   const clubId = '6909d80faf668433ff54eced'; // UPE
+=======
+  // Filter state
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedMajors, setSelectedMajors] = useState([]);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedSizes, setSelectedSizes] = useState([]);
+
+  // userId from login: stored in localStorage as 'token' (actual userId) – must be before savedClubIds
+  const userId = localStorage.getItem('token') || null;
+  const savedClubIds = userId ? savedClubIdsRaw : [];
+
+  const toggleValue = (value, list, setter) => {
+    setter((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
+  };
+
+  // TEMPORARY: Get userId from localStorage if logged in, otherwise null (clubs still display)
+  // const userId = localStorage.getItem('token') ? '6627638285b11e9ed9d11fc9' : null;
+  // Fetch user's saved club IDs when logged in (so star state is correct)
+  useEffect(() => {
+    if (!userId) return;
+    axios
+      .get(`${API_BASE}/api/users/saved/${userId}`)
+      .then((res) => {
+        const list = res?.data ?? [];
+        setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
+      })
+      .catch(() => setSavedClubIdsRaw([]));
+  }, [userId]);
+>>>>>>> origin/main
 
   const handleSearchChange = (event, newValue) => {
     setSearchQuery(newValue || '');
   };
+
+  useEffect(() => {
+    // TEMPORARY FIX: Add timeout and error handling
+    const timeoutId = setTimeout(() => {
+      console.log('⏱️ Loading timeout - showing page anyway');
+      setLoading(false);
+    }, 3000); // Stop loading after 3 seconds even if API fails
+
+    console.log('🔍 Fetching clubs from API...');
+    axios
+        .get(`${API_BASE}/api/clubs/`)
+        .then((res) => {
+          console.log('✅ Clubs fetched successfully:', res.data?.length || 0, 'clubs');
+          setClubs(res.data || []);
+          setLoading(false);
+          clearTimeout(timeoutId);
+        })
+        .catch((err) => {
+          console.error('❌ API Error:', err.message);
+          console.error('Full error:', err);
+          // Set empty array on error so page still renders
+          setClubs([]);
+          setLoading(false);
+          clearTimeout(timeoutId);
+        });
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  const filters = {
+    types: selectedTypes,
+    majors: selectedMajors,
+    days: selectedDays,
+    sizes: selectedSizes,
+  };
+
+  if (loading) {
+    return (
+      <div className="home-bg">
+        <NavigationBar />
+        <div className="home-header">
+          <Typography variant="h3" align="center" className="home-title">
+            Student Clubs and Organizations
+          </Typography>
+        </div>
+        <div style={{ padding: '40px', textAlign: 'center' }}>
+          <Typography>Loading clubs...</Typography>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="home-bg">
       <NavigationBar />
       <div className="home-header">
         <Typography variant="h3" align="center" className="home-title">
-          Organizations
-        </Typography>
-        <Typography variant="subtitle1" align="center" className="home-subtitle">
-          Discover and explore UCLA engineering organizations. Use the search bar to find specific
-          clubs or browse by category using the filters. Click on any organization card to learn
-          more about their activities, meeting times, and opportunities.
+          Student Clubs and Organizations
         </Typography>
       </div>
       <div className="main-content">
@@ -176,10 +264,134 @@ export const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <FormControl>
-                <FormControlLabel control={<Checkbox />} label="Project-based" />
-                <FormControlLabel control={<Checkbox />} label="Greek" />
-                <FormControlLabel control={<Checkbox />} label="Education & Outreach" />
-                <FormControlLabel control={<Checkbox />} label="Equity, Diversity, & Inclusion" />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Competitive')}
+                      onChange={() => toggleValue('Competitive', selectedTypes, setSelectedTypes)}
+                    />
+                  }
+                  label="Competitive"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Project')}
+                      onChange={() => toggleValue('Project', selectedTypes, setSelectedTypes)}
+                    />
+                  }
+                  label="Project"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Learning')}
+                      onChange={() =>
+                        toggleValue('Learning', selectedTypes, setSelectedTypes)
+                      }
+                    />
+                  }
+                  label="Learning"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Tutoring')}
+                      onChange={() =>
+                        toggleValue(
+                          'Tutoring',
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
+                  }
+                  label="Tutoring"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Beginner Friendly')}
+                      onChange={() => toggleValue('Beginner Friendly', selectedTypes, setSelectedTypes)}
+                    />
+                  }
+                  label="Beginner Friendly"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Honor Society')}
+                      onChange={() =>
+                        toggleValue(
+                          'Honor Society',
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
+                  }
+                  label="Honor Society"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Greek')}
+                      onChange={() =>
+                        toggleValue(
+                          'Greek',
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
+                  }
+                  label="Greek"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Community Service')}
+                      onChange={() =>
+                        toggleValue(
+                          'Community Service',
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
+                  }
+                  label="Community Service"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Resource')}
+                      onChange={() =>
+                        toggleValue(
+                          'Resource',
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
+                  }
+                  label="Resource"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedTypes.includes('Hands-On')}
+                      onChange={() =>
+                        toggleValue(
+                          'Hands-On',
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
+                  }
+                  label="Hands-On"
+                />
               </FormControl>
             </AccordionDetails>
           </Accordion>
@@ -193,11 +405,110 @@ export const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <FormControl>
-                <FormControlLabel control={<Checkbox />} label="Computer Science" />
-                <FormControlLabel control={<Checkbox />} label="Electrical Engineering" />
-                <FormControlLabel control={<Checkbox />} label="Mechanical/Aerospace Engineering" />
-                <FormControlLabel control={<Checkbox />} label="Civil/Environmental Engineering" />
-                <FormControlLabel control={<Checkbox />} label="Bioengineering" />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Aerospace Engineering')}
+                      onChange={() => toggleValue('Aerospace Engineering', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Aerospace Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Bioengineering')}
+                      onChange={() =>
+                        toggleValue('Bioengineering', selectedMajors, setSelectedMajors)
+                      }
+                    />
+                  }
+                  label="Bioengineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Chemical Engineering')}
+                      onChange={() =>
+                        toggleValue(
+                          'Chemical Engineering',
+                          selectedMajors,
+                          setSelectedMajors
+                        )
+                      }
+                    />
+                  }
+                  label="Chemical Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Civil Engineering')}
+                      onChange={() =>
+                        toggleValue(
+                          'Civil Engineering',
+                          selectedMajors,
+                          setSelectedMajors
+                        )
+                      }
+                    />
+                  }
+                  label="Civil Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Computer Engineering')}
+                      onChange={() => toggleValue('Computer Engineering', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Computer Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Computer Science')}
+                      onChange={() => toggleValue('Computer Science', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Computer Science"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Computer Science and Engineering')}
+                      onChange={() => toggleValue('Computer Science and Engineering', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Computer Science and Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Electrical Engineering')}
+                      onChange={() => toggleValue('Electrical Engineering', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Electrical Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Materials Engineering')}
+                      onChange={() => toggleValue('Materials Engineering', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Materials Engineering"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedMajors.includes('Mechanical Engineering')}
+                      onChange={() => toggleValue('Mechanical Engineering', selectedMajors, setSelectedMajors)}
+                    />
+                  }
+                  label="Mechanical Engineering"
+                />
               </FormControl>
             </AccordionDetails>
           </Accordion>
@@ -211,13 +522,18 @@ export const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <FormControl>
-                <FormControlLabel control={<Checkbox />} label="Sun" />
-                <FormControlLabel control={<Checkbox />} label="Mon" />
-                <FormControlLabel control={<Checkbox />} label="Tues" />
-                <FormControlLabel control={<Checkbox />} label="Wed" />
-                <FormControlLabel control={<Checkbox />} label="Thurs" />
-                <FormControlLabel control={<Checkbox />} label="Fri" />
-                <FormControlLabel control={<Checkbox />} label="Sat" />
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d) => (
+                  <FormControlLabel
+                    key={d}
+                    control={
+                      <Checkbox
+                        checked={selectedDays.includes(d)}
+                        onChange={() => toggleValue(d, selectedDays, setSelectedDays)}
+                      />
+                    }
+                    label={d}
+                  />
+                ))}
               </FormControl>
             </AccordionDetails>
           </Accordion>
@@ -231,10 +547,18 @@ export const Home = () => {
             </AccordionSummary>
             <AccordionDetails>
               <FormControl>
-                <FormControlLabel control={<Checkbox />} label="< 25 Members" />
-                <FormControlLabel control={<Checkbox />} label="< 50 Members" />
-                <FormControlLabel control={<Checkbox />} label="< 75 Members" />
-                <FormControlLabel control={<Checkbox />} label="100+ Members" />
+                {['10 - 25 Members', '25 - 100 Members', '100 - 200 Members', '200 - 400 Members', '400+ Members'].map((s) => (
+                  <FormControlLabel
+                    key={s}
+                    control={
+                      <Checkbox
+                        checked={selectedSizes.includes(s)}
+                        onChange={() => toggleValue(s, selectedSizes, setSelectedSizes)}
+                      />
+                    }
+                    label={s}
+                  />
+                ))}
               </FormControl>
             </AccordionDetails>
           </Accordion>
@@ -260,6 +584,7 @@ export const Home = () => {
                     '& .MuiOutlinedInput-root': {
                       '& fieldset': {
                         border: 'none',
+                        width: '75%',
                       },
                     },
                   }}
@@ -274,14 +599,15 @@ export const Home = () => {
                     marginTop: '8px',
                     border: '1px solid #e2e8f0',
                     '& .MuiAutocomplete-option': {
-                      padding: '12px 16px',
+                      padding: '12px 12px',
+                      width: '75%',
                       fontSize: '0.95rem',
                       '&:hover': {
                         backgroundColor: '#f8fafc',
                       },
                       '&[aria-selected="true"]': {
                         backgroundColor: 'transparent',
-                        color: '#0f172a',
+                        color: '#99A1AF',
                         '&:hover': {
                           backgroundColor: '#f8fafc',
                         },
@@ -292,9 +618,26 @@ export const Home = () => {
               )}
             />
           </SearchContainer>
-          <CardGrid searchQuery={searchQuery} userId={userId} clubId={clubId} />
+          <CardGrid
+            searchQuery={searchQuery}
+            userId={userId}
+            clubs={clubs}
+            filters={filters}
+            savedClubIds={savedClubIds}
+            onSaveSuccess={() => {
+              if (!userId) return;
+              axios
+                .get(`${API_BASE}/api/users/saved/${userId}`)
+                .then((res) => {
+                  const list = res?.data ?? [];
+                  setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
+                })
+                .catch(() => {});
+            }}
+          />
         </section>
       </div>
+      <Footer />
     </div>
   );
 };

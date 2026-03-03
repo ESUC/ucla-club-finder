@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import { API_BASE } from '../config';
 
 const OuterContainer = styled.div`
   background: white;
@@ -30,7 +31,7 @@ export const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:4000/api/users/auth/register', {
+      .post(`${API_BASE}/api/users/auth/register`, {
         firstName,
         lastName,
         username,

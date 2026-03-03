@@ -1,12 +1,21 @@
 const express = require("express")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
+const mongoose = require("mongoose")
 const User = require("../models/userModel")
 
 const { sendResetCodeEmail } = require("../services/mailer");
 const { validatePassword } = require("../services/validatePassword");
 
 const router = express.Router()
+
+function requireDb(res) {
+  if (mongoose.connection.readyState !== 1) {
+    res.status(503).json({ errors: { general: "Database unavailable. Check MongoDB connection and Atlas IP whitelist (Network Access)." } });
+    return false;
+  }
+  return true;
+}
 
 function generate6DigitCode() {
     return String(crypto.randomInt(100000, 1000000)); // always 6 digits
@@ -18,6 +27,7 @@ function isValidEmail(email) {
 }
 
 router.post("/auth/forgot-password", async (req, res) => {
+    if (!requireDb(res)) return;
     console.log("FORGOT-PASSWORD HIT ✅", req.body);
     try {
         const { email } = req.body;
@@ -39,8 +49,9 @@ router.post("/auth/forgot-password", async (req, res) => {
             return res.status(400).json({ errors });
         }
 
-        // 3) Must exist in DB
-        const user = await User.findOne({ email });
+        // 3) Must exist in DB (normalize email like login)
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const user = await User.findOne({ email: normalizedEmail });
         if (!user) {
             return res.status(404).json({ errors: { email: "No account found with that email." } });
         }
@@ -67,17 +78,28 @@ router.post("/auth/forgot-password", async (req, res) => {
         user.passwordResetLastSentAt = new Date();
         await user.save();
 
-        // 6) Send email
-        await sendResetCodeEmail(email, code);
+        // 6) Send email (or log code if email not configured – for development)
+        const hasEmailConfig = process.env.EMAIL_USER && process.env.EMAIL_PASS;
+        if (hasEmailConfig) {
+            try {
+                await sendResetCodeEmail(email, code);
+            } catch (mailErr) {
+                console.error("FORGOT PASSWORD: failed to send email", mailErr.message);
+                return res.status(500).json({ errors: { general: "Could not send email. Try again later or contact support." } });
+            }
+        } else {
+            console.log("FORGOT PASSWORD (no email config): reset code for", email, "->", code);
+        }
 
         return res.sendStatus(200);
     } catch (err) {
         console.error("FORGOT PASSWORD ERROR:", err);
-        return res.status(500).json({ error: "Server error" });
+        return res.status(500).json({ errors: { general: "Server error. Please try again." } });
     }
 });
 
 router.post("/auth/verify-code", async (req, res) => {
+    if (!requireDb(res)) return;
     try {
         const { email, code } = req.body;
 
@@ -139,6 +161,7 @@ router.post("/auth/verify-code", async (req, res) => {
 
 
 router.post("/auth/reset-password", async (req, res) => {
+    if (!requireDb(res)) return;
     try {
         const { email, password, confirmPassword } = req.body;
 
