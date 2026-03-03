@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 
 const clubSchema = new Schema(
   {
+    abbreviation: {
+      type: String,
+      required: true,
+    },
     clubName: {
       type: String,
       required: true,
@@ -16,14 +20,29 @@ const clubSchema = new Schema(
       type: String,
       required: true,
     },
-    meetingDays: {
+    /*
+    meetingDays: { // dont need
       type: String,
       required: true,
     },
-    size: {
+    size: { // dont need
       type: String,
       required: true,
     },
+    */
+    description: {
+      type: String,
+      required: true,
+    },
+    img: {
+      type: String,
+      required: true,
+    },
+    // add clubUrl
+    url: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );

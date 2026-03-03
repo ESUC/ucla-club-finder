@@ -33,20 +33,25 @@ header {
 }
 
 .home-header {
-  margin: 20px auto 24px auto;
-  max-width: 900px;
-  text-align: center;
-  padding-top: 40px;
+  display: flex;
+  width: 100%;
+  height: 200px;
+  padding: 92px 400px 148px 400px;
+  align-items: center;
+  background: #043873;
 }
 
 .home-title {
-  font-weight: 800;
-  color: #0f172a;
-  letter-spacing: -0.5px;
-  font-size: 3.2rem;
+  color: #FFF;
+  text-align: center;
+  /* Header/H1 */
+  font-family: Inter;
+  font-size: 72px;
+  font-style: bold;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.44px;
   margin-bottom: 40px;
-  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
-  font-family: 'Inter', 'Roboto', Arial, sans-serif;
 }
 
 .home-underline {
@@ -82,10 +87,11 @@ header {
 
 .category-bar {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin-bottom: 36px;
+height: 3563px;
+flex-direction: column;
+align-items: flex-start;
+gap: 59.383px;
+flex: 1 0 0;
 }
 
 .category-chip {
@@ -95,6 +101,14 @@ header {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   padding: 0 10px;
   transition: all 0.3s ease;
+  display: flex;
+width: 396.517px;
+height: 445.375px;
+padding-bottom: 5.567px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 35.259px;
 }
 .category-chip:hover {
   background: #1a365d !important;
@@ -112,31 +126,28 @@ header {
 }
 
 .sidebar {
-  min-width: 220px;
-  max-width: 280px;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  padding: 20px 20px;
-  height: fit-content;
-  margin-top: 8px;
   display: flex;
+  width: fit-content;
+  height: fit-content;
+  padding: 20.538px 20.538px 0 20.538px;
   flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  position: relative;
-  overflow: hidden;
+  align-items: flex-start;
+  gap: 3px;
+  border-radius: 18.557px;
+  background: #FFF;
+  box-shadow: 0 1.856px 5.567px 0 rgba(0, 0, 0, 0.10), 0 1.856px 3.711px -1.856px rgba(0, 0, 0, 0.10);
 }
 
 .sidebar::before {
-  content: 'REFINE BY';
-  position: relative;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 16px;
-  display: block;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  content: 'Filter(s)';
+  color: #6A7282;
+  flex: 1 0 0;
+  font-family: Inter;
+  font-size: 22.269px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 29.692px; /* 133.333% */
+  letter-spacing: 0.557px;
 }
 
 .filter-accordion {
@@ -146,8 +157,9 @@ header {
   border-radius: 0 !important;
   transition: all 0.2s ease;
   border: none !important;
-  border-bottom: 1px solid #f1f5f9 !important;
-  padding: 8px 0 !important;
+  border-bottom: 3px solid #f1f5f9 !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .filter-accordion:last-child {
@@ -184,7 +196,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: fit-content;
 }
 
 .filter-accordion .MuiAccordionSummary-expandIconWrapper {
@@ -268,6 +280,7 @@ header {
 .content-area .card-grid {
   margin-top: 10px;
   gap: 28px;
+  width: 50%;
 }
 
 /* Card styles (if using MUI Paper or custom) */
@@ -276,10 +289,19 @@ header {
   background: #ffffff;
   border-radius: 16px !important;
   border: 1px solid #e2e8f0;
-  padding: 24px 18px 18px 18px;
+  padding-bottom: 5.567px;
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
+  overflow:hidden;
+  color: #99A1AF;
+
+text-align: center;
+font-family: Inter;
+font-size: 29.692px;
+font-style: normal;
+font-weight: 400;
+line-height: 44.538px; /* 150% */
+letter-spacing: -0.58px;
 }
 
 .card::before,
@@ -293,6 +315,15 @@ header {
   background: linear-gradient(90deg, #1a365d, #ffc400);
   opacity: 0;
   transition: opacity 0.3s ease;
+  color: #99A1AF;
+
+text-align: center;
+font-family: Inter;
+font-size: 29.692px;
+font-style: normal;
+font-weight: 400;
+line-height: 44.538px; /* 150% */
+letter-spacing: -0.58px;
 }
 
 .card:hover,
@@ -307,10 +338,38 @@ header {
   opacity: 1;
 }
 
+.cKMUIS {
+    color: #99A1AF;
+text-align: center;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 44.538px; /* 150% */
+letter-spacing: -0.58px;
+}
+
+.MuiPaper-root-MuiCard-root {
+  color: #99A1AF;
+
+text-align: center;
+font-family: Inter;
+font-size: 29.692px;
+font-style: normal;
+font-weight: 400;
+line-height: 44.538px; /* 150% */
+letter-spacing: -0.58px;
+}
+
 .card-title {
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: #1a365d;
+  color: #99A1AF;
+text-align: center;
+font-family: Inter;
+font-size: 29.692px;
+font-style: normal;
+font-weight: 400;
+line-height: 44.538px; /* 150% */
+letter-spacing: -0.58px;
 }
 
 .card-subtitle {

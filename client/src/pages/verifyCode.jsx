@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
+import { API_BASE } from "../config";
 
-const API_BASE = "http://localhost:4000/api/userAuth";
+const AUTH_API_BASE = `${API_BASE}/api/userAuth`;
 
 const PageContainer = styled.div`
   display: flex;
@@ -60,7 +61,7 @@ export const VerifyCode = () => {
     setSubmitting(true);
 
     try {
-      await axios.post(`${API_BASE}/auth/verify-code`, { email, code });
+      await axios.post(`${AUTH_API_BASE}/auth/verify-code`, { email, code });
       navigate("/auth/reset-password");
     } catch (err) {
       const apiErrors = err?.response?.data?.errors;
