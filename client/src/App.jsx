@@ -9,14 +9,9 @@ import { ForgotPassword } from './pages/forgotPassword';
 import { ResetPassword } from './pages/resetPassword';
 import { VerifyCode } from './pages/verifyCode';
 import { VerifyPassword } from './pages/verifyPassword';
-<<<<<<< HEAD
 import { Profile } from './pages/profile';
-
 import ProtectedRoutes from "./components/ProtectedRoutes";
-
-=======
 import EditProfile from './pages/edit-profile';
->>>>>>> origin/main
 
 export const App = () => {
   return (
@@ -32,17 +27,13 @@ export const App = () => {
           <Route path="/auth/verify-password" element={<VerifyPassword />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
-<<<<<<< HEAD
 
           <Route element={<ProtectedRoutes />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/saved-clubs" element={<SavedClubs />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
           </Route>
 
-=======
-          <Route path="/saved-clubs" element={<SavedClubs />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
->>>>>>> origin/main
         </Routes>
       </Router>
     </div>

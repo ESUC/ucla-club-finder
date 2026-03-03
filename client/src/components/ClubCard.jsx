@@ -149,6 +149,8 @@ const ClubCard = ({
   clubId,
   savedClubIds = [],
   onSaveSuccess,
+  joinedClubIds = [],
+  onJoinSuccess,
   fullName,
   description,
   clubType,
@@ -232,7 +234,15 @@ const ClubCard = ({
           <Abbreviation>{title}</Abbreviation>
         </FooterSection>
 
-        <ClubPopUp isOpen={isBoxOpen} onClose={onClose} club={clubId ? { photo: img, title, fullName: displayFullName, description, clubType, major, link: url } : null} />
+        <ClubPopUp
+          isOpen={isBoxOpen}
+          onClose={onClose}
+          club={clubId ? { photo: img, title, fullName: displayFullName, description, clubType, major, link: url } : null}
+          userId={userId}
+          clubId={clubId}
+          joinedClubIds={joinedClubIds}
+          onJoinSuccess={onJoinSuccess}
+        />
       </CardContainer>
     </>
   );

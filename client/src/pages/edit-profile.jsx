@@ -11,7 +11,6 @@ const defaultFormData = {
   firstName: '',
   lastName: '',
   username: '',
-  email: '',
   pronouns: '',
   major: 'N/A',
   year: 'N/A',
@@ -38,65 +37,70 @@ function getProfileUpdateMessage(major, year) {
 
 export const EditProfile = () => {
   const navigate = useNavigate();
-  const userId = localStorage.getItem('token') || null;
+  const token = localStorage.getItem('token');
+
   const [formData, setFormData] = useState(defaultFormData);
   const [showAlert, setShowAlert] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!token) { window.location.href = '/auth/login'; return; }
+
     axios
-      .get(`${API_BASE}/api/users/profile/${userId}`)
+      .get(`${API_BASE}/api/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         const d = res.data || {};
         setFormData({
           firstName: d.firstName ?? '',
           lastName: d.lastName ?? '',
           username: d.username ?? '',
-          email: d.email ?? '',
           pronouns: d.pronouns ?? '',
-          major: d.major ?? 'N/A',
-          year: d.year ?? 'N/A',
+          major: (d.major && d.major !== 'N/A') ? d.major : '',
+          year: (d.year && d.year !== 'N/A') ? d.year : '',
           bio: d.bio ?? '',
         });
         setShowAlert(needsProfileUpdate(d.major, d.year));
       })
-      .catch(() => setFormData(defaultFormData));
-  }, [userId]);
+      .catch((err) => {
+        if (err?.response?.status === 401) window.location.href = '/auth/login';
+      });
+  }, [token]);
 
   const shouldShowAlert = needsProfileUpdate(formData.major, formData.year);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!userId) return;
+    if (!token) { window.location.href = '/auth/login'; return; }
     setSaveError(null);
     setSaving(true);
+
     axios
-      .put(`${API_BASE}/api/users/profile/${userId}`, formData)
-      .then(() => {
-        setShowAlert(needsProfileUpdate(formData.major, formData.year));
-        navigate('/saved-clubs');
+      .patch(`${API_BASE}/api/users/me`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
       })
+      .then(() => navigate('/profile'))
       .catch((err) => {
+        if (err?.response?.status === 401) { window.location.href = '/auth/login'; return; }
         const data = err.response?.data;
-        const msg = data?.errors?.general ?? data?.error ?? (data?.errors && Object.values(data.errors).join(' ')) ?? 'Failed to save profile.';
+        const msg =
+          data?.errors?.general ??
+          data?.error ??
+          (data?.errors && Object.values(data.errors).join(' ')) ??
+          'Failed to save profile.';
         setSaveError(typeof msg === 'string' ? msg : 'Failed to save profile.');
       })
       .finally(() => setSaving(false));
   };
 
-  const handleCancel = () => {
-    navigate(-1); // Go back to previous page
-  };
+  const handleCancel = () => navigate('/profile');
 
   return (
     <div className="edit-profile-page">
@@ -176,17 +180,6 @@ export const EditProfile = () => {
           </div>
 
           <div className="edit-profile-field">
-            <label className="edit-profile-label">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="edit-profile-input"
-            />
-          </div>
-
-          <div className="edit-profile-field">
             <label className="edit-profile-label">Pronouns</label>
             <input
               type="text"
@@ -194,7 +187,7 @@ export const EditProfile = () => {
               value={formData.pronouns}
               onChange={handleInputChange}
               className="edit-profile-input"
-              placeholder="she/her"
+              placeholder="e.g. she/her, he/him, they/them"
             />
           </div>
 
@@ -210,13 +203,14 @@ export const EditProfile = () => {
           </div>
 
           <div className="edit-profile-field">
-            <label className="edit-profile-label">Year</label>
+            <label className="edit-profile-label">Graduation Year</label>
             <input
               type="text"
               name="year"
               value={formData.year}
               onChange={handleInputChange}
               className="edit-profile-input"
+              placeholder="e.g. 2026"
             />
           </div>
 
@@ -228,6 +222,7 @@ export const EditProfile = () => {
               onChange={handleInputChange}
               className="edit-profile-textarea"
               rows="4"
+              placeholder="Tell people about yourself…"
             />
           </div>
 
@@ -247,4 +242,3 @@ export const EditProfile = () => {
 };
 
 export default EditProfile;
-

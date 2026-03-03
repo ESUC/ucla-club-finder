@@ -1,0 +1,286 @@
+.profile-page {
+  min-height: 100vh;
+  background: #f5f8ff;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.profile-content {
+  flex: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 65px 20px 40px;
+  width: 100%;
+}
+
+/* Main card */
+.profile-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(4, 56, 115, 0.08);
+  border: 1px solid #e6eef9;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Avatar */
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-avatar-button {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid #043873;
+  background: #e8f0fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  padding: 0;
+}
+
+.profile-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-placeholder {
+  width: 60px;
+  height: 60px;
+  color: #043873;
+}
+
+.profile-avatar-add-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #043873;
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+  padding: 0;
+}
+
+.profile-avatar-add-btn:hover {
+  background: #062e63;
+}
+
+.profile-upload-error {
+  font-size: 0.8rem;
+  color: #d32f2f;
+  margin-top: 6px;
+  max-width: 240px;
+  text-align: center;
+}
+
+/* Name & meta */
+.profile-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #043873;
+  margin: 0 0 6px;
+  font-family: 'Inter', 'DM Sans', sans-serif;
+}
+
+.profile-username {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.profile-pronouns {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+/* Stats */
+.profile-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 16px 0 20px;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.profile-stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #043873;
+}
+
+.profile-stat-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: #e2e8f0;
+}
+
+/* Details */
+.profile-details {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 0 24px;
+}
+
+.profile-detail {
+  font-size: 1rem;
+  color: #334155;
+  margin: 6px 0;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.profile-detail-label {
+  font-weight: 600;
+  color: #043873;
+}
+
+.profile-bio {
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 12px 0 0;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Edit button */
+.profile-edit-btn {
+  background: #043873;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 8px;
+}
+
+.profile-edit-btn:hover {
+  background: #062e63;
+  box-shadow: 0 6px 20px rgba(4, 56, 115, 0.25);
+}
+
+/* Club sections */
+.profile-clubs-section {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(4, 56, 115, 0.06);
+  border: 1px solid #e6eef9;
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+
+.profile-section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #043873;
+  margin: 0 0 20px;
+}
+
+.profile-clubs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.profile-club-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 80px;
+}
+
+.profile-club-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fafafa;
+  padding: 4px;
+}
+
+.profile-club-name {
+  font-size: 0.7rem;
+  color: #64748b;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.3;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 28px 20px;
+  }
+
+  .profile-name {
+    font-size: 1.6rem;
+  }
+
+  .profile-clubs-section {
+    padding: 20px 16px;
+  }
+}

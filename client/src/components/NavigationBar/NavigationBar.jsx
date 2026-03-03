@@ -69,7 +69,7 @@ const NavigationBar = () => {
               <div className="navbar-user-area" title={userEmail || 'Logged in'}>
                 <Button
                   component={Link}
-                  to="/saved-clubs"
+                  to="/profile"
                   className="navbar-user-button"
                   aria-label="Saved clubs"
                 >

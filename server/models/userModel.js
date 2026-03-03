@@ -74,6 +74,12 @@ const userSchema = new Schema(
         ref: 'Club',
       },
     ],
+    joinedClubs: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Club',
+      },
+    ],
   },
   { timestamps: true }
 );
