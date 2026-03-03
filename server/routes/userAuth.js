@@ -55,6 +55,7 @@ router.post("/auth/forgot-password", async (req, res) => {
                 });
             }
         }
+        
 
         // 5) Generate hash and store it
         const code = generate6DigitCode();

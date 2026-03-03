@@ -70,9 +70,6 @@ export const ResetPassword = () => {
         confirmPassword,
       });
 
-      // Clear stored email after success
-      //localStorage.removeItem("resetEmail");
-
       navigate("/auth/login");
     } catch (err) {
       const apiErrors = err?.response?.data?.errors;

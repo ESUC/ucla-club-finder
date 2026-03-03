@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const router = express.Router();
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
 
 // GET all clubs
 // router.get('/', (req, res) => {
@@ -17,11 +19,92 @@ const router = express.Router();
 const { validatePassword } = require("../services/validatePassword");
 
 const validateYear = (year) => {
-  if(!/^(2026|2027|2028|2029)$/.test(year)){
+  if (!/^(2026|2027|2028|2029)$/.test(year)) {
     return 1;
   }
   return 0;
 }
+
+router.get("/me", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.patch("/me", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const allowed = ["firstName", "lastName", "username", "major", "year", "bio", "profilePicture"];
+    const updates = {};
+    console.log("PATCH username:", req.body.username);
+
+    for (const key of allowed) {
+      if (req.body[key] !== undefined) updates[key] = req.body[key];
+    }
+
+    const errors = {};
+
+    if ("firstName" in updates && !String(updates.firstName).trim()) {
+      errors.firstName = "Please enter first name";
+    }
+
+    if ("lastName" in updates && !String(updates.lastName).trim()) {
+      errors.lastName = "Please enter last name";
+    }
+
+    if ("username" in updates) {
+      if (!String(updates.username).trim()) {
+        errors.username = "Username is required.";
+      } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(updates.username)) {
+        errors.username = "Username must be 3–20 characters, letters, numbers, or underscores.";
+      }
+    }
+
+    if ("major" in updates && !String(updates.major).trim()) {
+      errors.major = "Please enter major";
+    }
+
+    if ("year" in updates && validateYear(updates.year)) {
+      errors.year = "Please enter a valid graduation year";
+    }
+
+    if ("bio" in updates && updates.bio.length > 300) {
+      errors.bio = "Bio must be under 300 characters.";
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ errors: { general: "No fields provided to update." } });
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
+
+
+    // username must be unique
+    const updated = await User.findByIdAndUpdate(userId, updates, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
+
+    if (!updated) return res.status(404).json({ message: "User not found" });
+
+    return res.json(updated);
+  } catch (err) {
+    // handle duplicates
+    if (err?.code === 11000) {
+      return res.status(400).json({ errors: { username: "That username is already taken." } });
+    }
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 router.post('/auth/register', async (req, res) => {
@@ -32,16 +115,16 @@ router.post('/auth/register', async (req, res) => {
   if (!email || (!email.endsWith('@ucla.edu') && !email.endsWith('@g.ucla.edu'))) {
     errors.email = 'You must register with a UCLA email.';
   }
-  if(!year || validateYear(year)){
+  if (!year || validateYear(year)) {
     errors.year = "Please enter a valid graduation year";
   }
-  if(!firstName){
+  if (!firstName) {
     errors.firstName = "Please enter first name"
   }
-  if(!lastName){
+  if (!lastName) {
     errors.lastName = "Please enter last name"
   }
-  if(!major){
+  if (!major) {
     errors.major = "Please enter major"
   }
   const passwordErrors = validatePassword(password);
@@ -117,7 +200,25 @@ router.post("/auth/login", async (req, res) => {
     }
 
     console.log("LOGIN SUCCESS ✅");
-    return res.status(200).json({ message: "Login successful." });
+
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return res.status(200).json({
+      message: "Login successful.",
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        username: user.username,
+        major: user.major,
+        profilePic: user.profilePic, // only if you have it
+      },
+    });
+
 
   } catch (err) {
     console.error("LOGIN ERROR 💥", err);

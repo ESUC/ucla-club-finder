@@ -4,6 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
 import InfoIcon from '@mui/icons-material/Info';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import styled from 'styled-components';
 
@@ -84,13 +85,21 @@ const NavButton = styled(Button)`
 `;
 
 const NavigationBar = () => {
-  const navItems = [
-    { text: 'Home', icon: <HomeIcon />, to: '/home' },
-    { text: 'Saved Clubs', icon: <ListAltIcon />, to: '/saved-clubs' },
-    { text: 'Login', icon: <LoginIcon />, to: '/auth/login' },
-    { text: 'Register', icon: <HowToRegIcon />, to: '/auth/register' },
-    { text: 'About', icon: <InfoIcon />, to: '/about' },
-  ];
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navItems = user
+    ? [
+      { text: 'Home', icon: <HomeIcon />, to: '/home' },
+      { text: 'Saved Clubs', icon: <ListAltIcon />, to: '/saved-clubs' },
+      { text: 'Profile', icon: <AccountCircleIcon />, to: '/profile' },
+      { text: 'About', icon: <InfoIcon />, to: '/about' },
+    ]
+    : [
+      { text: 'Home', icon: <HomeIcon />, to: '/home' },
+      { text: 'Login', icon: <LoginIcon />, to: '/auth/login' },
+      { text: 'Register', icon: <HowToRegIcon />, to: '/auth/register' },
+      { text: 'About', icon: <InfoIcon />, to: '/about' },
+    ];
+
 
   return (
     <StyledAppBar position="fixed">
@@ -111,6 +120,18 @@ const NavigationBar = () => {
               {item.text}
             </NavButton>
           ))}
+          {user && (
+            <NavButton
+              onClick={() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                window.location.href = "/auth/login";
+              }}
+            >
+              Logout
+            </NavButton>
+          )}
+
         </NavButtons>
       </StyledToolbar>
     </StyledAppBar>
