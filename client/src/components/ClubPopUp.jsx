@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
+import axios from 'axios';
+import { API_BASE } from '../config';
 
 const Overlay = styled.div`
   position: fixed;
@@ -102,9 +105,19 @@ const CTASection = styled.div`
   background: linear-gradient(135deg, #1a3a5d, #0f172a);
   color: #fff;
   border-radius: 12px;
-  height: 90px;
   margin: 12px 16px;
   padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 90px;
+`;
+
+const CTALeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const CTAButton = styled.a`
@@ -115,7 +128,6 @@ const CTAButton = styled.a`
   font-weight: 600;
   font-size: 0.85rem;
   display: inline-block;
-  margin-top: 8px;
   text-decoration: none;
 
   &:hover {
@@ -123,8 +135,57 @@ const CTAButton = styled.a`
   }
 `;
 
-export default function ClubPopUp({ isOpen, onClose, club }) {
+const JoinButton = styled.button`
+  background: ${(props) => (props.isJoined ? 'rgba(255,255,255,0.15)' : 'transparent')};
+  color: #fff;
+  border: 2px solid ${(props) => (props.isJoined ? '#4ade80' : 'rgba(255,255,255,0.5)')};
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: ${(props) => (props.isJoined ? '#86efac' : '#fff')};
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
+export default function ClubPopUp({ isOpen, onClose, club, userId, clubId, joinedClubIds = [], onJoinSuccess }) {
+  const [joining, setJoining] = useState(false);
+
   if (!club) return null;
+
+  const isJoined = joinedClubIds.some((id) => String(id) === String(clubId));
+  const token = localStorage.getItem('token');
+
+  const handleJoinToggle = () => {
+    if (!token || !userId) {
+      window.location.href = '/auth/login';
+      return;
+    }
+    setJoining(true);
+    const request = isJoined
+      ? axios.delete(`${API_BASE}/api/users/join/${clubId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      : axios.post(`${API_BASE}/api/users/join/${clubId}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+    request
+      .then(() => onJoinSuccess?.())
+      .catch((err) => console.error('Join toggle error:', err.message))
+      .finally(() => setJoining(false));
+  };
 
   return createPortal(
     <Overlay isOpen={isOpen} onClick={onClose}>
@@ -154,8 +215,17 @@ export default function ClubPopUp({ isOpen, onClose, club }) {
         </InfoSection>
 
         <CTASection>
-          <div>Interested in joining {club.fullName}? Click below:</div>
-          <CTAButton href={club.link || '#'} target="_blank">Sign Up / Learn More</CTAButton>
+          <CTALeft>
+            <div>Interested in {club.fullName}? Click below:</div>
+            <CTAButton href={club.link || '#'} target="_blank">Sign Up / Learn More</CTAButton>
+          </CTALeft>
+          <JoinButton
+            isJoined={isJoined}
+            onClick={handleJoinToggle}
+            disabled={joining}
+          >
+            {joining ? '…' : isJoined ? "✓ I'm a Member" : "I'm in this Club"}
+          </JoinButton>
         </CTASection>
       </ModalContainer>
     </Overlay>,

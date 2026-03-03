@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-import { useState, useEffect } from 'react';
-import axios from 'axios';
->>>>>>> origin/main
 import {
   TextField,
   Typography,
@@ -134,31 +129,8 @@ export const Home = () => {
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [savedClubIdsRaw, setSavedClubIdsRaw] = useState([]);
+  const [joinedClubIdsRaw, setJoinedClubIdsRaw] = useState([]);
 
-<<<<<<< HEAD
-    useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return; // not logged in
-
-    axios
-      .get("http://localhost:4000/api/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data));
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.href = "/auth/login";
-      });
-  }, []);
-
-
-  // TEMPORARY WILL CHANGE LATER
-  const userId = '6627638285b11e9ed9d11fc9'; // john bruin
-  const clubId = '6909d80faf668433ff54eced'; // UPE
-=======
   // Filter state
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedMajors, setSelectedMajors] = useState([]);
@@ -166,27 +138,30 @@ export const Home = () => {
   const [selectedSizes, setSelectedSizes] = useState([]);
 
   // userId from login: stored in localStorage as 'token' (actual userId) – must be before savedClubIds
-  const userId = localStorage.getItem('token') || null;
-  const savedClubIds = userId ? savedClubIdsRaw : [];
+  const token = localStorage.getItem('token') || null;
+  const userId = token; // kept for passing to CardGrid (popup uses it to check if logged in)
+  const savedClubIds = token ? savedClubIdsRaw : [];
+  const joinedClubIds = token ? joinedClubIdsRaw : [];
 
   const toggleValue = (value, list, setter) => {
     setter((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
   };
 
-  // TEMPORARY: Get userId from localStorage if logged in, otherwise null (clubs still display)
-  // const userId = localStorage.getItem('token') ? '6627638285b11e9ed9d11fc9' : null;
-  // Fetch user's saved club IDs when logged in (so star state is correct)
-  useEffect(() => {
-    if (!userId) return;
+  // Fetch saved and joined club IDs when logged in
+  const refreshUserClubs = () => {
+    if (!token) return;
     axios
-      .get(`${API_BASE}/api/users/saved/${userId}`)
+      .get(`${API_BASE}/api/users/me`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
-        const list = res?.data ?? [];
-        setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
+        const saved = res?.data?.savedClubs ?? [];
+        const joined = res?.data?.joinedClubs ?? [];
+        setSavedClubIdsRaw(saved.map((c) => (c && c._id ? c._id : c)));
+        setJoinedClubIdsRaw(joined.map((c) => (c && c._id ? c._id : c)));
       })
-      .catch(() => setSavedClubIdsRaw([]));
-  }, [userId]);
->>>>>>> origin/main
+      .catch(() => { setSavedClubIdsRaw([]); setJoinedClubIdsRaw([]); });
+  };
+
+  useEffect(() => { refreshUserClubs(); }, [token]);
 
   const handleSearchChange = (event, newValue) => {
     setSearchQuery(newValue || '');
@@ -624,16 +599,9 @@ export const Home = () => {
             clubs={clubs}
             filters={filters}
             savedClubIds={savedClubIds}
-            onSaveSuccess={() => {
-              if (!userId) return;
-              axios
-                .get(`${API_BASE}/api/users/saved/${userId}`)
-                .then((res) => {
-                  const list = res?.data ?? [];
-                  setSavedClubIdsRaw(Array.isArray(list) ? list.map((c) => (c && c._id ? c._id : c)) : []);
-                })
-                .catch(() => {});
-            }}
+            onSaveSuccess={refreshUserClubs}
+            joinedClubIds={joinedClubIds}
+            onJoinSuccess={refreshUserClubs}
           />
         </section>
       </div>

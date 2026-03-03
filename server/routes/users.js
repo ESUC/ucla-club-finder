@@ -45,10 +45,12 @@ const validateYear = (year) => {
   return 0;
 };
 
-<<<<<<< HEAD
 router.get("/me", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
+    const user = await User.findById(req.userId)
+      .populate('savedClubs')
+      .populate('joinedClubs')
+      .select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json(user);
@@ -60,7 +62,7 @@ router.get("/me", authMiddleware, async (req, res) => {
 router.patch("/me", authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
-    const allowed = ["firstName", "lastName", "username", "major", "year", "bio", "profilePicture"];
+    const allowed = ["firstName", "lastName", "username", "major", "year", "bio", "profilePicture", "pronouns"];
     const updates = {};
     console.log("PATCH username:", req.body.username);
 
@@ -100,32 +102,17 @@ router.patch("/me", authMiddleware, async (req, res) => {
 
     if (Object.keys(updates).length === 0) {
       return res.status(400).json({ errors: { general: "No fields provided to update." } });
-=======
-router.post('/contact', async (req, res) => {
-  try {
-    const { firstName, lastName, email, subject, clubName, message } = req.body || {};
-    const errors = {};
-
-    if (!email || String(email).trim() === '') {
-      errors.email = 'Please enter your email.';
-    }
-    if (!message || String(message).trim() === '') {
-      errors.message = 'Please enter a message.';
->>>>>>> origin/main
     }
 
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({ errors });
     }
 
-<<<<<<< HEAD
-
     // username must be unique
     const updated = await User.findByIdAndUpdate(userId, updates, {
       new: true,
       runValidators: true,
     }).select("-password");
-
 
     if (!updated) return res.status(404).json({ message: "User not found" });
 
@@ -140,7 +127,22 @@ router.post('/contact', async (req, res) => {
   }
 });
 
-=======
+router.post('/contact', async (req, res) => {
+  try {
+    const { firstName, lastName, email, subject, clubName, message } = req.body || {};
+    const errors = {};
+
+    if (!email || String(email).trim() === '') {
+      errors.email = 'Please enter your email.';
+    }
+    if (!message || String(message).trim() === '') {
+      errors.message = 'Please enter a message.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
+
     await sendContactEmail({ firstName, lastName, email, subject, clubName, message });
     return res.status(200).json({ message: 'Message sent successfully.' });
   } catch (err) {
@@ -152,7 +154,36 @@ router.post('/contact', async (req, res) => {
     });
   }
 });
->>>>>>> origin/main
+
+router.post('/join/:clubId', authMiddleware, async (req, res) => {
+  const { clubId } = req.params;
+  if (!isValidObjectId(clubId)) return res.status(400).json({ error: 'Invalid club ID' });
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    if (user.joinedClubs.some((id) => id.toString() === clubId))
+      return res.status(400).json({ error: 'Already joined' });
+    user.joinedClubs.push(clubId);
+    await user.save();
+    res.status(200).json('Club joined');
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/join/:clubId', authMiddleware, async (req, res) => {
+  const { clubId } = req.params;
+  if (!isValidObjectId(clubId)) return res.status(400).json({ error: 'Invalid club ID' });
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    user.joinedClubs.pull(clubId);
+    await user.save();
+    res.status(200).json('Club unjoined');
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 router.post('/auth/register', async (req, res) => {
   if (!requireDb(res)) return;
@@ -163,19 +194,6 @@ router.post('/auth/register', async (req, res) => {
   if (!email || (!email.endsWith('@ucla.edu') && !email.endsWith('@g.ucla.edu'))) {
     errors.email = 'You must register with a UCLA email.';
   }
-<<<<<<< HEAD
-  if (!year || validateYear(year)) {
-    errors.year = "Please enter a valid graduation year";
-  }
-  if (!firstName) {
-    errors.firstName = "Please enter first name"
-  }
-  if (!lastName) {
-    errors.lastName = "Please enter last name"
-  }
-  if (!major) {
-    errors.major = "Please enter major"
-=======
   if (!firstName || String(firstName).trim() === '') {
     errors.firstName = "Please enter first name";
   }
@@ -187,7 +205,6 @@ router.post('/auth/register', async (req, res) => {
   const majorVal = major && String(major).trim() ? String(major).trim() : 'N/A';
   if (yearVal !== 'N/A' && validateYear(yearVal)) {
     errors.year = "Please enter a valid graduation year (2026–2029)";
->>>>>>> origin/main
   }
   const passwordErrors = validatePassword(password);
   if (passwordErrors.length > 0) {
@@ -262,7 +279,10 @@ router.post("/auth/login", async (req, res) => {
       return res.status(400).json({ errors: { password: "Incorrect password." } });
     }
 
-<<<<<<< HEAD
+    // 5) Update last sign-in in MongoDB
+    user.lastLoginAt = new Date();
+    await user.save();
+
     console.log("LOGIN SUCCESS ✅");
 
     const token = jwt.sign(
@@ -279,21 +299,8 @@ router.post("/auth/login", async (req, res) => {
         email: user.email,
         username: user.username,
         major: user.major,
-        profilePic: user.profilePic, // only if you have it
+        profilePic: user.profilePic,
       },
-    });
-
-=======
-    // 5) Update last sign-in in MongoDB
-    user.lastLoginAt = new Date();
-    await user.save();
->>>>>>> origin/main
-
-    console.log("LOGIN SUCCESS ✅");
-    return res.status(200).json({
-      message: "Login successful.",
-      userId: user._id.toString(),
-      email: user.email || null,
     });
   } catch (err) {
     console.error("LOGIN ERROR 💥", err);

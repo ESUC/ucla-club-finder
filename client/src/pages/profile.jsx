@@ -1,62 +1,22 @@
-import { useEffect, useState } from 'react';
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import styled from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import NavigationBar from '../components/NavigationBar';
-
-const PageContainer = styled.div`
-  display: flex;
-  min-height: 100vh;
-  width: 100vw;
-  background: #f5f8ff;
-`;
-
-const FormContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 16px;
-`;
-
-const StyledContainer = styled(Container)`
-  width: 100%;
-  max-width: 560px;
-  padding: 32px;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
-  border: 1px solid #e6eef9;
-`;
-
-const SidePanel = styled.div`
-  flex: 1;
-  background: #043873;
-`;
-
-const API_BASE = 'http://localhost:4000/api/users';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Footer from '../components/Footer/Footer';
+import { API_BASE } from '../config';
+import './Profile.css';
 
 export const Profile = () => {
-  const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [major, setMajor] = useState('');
-  const [year, setYear] = useState('');
-  const [bio, setBio] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState('');
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [uploadError, setUploadError] = useState('');
+  const [uploading, setUploading] = useState(false);
+
+  const token = localStorage.getItem('token');
 
   const logoutToLogin = () => {
     localStorage.removeItem('token');
@@ -65,290 +25,197 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      logoutToLogin();
-      return;
-    }
-
+    if (!token) { logoutToLogin(); return; }
     axios
-      .get(`${API_BASE}/me`, {
+      .get(`${API_BASE}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        const u = res.data; // backend returns user directly
-
-        setFirstName(u.firstName || '');
-        setLastName(u.lastName || '');
-        setUsername(u.username || '');
-        setMajor(u.major || '');
-        setYear(u.year || '');
-        setBio(u.bio || '');
-        setProfilePicture(u.profilePicture || '');
-
-        localStorage.setItem('user', JSON.stringify(u));
-        setErrors({});
+        setUser(res.data);
+        localStorage.setItem('user', JSON.stringify(res.data));
       })
       .catch((err) => {
-        if (err?.response?.status === 401) return logoutToLogin();
-        setErrors({ general: 'Failed to load your profile.' });
+        if (err?.response?.status === 401) logoutToLogin();
       })
       .finally(() => setLoading(false));
   }, []);
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    setSuccess('');
-    setErrors({});
+  const handlePictureClick = () => {
+    fileInputRef.current?.click();
+  };
 
-    const token = localStorage.getItem('token');
-    if (!token) return logoutToLogin();
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    // Basic client-side checks (keep it simple)
-    const newErrors = {};
-    if (!firstName.trim()) newErrors.firstName = 'First name is required.';
-    if (!lastName.trim()) newErrors.lastName = 'Last name is required.';
-    if (!username.trim()) newErrors.username = 'Username is required.';
-    if (!major.trim()) newErrors.major = 'Major is required.';
-    if (!year.trim()) newErrors.year = 'Year is required.';
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    // Warn if file is larger than 700KB
+    if (file.size > 700 * 1024) {
+      setUploadError('Image is too large. Please choose a photo under 700KB.');
       return;
     }
 
-    axios
-      .patch(
-        `${API_BASE}/me`,
-        {
-          firstName,
-          lastName,
-          username,
-          major,
-          year,
-          bio,
-          profilePicture,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        const updatedUser = res.data?.user ? res.data.user : res.data;
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-        setSuccess('Profile updated successfully.');
-        setErrors({});
-        setIsEditing(false);
-      })
-      .catch((err) => {
-        if (err?.response?.status === 401) return logoutToLogin();
+    setUploadError('');
+    setUploading(true);
 
-        // If backend sends { errors: {...} }
-        const backendErrors = err?.response?.data?.errors;
-        if (backendErrors) {
-          setErrors(backendErrors);
-        } else {
-          setErrors({ general: 'Update failed.' });
-        }
-      });
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target.result;
+      axios
+        .patch(
+          `${API_BASE}/api/users/me`,
+          { profilePicture: base64 },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          const updated = res.data?.user ?? res.data;
+          setUser((prev) => ({ ...prev, profilePicture: updated.profilePicture ?? base64 }));
+        })
+        .catch(() => setUploadError('Failed to upload photo. Please try again.'))
+        .finally(() => setUploading(false));
+    };
+    reader.readAsDataURL(file);
+
+    // Reset file input so the same file can be re-selected if needed
+    e.target.value = '';
   };
 
+  if (loading) {
+    return (
+      <div className="profile-page">
+        <NavigationBar />
+        <div className="profile-loading">Loading your profile…</div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const savedClubs = Array.isArray(user?.savedClubs) ? user.savedClubs : [];
+  const joinedClubs = Array.isArray(user?.joinedClubs) ? user.joinedClubs : [];
+  const displayName = [user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Your Name';
+
   return (
-    <>
+    <div className="profile-page">
       <NavigationBar />
-      <PageContainer>
-        <FormContainer>
-          <StyledContainer>
-            <Typography
-              variant="h5"
-              align="left"
-              gutterBottom
-              sx={{ color: '#043873', fontWeight: 700 }}
-            >
-              Profile
-            </Typography>
 
-            <Typography variant="body2" align="left" style={{ marginBottom: '10px' }}>
-              Update your account details below.
-            </Typography>
+      <div className="profile-content">
+        <div className="profile-card">
 
-            {loading && (
-              <Typography variant="body2" align="left" style={{ marginBottom: '10px' }}>
-                Loading...
-              </Typography>
-            )}
-            <Button
-              variant="contained"
-              onClick={() => setIsEditing(true)}
-              sx={{
-                background: '#043873',
-                borderRadius: '14px',
-                textTransform: 'none',
-                fontWeight: 600,
-              }}>
-              Edit Profile
-            </Button>
-
-            {!!errors.general && (
-              <Typography variant="body2" align="left" sx={{ color: 'red', mb: 1 }}>
-                {errors.general}
-              </Typography>
-            )}
-
-            {!!success && (
-              <Typography variant="body2" align="left" sx={{ color: 'green', mb: 1 }}>
-                {success}
-              </Typography>
-            )}
-
-            <form onSubmit={handleSave}>
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                error={!!errors.firstName}
-                helperText={errors.firstName || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                error={!!errors.lastName}
-                helperText={errors.lastName || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                error={!!errors.username}
-                helperText={errors.username || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="Major"
-                value={major}
-                onChange={(e) => setMajor(e.target.value)}
-                error={!!errors.major}
-                helperText={errors.major || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="Graduation Year"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-                error={!!errors.year}
-                helperText={errors.year || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="Bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                multiline
-                minRows={3}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <TextField
-                InputProps={{ readOnly: !isEditing }}
-                fullWidth
-                margin="normal"
-                label="Profile Picture URL"
-                value={profilePicture}
-                onChange={(e) => setProfilePicture(e.target.value)}
-                error={!!errors.profilePicture}
-                helperText={errors.profilePicture || ''}
-                sx={{
-                  '& .MuiOutlinedInput-root': { borderRadius: 12 },
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A7CEFC' },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4F9CF9' },
-                }}
-              />
-
-              <Button
-                fullWidth
-                variant="contained"
-                type="submit"
-                sx={{
-                  mt: 2,
-                  mb: 1,
-                  height: 54,
-                  background: '#043873',
-                  color: '#FFFFFF',
-                  borderRadius: '16px',
-                  textTransform: 'none',
-                  fontWeight: 600,
-                  letterSpacing: '.2px',
-                  boxShadow: '0 10px 20px rgba(79,156,249,0.35)',
-                  '&:hover': {
-                    background: '#062E63',
-                    boxShadow: '0 12px 24px rgba(79,156,249,0.45)',
-                  },
-                }}
+          {/* Profile Picture */}
+          <div className="profile-avatar-section">
+            <div className="profile-avatar-button">
+              <div className="profile-avatar-inner">
+                {user?.profilePicture ? (
+                  <img
+                    src={user.profilePicture}
+                    alt="Profile"
+                    className="profile-avatar-img"
+                  />
+                ) : (
+                  <svg className="profile-avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                  </svg>
+                )}
+              </div>
+              <button
+                className="profile-avatar-add-btn"
+                onClick={handlePictureClick}
+                title={uploading ? 'Uploading…' : 'Upload a new photo'}
+                aria-label="Upload profile picture"
+                disabled={uploading}
               >
-                Save Changes
-              </Button>
-            </form>
-          </StyledContainer>
-        </FormContainer>
-        <SidePanel />
-      </PageContainer >
-    </>
+                {uploading ? '…' : '+'}
+              </button>
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
+            {uploadError && <p className="profile-upload-error">{uploadError}</p>}
+          </div>
+
+          {/* Name & Basic Info */}
+          <h1 className="profile-name">{displayName}</h1>
+          {user?.username && <p className="profile-username">@{user.username}</p>}
+          {user?.pronouns && <p className="profile-pronouns">{user.pronouns}</p>}
+
+          {/* Stats row */}
+          <div className="profile-stats">
+            <div className="profile-stat">
+              <span className="profile-stat-number">{savedClubs.length}</span>
+              <span className="profile-stat-label">Saved</span>
+            </div>
+            <div className="profile-stat-divider" />
+            <div className="profile-stat">
+              <span className="profile-stat-number">{joinedClubs.length}</span>
+              <span className="profile-stat-label">Joined</span>
+            </div>
+          </div>
+
+          {/* Details */}
+          <div className="profile-details">
+            {user?.major && user.major !== 'N/A' && (
+              <p className="profile-detail"><span className="profile-detail-label">Major</span>{user.major}</p>
+            )}
+            {user?.year && user.year !== 'N/A' && (
+              <p className="profile-detail"><span className="profile-detail-label">Class of</span>{user.year}</p>
+            )}
+            {user?.bio && (
+              <p className="profile-bio">{user.bio}</p>
+            )}
+          </div>
+
+          {/* Edit Profile button */}
+          <button className="profile-edit-btn" onClick={() => navigate('/edit-profile')}>
+            Edit Profile
+          </button>
+        </div>
+
+        {/* Saved Clubs */}
+        {savedClubs.length > 0 && (
+          <div className="profile-clubs-section">
+            <h2 className="profile-section-title">Saved Clubs</h2>
+            <div className="profile-clubs-row">
+              {savedClubs.map((club) => (
+                <div key={club._id} className="profile-club-logo-wrap" title={club.clubName || club.abbreviation}>
+                  <img
+                    src={club.img}
+                    alt={club.abbreviation || club.clubName}
+                    className="profile-club-logo"
+                  />
+                  <span className="profile-club-name">{club.abbreviation || club.clubName}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Joined Clubs */}
+        {joinedClubs.length > 0 && (
+          <div className="profile-clubs-section">
+            <h2 className="profile-section-title">Clubs I&apos;m In</h2>
+            <div className="profile-clubs-row">
+              {joinedClubs.map((club) => (
+                <div key={club._id} className="profile-club-logo-wrap" title={club.clubName || club.abbreviation}>
+                  <img
+                    src={club.img}
+                    alt={club.abbreviation || club.clubName}
+                    className="profile-club-logo"
+                  />
+                  <span className="profile-club-name">{club.abbreviation || club.clubName}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <Footer />
+    </div>
   );
 };
+
+export default Profile;

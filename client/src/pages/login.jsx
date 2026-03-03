@@ -17,23 +17,12 @@ export const Login = () => {
     e.preventDefault();
     setErrors({});
     axios
-<<<<<<< HEAD
-      .post('http://localhost:4000/api/users/auth/login', { email, password })
+      .post(`${API_BASE}/api/users/auth/login`, { email, password })
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         window.location.href = '/home';
-        setError(''); // clear error
-=======
-      .post(`${API_BASE}/api/users/auth/login`, { email, password })
-      .then((res) => {
-        const data = res?.data;
-        if (data?.userId) {
-          localStorage.setItem('token', data.userId);
-          if (data?.email) localStorage.setItem('userEmail', data.email);
-        }
-        window.location.href = '/home';
->>>>>>> origin/main
+        setErrors({});
       })
       .catch((err) => {
         const data = err?.response?.data;
