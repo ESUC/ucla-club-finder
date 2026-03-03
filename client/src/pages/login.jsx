@@ -57,8 +57,10 @@ export const Login = () => {
     axios
       .post('http://localhost:4000/api/users/auth/login', { email, password })
       .then((response) => {
-          window.location.href = '/home';
-          setError(''); // clear error
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        window.location.href = '/home';
+        setError(''); // clear error
       })
       .catch((err) => {
         setErrors(err?.response?.data?.errors || { general: 'Registration failed' });

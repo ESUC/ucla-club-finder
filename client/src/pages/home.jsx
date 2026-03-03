@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   TextField,
   Typography,
@@ -8,6 +7,8 @@ import {
   Autocomplete,
   Paper,
 } from '@mui/material';
+import { useState, useEffect } from 'react';
+import axios from 'axios'; // or your axios instance if you have one
 import SearchIcon from '@mui/icons-material/Search';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -122,6 +123,25 @@ const SearchContainer = styled.div`
 
 export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return; // not logged in
+
+    axios
+      .get("http://localhost:4000/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/auth/login";
+      });
+  }, []);
+
 
   // TEMPORARY WILL CHANGE LATER
   const userId = '6627638285b11e9ed9d11fc9'; // john bruin
