@@ -22,71 +22,53 @@ import Footer from '../components/Footer/Footer';
 import { API_BASE } from '../config';
 import '../css/Home.css';
 
+const majorOptions = [
+  { label: 'Aerospace Engineering', dbValues: ['Mechanical and Aerospace Engineering'] },
+  { label: 'Bioengineering', dbValues: ['Bioengineering'] },
+  { label: 'Biomolecular Engineering', dbValues: ['Chemical and Biomolecular Engineering'] },
+  { label: 'Chemical Engineering', dbValues: ['Chemical and Biomolecular Engineering'] },
+  { label: 'Civil Engineering', dbValues: ['Civil and Environmental Engineering'] },
+  { label: 'Computer Engineering', dbValues: ['Electrical and Computer Engineering'] },
+  { label: 'Computer Science', dbValues: ['Computer Science'] },
+  { label: 'Computer Science and Engineering', dbValues: ['Computer Science', 'Electrical and Computer Engineering'] },
+  { label: 'Electrical Engineering', dbValues: ['Electrical and Computer Engineering'] },
+  { label: 'Environmental Engineering', dbValues: ['Civil and Environmental Engineering'] },
+  { label: 'Materials Science and Engineering', dbValues: ['Materials Science and Engineering'] },
+  { label: 'Mechanical Engineering', dbValues: ['Mechanical and Aerospace Engineering'] },
+  { label: 'General', dbValues: ['General'] },
+];
+
 const searchSuggestions = [
-  'Computer Science',
-  'Engineering',
-  'Aerospace',
-  'Mechanical',
-  'Electrical',
-  'Biomedical',
-  'Chemical',
-  'Civil',
-  'Materials',
-  'Robotics',
-  'AI/ML',
-  'Software',
-  'Hardware',
-  'Research',
-  'Competition',
-  'Outreach',
-  'Women in Engineering',
-  'Diversity',
-  'Professional Development',
-  'Networking',
-  'Mentorship',
-  'Innovation',
-  'Sustainability',
-  'Space',
-  'Automotive',
-  'Biotechnology',
-  'Renewable Energy',
-  'Data Science',
-  'Cybersecurity',
-  'Internet of Things',
+  'AI',
+  'Build',
+  'Women',
+  'Vehicle',
+  'Network',
+  'Rocket',
+  'Workshops',
+  'Hands-On',
+  'Design',
+  'Honor Society'
 ];
 
 const StyledAutocomplete = styled(Autocomplete)`
   .MuiOutlinedInput-root {
-    border-radius: 16px !important;
-    background: #ffffff;
-    border: 2px solid #e2e8f0;
-    font-size: 1.1rem;
-    font-family: 'Inter', 'Roboto', Arial, sans-serif;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-radius: 12px !important;
+    background: #f9f9fb;
+    border: 1.5px solid #d1d5db;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    padding-left: 44px !important;
 
     &:hover {
-      border-color: #0f172a;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
-      transform: translateY(-1px);
+      border-color: #b0b5bf;
     }
 
     &.Mui-focused {
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
-      transform: translateY(-2px);
+      background: #fff;
+      border-color: #9ca3af;
     }
-  }
-
-  .MuiInputLabel-root {
-    color: #64748b;
-    font-weight: 500;
-    font-size: 1rem;
-  }
-
-  .MuiInputLabel-root.Mui-focused {
-    color: #f59e0b;
-    font-weight: 600;
   }
 
   .MuiOutlinedInput-notchedOutline {
@@ -94,32 +76,23 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 
   .MuiAutocomplete-endAdornment {
-    color: #64748b;
-  }
-
-  .MuiAutocomplete-endAdornment .MuiSvgIcon-root {
-    font-size: 1.2rem;
+    color: #717182;
   }
 `;
 
 const SearchContainer = styled.div`
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
+  width: 100%;
 
   .search-icon {
     position: absolute;
     left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    color: #64748b;
+    color: #717182;
     z-index: 2;
-    font-size: 1.3rem;
-    transition: all 0.3s ease;
-  }
-
-  &:focus-within .search-icon {
-    color: #f59e0b;
-    transform: translateY(-50%) scale(1.1);
+    font-size: 22px;
   }
 `;
 
@@ -132,8 +105,6 @@ export const Home = () => {
   // Filter state
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedMajors, setSelectedMajors] = useState([]);
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [selectedSizes, setSelectedSizes] = useState([]);
 
   // userId from login: stored in localStorage as 'token' (actual userId) – must be before savedClubIds
   const userId = localStorage.getItem('token') || null;
@@ -143,9 +114,6 @@ export const Home = () => {
     setter((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
   };
 
-  // TEMPORARY: Get userId from localStorage if logged in, otherwise null (clubs still display)
-  // const userId = localStorage.getItem('token') ? '6627638285b11e9ed9d11fc9' : null;
-  // Fetch user's saved club IDs when logged in (so star state is correct)
   useEffect(() => {
     if (!userId) return;
     axios
@@ -162,25 +130,16 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    // TEMPORARY FIX: Add timeout and error handling
-    const timeoutId = setTimeout(() => {
-      console.log('⏱️ Loading timeout - showing page anyway');
-      setLoading(false);
-    }, 3000); // Stop loading after 3 seconds even if API fails
+    const timeoutId = setTimeout(() => setLoading(false), 3000);
 
-    console.log('🔍 Fetching clubs from API...');
     axios
         .get(`${API_BASE}/api/clubs/`)
         .then((res) => {
-          console.log('✅ Clubs fetched successfully:', res.data?.length || 0, 'clubs');
           setClubs(res.data || []);
           setLoading(false);
           clearTimeout(timeoutId);
         })
-        .catch((err) => {
-          console.error('❌ API Error:', err.message);
-          console.error('Full error:', err);
-          // Set empty array on error so page still renders
+        .catch(() => {
           setClubs([]);
           setLoading(false);
           clearTimeout(timeoutId);
@@ -192,8 +151,6 @@ export const Home = () => {
   const filters = {
     types: selectedTypes,
     majors: selectedMajors,
-    days: selectedDays,
-    sizes: selectedSizes,
   };
 
   if (loading) {
@@ -205,7 +162,7 @@ export const Home = () => {
             Student Clubs and Organizations
           </Typography>
         </div>
-        <div style={{ padding: '40px', textAlign: 'center' }}>
+        <div className="loading-message">
           <Typography>Loading clubs...</Typography>
         </div>
         <Footer />
@@ -225,8 +182,8 @@ export const Home = () => {
         <aside className="sidebar">
           <Accordion className="filter-accordion">
             <AccordionSummary
-              id="panel-header"
-              aria-controls="panel-content"
+              id="type-panel-header"
+              aria-controls="type-panel-content"
               expandIcon={<ExpandMoreIcon />}
             >
               Club Type
@@ -236,296 +193,79 @@ export const Home = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={selectedTypes.includes('Competitive')}
-                      onChange={() => toggleValue('Competitive', selectedTypes, setSelectedTypes)}
+                      checked={selectedTypes.includes('Professional')}
+                      onChange={() => toggleValue('Professional', selectedTypes, setSelectedTypes)}
                     />
                   }
-                  label="Competitive"
+                  label="Professional"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={selectedTypes.includes('Project')}
-                      onChange={() => toggleValue('Project', selectedTypes, setSelectedTypes)}
+                      checked={selectedTypes.includes('Project-based')}
+                      onChange={() => toggleValue('Project-based', selectedTypes, setSelectedTypes)}
                     />
                   }
-                  label="Project"
+                  label="Project-based"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={selectedTypes.includes('Learning')}
+                      checked={selectedTypes.includes('Equity, Diversity, & Inclusion')}
                       onChange={() =>
-                        toggleValue('Learning', selectedTypes, setSelectedTypes)
+                        toggleValue('Equity, Diversity, & Inclusion', selectedTypes, setSelectedTypes)
                       }
                     />
                   }
-                  label="Learning"
+                  label="Equity, Diversity, & Inclusion"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={selectedTypes.includes('Tutoring')}
+                      checked={selectedTypes.includes('Education & Outreach')}
                       onChange={() =>
                         toggleValue(
-                          'Tutoring',
+                          'Education & Outreach',
                           selectedTypes,
                           setSelectedTypes
                         )
                       }
                     />
                   }
-                  label="Tutoring"
+                  label="Education & Outreach"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={selectedTypes.includes('Beginner Friendly')}
-                      onChange={() => toggleValue('Beginner Friendly', selectedTypes, setSelectedTypes)}
+                      checked={selectedTypes.includes('General')}
+                      onChange={() => toggleValue('General', selectedTypes, setSelectedTypes)}
                     />
                   }
-                  label="Beginner Friendly"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedTypes.includes('Honor Society')}
-                      onChange={() =>
-                        toggleValue(
-                          'Honor Society',
-                          selectedTypes,
-                          setSelectedTypes
-                        )
-                      }
-                    />
-                  }
-                  label="Honor Society"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedTypes.includes('Greek')}
-                      onChange={() =>
-                        toggleValue(
-                          'Greek',
-                          selectedTypes,
-                          setSelectedTypes
-                        )
-                      }
-                    />
-                  }
-                  label="Greek"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedTypes.includes('Community Service')}
-                      onChange={() =>
-                        toggleValue(
-                          'Community Service',
-                          selectedTypes,
-                          setSelectedTypes
-                        )
-                      }
-                    />
-                  }
-                  label="Community Service"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedTypes.includes('Resource')}
-                      onChange={() =>
-                        toggleValue(
-                          'Resource',
-                          selectedTypes,
-                          setSelectedTypes
-                        )
-                      }
-                    />
-                  }
-                  label="Resource"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedTypes.includes('Hands-On')}
-                      onChange={() =>
-                        toggleValue(
-                          'Hands-On',
-                          selectedTypes,
-                          setSelectedTypes
-                        )
-                      }
-                    />
-                  }
-                  label="Hands-On"
+                  label="General"
                 />
               </FormControl>
             </AccordionDetails>
           </Accordion>
           <Accordion className="filter-accordion">
             <AccordionSummary
-              id="panel-header"
-              aria-controls="panel-content"
+              id="major-panel-header"
+              aria-controls="major-panel-content"
               expandIcon={<ExpandMoreIcon />}
             >
               Major
             </AccordionSummary>
             <AccordionDetails>
               <FormControl>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Aerospace Engineering')}
-                      onChange={() => toggleValue('Aerospace Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Aerospace Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Bioengineering')}
-                      onChange={() =>
-                        toggleValue('Bioengineering', selectedMajors, setSelectedMajors)
-                      }
-                    />
-                  }
-                  label="Bioengineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Chemical Engineering')}
-                      onChange={() =>
-                        toggleValue(
-                          'Chemical Engineering',
-                          selectedMajors,
-                          setSelectedMajors
-                        )
-                      }
-                    />
-                  }
-                  label="Chemical Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Civil Engineering')}
-                      onChange={() =>
-                        toggleValue(
-                          'Civil Engineering',
-                          selectedMajors,
-                          setSelectedMajors
-                        )
-                      }
-                    />
-                  }
-                  label="Civil Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Computer Engineering')}
-                      onChange={() => toggleValue('Computer Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Computer Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Computer Science')}
-                      onChange={() => toggleValue('Computer Science', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Computer Science"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Computer Science and Engineering')}
-                      onChange={() => toggleValue('Computer Science and Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Computer Science and Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Electrical Engineering')}
-                      onChange={() => toggleValue('Electrical Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Electrical Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Materials Engineering')}
-                      onChange={() => toggleValue('Materials Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Materials Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Mechanical Engineering')}
-                      onChange={() => toggleValue('Mechanical Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Mechanical Engineering"
-                />
-              </FormControl>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion className="filter-accordion">
-            <AccordionSummary
-              id="panel-header"
-              aria-controls="panel-content"
-              expandIcon={<ExpandMoreIcon />}
-            >
-              Meeting Days
-            </AccordionSummary>
-            <AccordionDetails>
-              <FormControl>
-                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d) => (
+                {majorOptions.map((opt) => (
                   <FormControlLabel
-                    key={d}
+                    key={opt.label}
                     control={
                       <Checkbox
-                        checked={selectedDays.includes(d)}
-                        onChange={() => toggleValue(d, selectedDays, setSelectedDays)}
+                        checked={selectedMajors.includes(opt.label)}
+                        onChange={() => toggleValue(opt.label, selectedMajors, setSelectedMajors)}
                       />
                     }
-                    label={d}
-                  />
-                ))}
-              </FormControl>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion className="filter-accordion">
-            <AccordionSummary
-              id="panel-header"
-              aria-controls="panel-content"
-              expandIcon={<ExpandMoreIcon />}
-            >
-              Size
-            </AccordionSummary>
-            <AccordionDetails>
-              <FormControl>
-                {['10 - 25 Members', '25 - 100 Members', '100 - 200 Members', '200 - 400 Members', '400+ Members'].map((s) => (
-                  <FormControlLabel
-                    key={s}
-                    control={
-                      <Checkbox
-                        checked={selectedSizes.includes(s)}
-                        onChange={() => toggleValue(s, selectedSizes, setSelectedSizes)}
-                      />
-                    }
-                    label={s}
+                    label={opt.label}
                   />
                 ))}
               </FormControl>
@@ -544,41 +284,21 @@ export const Home = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Search clubs by name, description, or keywords..."
-                  InputProps={{
-                    ...params.InputProps,
-                    style: { paddingLeft: '48px' },
-                  }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        border: 'none',
-                      },
-                    },
-                  }}
+                  placeholder="Search clubs by name or abbreviation..."
                 />
               )}
               PaperComponent={(props) => (
                 <Paper
                   {...props}
-                  elevation={8}
+                  elevation={4}
                   sx={{
-                    borderRadius: '12px',
-                    marginTop: '8px',
-                    border: '1px solid #e2e8f0',
+                    borderRadius: '10px',
+                    marginTop: '6px',
+                    border: '1px solid #e5e7eb',
                     '& .MuiAutocomplete-option': {
-                      padding: '12px 16px',
-                      fontSize: '0.95rem',
-                      '&:hover': {
-                        backgroundColor: '#f8fafc',
-                      },
-                      '&[aria-selected="true"]': {
-                        backgroundColor: 'transparent',
-                        color: '#0f172a',
-                        '&:hover': {
-                          backgroundColor: '#f8fafc',
-                        },
-                      },
+                      padding: '10px 16px',
+                      fontSize: '14px',
+                      '&:hover': { backgroundColor: '#f3f4f6' },
                     },
                   }}
                 />

@@ -44,8 +44,8 @@
   background: #ffffff;
   border: 1.5px solid rgba(4, 56, 115, 0.25);
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,8 +83,8 @@
 }
 
 .carousel-arrow svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .carousel-container {
@@ -117,7 +117,7 @@
 .carousel-track {
   display: flex;
   gap: 24px;
-  padding: 0;
+  padding: 4px 8px;
   height: 240px;
   align-items: flex-start;
 }
