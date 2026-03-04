@@ -148,10 +148,78 @@
   box-shadow: 0 2px 8px rgba(4, 56, 115, 0.3);
 }
 
+/* Toast Notification */
+.contact-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  animation: toast-slide-in 0.3s ease-out;
+  max-width: 480px;
+  width: max-content;
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.contact-toast-success {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  color: #166534;
+}
+
+.contact-toast-error {
+  background: #fef2f2;
+  border: 1.5px solid #fca5a5;
+  color: #991b1b;
+}
+
+.contact-toast-icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.contact-toast-message {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.contact-toast-close {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.contact-toast-close:hover {
+  opacity: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 968px) {
   .contact-section {
-    padding: 300px 20px 40px;
+    padding: 40px 20px;
     margin: 40px 20px;
   }
 
@@ -162,7 +230,12 @@
   .form-input,
   .form-textarea,
   .form-button {
-    font-size: 24px;
+    font-size: 16px;
+  }
+
+  .contact-toast {
+    max-width: calc(100vw - 32px);
+    top: 16px;
   }
 }
 

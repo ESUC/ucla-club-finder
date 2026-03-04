@@ -1,56 +1,23 @@
 import { useEffect, useState } from "react";
-import { TextField, Button, Typography, Container, InputAdornment, IconButton } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import axios from "axios";
 
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import Footer from "../components/Footer/Footer";
+import "../css/account.css";
 import { API_BASE } from "../config";
 
 const AUTH_API_BASE = `${API_BASE}/api/userAuth`;
-
-const PageContainer = styled.div`
-  display: flex;
-  min-height: 100vh;
-  width: 100vw;
-  background: #f5f8ff;
-`;
-
-const FormContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 16px;
-`;
-
-const StyledContainer = styled(Container)`
-  width: 100%;
-  max-width: 560px;
-  padding: 32px;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
-  border: 1px solid #e6eef9;
-`;
-
-const SidePanel = styled.div`
-  flex: 1;
-  background: #043873;
-`;
 
 export const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const navigate = useNavigate();
-
   const email = localStorage.getItem("resetEmail");
 
   useEffect(() => {
@@ -70,10 +37,6 @@ export const ResetPassword = () => {
         password,
         confirmPassword,
       });
-
-      // Clear stored email after success
-      //localStorage.removeItem("resetEmail");
-
       navigate("/auth/login");
     } catch (err) {
       const apiErrors = err?.response?.data?.errors;
@@ -84,116 +47,100 @@ export const ResetPassword = () => {
   };
 
   return (
-    <>
+    <div className="login-page-wrapper">
       <NavigationBar />
-      <PageContainer>
-        <FormContainer>
-          <StyledContainer>
-            <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
-              Reset Password
-            </Typography>
+      <div className="login-content-area">
+        <div className="login-container">
+          <h3 className="account-title">Reset Password</h3>
+          <h4 className="account-subtitle">
+            Enter a new password.
+            <Link to="/auth/login" className="account-link">Back to login</Link>
+          </h4>
 
-            <Typography variant="body2" align="left" style={{ marginBottom: "20px" }}>
-              Enter a new password.{" "}
-              <Link to="/auth/login" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>
-                Back to login
-              </Link>
-            </Typography>
-
-            <form onSubmit={handleReset}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="New password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={Boolean(errors.password)}
-                helperText={errors.password || ""}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword((s) => !s)}>
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": { borderRadius: 12 },
-                }}
-              />
-
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Confirm new password"
-                type={showConfirm ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                error={Boolean(errors.confirmPassword)}
-                helperText={errors.confirmPassword || ""}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowConfirm((s) => !s)}>
-                        {showConfirm ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": { borderRadius: 12 },
-                }}
-              />
-
-              {errors.code && (
-                <Typography sx={{ color: "red", mt: 1 }}>
-                  {errors.code}
-                </Typography>
+          <form className="account-form" onSubmit={handleReset}>
+            <div className="account-input-wrapper">
+              <div className="account-password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="account-input"
+                  placeholder="New password"
+                />
+                <button
+                  type="button"
+                  className="account-password-toggle"
+                  onClick={() => setShowPassword((s) => !s)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {errors?.password && (
+                <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.password}</p>
               )}
+            </div>
 
-              {errors.email && (
-                <Typography sx={{ color: "red", mt: 1 }}>
-                  {errors.email}
-                </Typography>
+            <div className="account-input-wrapper">
+              <div className="account-password-wrapper">
+                <input
+                  type={showConfirm ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="account-input"
+                  placeholder="Confirm new password"
+                />
+                <button
+                  type="button"
+                  className="account-password-toggle"
+                  onClick={() => setShowConfirm((s) => !s)}
+                  aria-label={showConfirm ? "Hide password" : "Show password"}
+                >
+                  {showConfirm ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {errors?.confirmPassword && (
+                <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.confirmPassword}</p>
               )}
+            </div>
 
-              {errors.general && (
-                <Typography sx={{ color: "red", mt: 1 }}>
-                  {errors.general}
-                </Typography>
-              )}
+            {errors?.code && (
+              <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.code}</p>
+            )}
+            {errors?.email && (
+              <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.email}</p>
+            )}
+            {errors?.general && (
+              <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.general}</p>
+            )}
 
-              <Button
-                fullWidth
-                variant="contained"
-                type="submit"
-                disabled={submitting}
-                sx={{
-                  mt: 2,
-                  mb: 2,
-                  height: 54,
-                  background: "#043873",
-                  color: "#FFFFFF",
-                  borderRadius: "16px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  letterSpacing: ".2px",
-                  boxShadow: "0 10px 20px rgba(79,156,249,0.35)",
-                  "&:hover": {
-                    background: "#062E63",
-                    boxShadow: "0 12px 24px rgba(79,156,249,0.45)",
-                  },
-                }}
-              >
-                {submitting ? "Updating..." : "Update Password"}
-              </Button>
-            </form>
-          </StyledContainer>
-        </FormContainer>
-        <SidePanel />
-      </PageContainer>
-    </>
+            <button type="submit" className="account-button" disabled={submitting}>
+              {submitting ? "Updating..." : "Update Password"}
+            </button>
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };

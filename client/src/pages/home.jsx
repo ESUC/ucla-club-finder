@@ -22,6 +22,22 @@ import Footer from '../components/Footer/Footer';
 import { API_BASE } from '../config';
 import '../css/Home.css';
 
+const majorOptions = [
+  { label: 'Aerospace Engineering', dbValues: ['Mechanical and Aerospace Engineering'] },
+  { label: 'Bioengineering', dbValues: ['Bioengineering'] },
+  { label: 'Biomolecular Engineering', dbValues: ['Chemical and Biomolecular Engineering'] },
+  { label: 'Chemical Engineering', dbValues: ['Chemical and Biomolecular Engineering'] },
+  { label: 'Civil Engineering', dbValues: ['Civil and Environmental Engineering'] },
+  { label: 'Computer Engineering', dbValues: ['Electrical and Computer Engineering'] },
+  { label: 'Computer Science', dbValues: ['Computer Science'] },
+  { label: 'Computer Science and Engineering', dbValues: ['Computer Science', 'Electrical and Computer Engineering'] },
+  { label: 'Electrical Engineering', dbValues: ['Electrical and Computer Engineering'] },
+  { label: 'Environmental Engineering', dbValues: ['Civil and Environmental Engineering'] },
+  { label: 'Materials Science and Engineering', dbValues: ['Materials Science and Engineering'] },
+  { label: 'Mechanical Engineering', dbValues: ['Mechanical and Aerospace Engineering'] },
+  { label: 'General', dbValues: ['General'] },
+];
+
 const searchSuggestions = [
   'AI',
   'Build',
@@ -37,37 +53,22 @@ const searchSuggestions = [
 
 const StyledAutocomplete = styled(Autocomplete)`
   .MuiOutlinedInput-root {
-    border-radius: 16px !important;
-    background: #ffffff;
-    border: 2px solid #e2e8f0;
-    font-size: 1.1rem;
-    font-family: 'Inter', 'Roboto', Arial, sans-serif;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    
+    border-radius: 12px !important;
+    background: #f9f9fb;
+    border: 1.5px solid #d1d5db;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    padding-left: 44px !important;
 
     &:hover {
-      border-color: #0f172a;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
-      transform: translateY(-1px);
+      border-color: #b0b5bf;
     }
 
     &.Mui-focused {
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
-      transform: translateY(-2px);
+      background: #fff;
+      border-color: #9ca3af;
     }
-  }
-
-  .MuiInputLabel-root {
-    color: #64748b;
-    font-weight: 500;
-    font-size: 1rem;
-  }
-
-  .MuiInputLabel-root.Mui-focused {
-    color: #f59e0b;
-    font-weight: 600;
   }
 
   .MuiOutlinedInput-notchedOutline {
@@ -75,32 +76,23 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 
   .MuiAutocomplete-endAdornment {
-    color: #64748b;
-  }
-
-  .MuiAutocomplete-endAdornment .MuiSvgIcon-root {
-    font-size: 1.2rem;
+    color: #717182;
   }
 `;
 
 const SearchContainer = styled.div`
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
+  width: 100%;
 
   .search-icon {
     position: absolute;
     left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    color: #64748b;
+    color: #717182;
     z-index: 2;
-    font-size: 1.3rem;
-    transition: all 0.3s ease;
-  }
-
-  &:focus-within .search-icon {
-    color: #f59e0b;
-    transform: translateY(-50%) scale(1.1);
+    font-size: 22px;
   }
 `;
 
@@ -122,9 +114,6 @@ export const Home = () => {
     setter((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
   };
 
-  // TEMPORARY: Get userId from localStorage if logged in, otherwise null (clubs still display)
-  // const userId = localStorage.getItem('token') ? '6627638285b11e9ed9d11fc9' : null;
-  // Fetch user's saved club IDs when logged in (so star state is correct)
   useEffect(() => {
     if (!userId) return;
     axios
@@ -141,25 +130,16 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    // TEMPORARY FIX: Add timeout and error handling
-    const timeoutId = setTimeout(() => {
-      console.log('⏱️ Loading timeout - showing page anyway');
-      setLoading(false);
-    }, 3000); // Stop loading after 3 seconds even if API fails
+    const timeoutId = setTimeout(() => setLoading(false), 3000);
 
-    console.log('🔍 Fetching clubs from API...');
     axios
         .get(`${API_BASE}/api/clubs/`)
         .then((res) => {
-          console.log('✅ Clubs fetched successfully:', res.data?.length || 0, 'clubs');
           setClubs(res.data || []);
           setLoading(false);
           clearTimeout(timeoutId);
         })
-        .catch((err) => {
-          console.error('❌ API Error:', err.message);
-          console.error('Full error:', err);
-          // Set empty array on error so page still renders
+        .catch(() => {
           setClubs([]);
           setLoading(false);
           clearTimeout(timeoutId);
@@ -182,7 +162,7 @@ export const Home = () => {
             Student Clubs and Organizations
           </Typography>
         </div>
-        <div style={{ padding: '40px', textAlign: 'center' }}>
+        <div className="loading-message">
           <Typography>Loading clubs...</Typography>
         </div>
         <Footer />
@@ -202,8 +182,8 @@ export const Home = () => {
         <aside className="sidebar">
           <Accordion className="filter-accordion">
             <AccordionSummary
-              id="panel-header"
-              aria-controls="panel-content"
+              id="type-panel-header"
+              aria-controls="type-panel-content"
               expandIcon={<ExpandMoreIcon />}
             >
               Club Type
@@ -268,159 +248,26 @@ export const Home = () => {
           </Accordion>
           <Accordion className="filter-accordion">
             <AccordionSummary
-              id="panel-header"
-              aria-controls="panel-content"
+              id="major-panel-header"
+              aria-controls="major-panel-content"
               expandIcon={<ExpandMoreIcon />}
             >
               Major
             </AccordionSummary>
             <AccordionDetails>
               <FormControl>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Mechanical and Aerospace Engineering')}
-                      onChange={() => toggleValue('Mechanical and Aerospace Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Aerospace Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Bioengineering')}
-                      onChange={() =>
-                        toggleValue('Bioengineering', selectedMajors, setSelectedMajors)
-                      }
-                    />
-                  }
-                  label="Bioengineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Chemical and Biomolecular Engineering')}
-                      onChange={() =>
-                        toggleValue(
-                          'Chemical and Biomolecular Engineering',
-                          selectedMajors,
-                          setSelectedMajors
-                        )
-                      }
-                    />
-                  }
-                  label="Biomolecular Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Chemical and Biomolecular Engineering')}
-                      onChange={() =>
-                        toggleValue(
-                          'Chemical and Biomolecular Engineering',
-                          selectedMajors,
-                          setSelectedMajors
-                        )
-                      }
-                    />
-                  }
-                  label="Chemical Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Civil and Environmental Engineering')}
-                      onChange={() =>
-                        toggleValue(
-                          'Civil and Environmental Engineering',
-                          selectedMajors,
-                          setSelectedMajors
-                        )
-                      }
-                    />
-                  }
-                  label="Civil Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Electrical and Computer Engineering')}
-                      onChange={() => toggleValue('Electrical and Computer Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Computer Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Computer Science')}
-                      onChange={() => toggleValue('Computer Science', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Computer Science"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Computer Science') && selectedMajors.includes('Electrical and Computer Engineering')}
-                      onChange={() => {toggleValue('Computer Science', selectedMajors, setSelectedMajors);
-                        toggleValue('Electrical and Computer Engineering', selectedMajors, setSelectedMajors)
-                      }}
-                    />
-                  }
-                  label="Computer Science and Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Electrical and Computer Engineering')}
-                      onChange={() => toggleValue('Electrical and Computer Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Electrical Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Civil and Environmental Engineering')}
-                      onChange={() =>
-                        toggleValue(
-                          'Civil and Environmental Engineering',
-                          selectedMajors,
-                          setSelectedMajors
-                        )
-                      }
-                    />
-                  }
-                  label="Environmental Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Materials Science and Engineering')}
-                      onChange={() => toggleValue('Materials Science and Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Materials Science and Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('Mechanical and Aerospace Engineering')}
-                      onChange={() => toggleValue('Mechanical and Aerospace Engineering', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="Mechanical Engineering"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedMajors.includes('General')}
-                      onChange={() => toggleValue('General', selectedMajors, setSelectedMajors)}
-                    />
-                  }
-                  label="General"
-                />
+                {majorOptions.map((opt) => (
+                  <FormControlLabel
+                    key={opt.label}
+                    control={
+                      <Checkbox
+                        checked={selectedMajors.includes(opt.label)}
+                        onChange={() => toggleValue(opt.label, selectedMajors, setSelectedMajors)}
+                      />
+                    }
+                    label={opt.label}
+                  />
+                ))}
               </FormControl>
             </AccordionDetails>
           </Accordion>
@@ -437,43 +284,21 @@ export const Home = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Search clubs by name, description, or keywords..."
-                  InputProps={{
-                    ...params.InputProps,
-                    style: { paddingLeft: '48px' },
-                  }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        border: 'none',
-                        width: '75%',
-                      },
-                    },
-                  }}
+                  placeholder="Search clubs by name or abbreviation..."
                 />
               )}
               PaperComponent={(props) => (
                 <Paper
                   {...props}
-                  elevation={8}
+                  elevation={4}
                   sx={{
-                    borderRadius: '12px',
-                    marginTop: '8px',
-                    border: '1px solid #e2e8f0',
+                    borderRadius: '10px',
+                    marginTop: '6px',
+                    border: '1px solid #e5e7eb',
                     '& .MuiAutocomplete-option': {
-                      padding: '12px 12px',
-                      width: '75%',
-                      fontSize: '0.95rem',
-                      '&:hover': {
-                        backgroundColor: '#f8fafc',
-                      },
-                      '&[aria-selected="true"]': {
-                        backgroundColor: 'transparent',
-                        color: '#99A1AF',
-                        '&:hover': {
-                          backgroundColor: '#f8fafc',
-                        },
-                      },
+                      padding: '10px 16px',
+                      fontSize: '14px',
+                      '&:hover': { backgroundColor: '#f3f4f6' },
                     },
                   }}
                 />
