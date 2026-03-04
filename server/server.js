@@ -15,11 +15,6 @@ const mongoose = require('mongoose');
 app.use(express.json());
 app.use(cors());
 
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
-
 // routes for the backend
 app.use('/api/clubs/', clubRoutes);
 app.use('/api/users/', userRoutes);

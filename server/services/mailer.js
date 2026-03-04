@@ -14,14 +14,26 @@ async function sendResetCodeEmail(toEmail, code) {
   const transporter = makeTransporter();
 
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: `"ESUC ClubFinder" <${process.env.EMAIL_USER}>`,
     to: toEmail,
-    subject: "CLUB FINDER RESET CODE",
-    text: `Your password reset code is: ${code}\nThis code expires in 10 minutes.`,
+    subject: `Your ClubFinder Reset Code: ${code}`,
+    text: [
+      `Hi there,`,
+      ``,
+      `Your password reset code is: ${code}`,
+      ``,
+      `This code expires in 10 minutes. If you didn't request a password reset, you can safely ignore this email.`,
+      ``,
+      `— ESUC ClubFinder Team`,
+    ].join("\n"),
   });
 }
 
 async function sendContactEmail(payload) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    throw new Error("Email service not configured.");
+  }
+
   const {
     firstName = "",
     lastName = "",
