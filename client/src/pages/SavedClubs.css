@@ -8,11 +8,12 @@
 }
 
 .saved-clubs-content {
-  padding: 24px 20px;
+  padding: 28px 40px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  max-width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
@@ -144,8 +145,16 @@
   padding: 8px 14px;
   background-color: #043873;
   color: white;
-  border-radius: 6px;
+  border-radius: 8px;
   text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+}
+
+.go-to-clubs-button:hover {
+  background-color: #054d87;
 }
 
 .saved-clubs-loading {

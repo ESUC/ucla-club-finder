@@ -4,160 +4,83 @@ body,
   background: #ffffff;
 }
 
-.home-container {
-  display: flex;
-}
-
-header {
-  flex: 1; /* Allow the header to grow and take up remaining space */
-}
-
-/* Target the NavigationBar component using its tag name */
-.home-container {
-  display: flex;
-  flex-direction: column; /* Arrange children vertically */
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between; /* Space out items, pushing NavigationBar to the right */
-  align-items: center; /* Align items vertically */
-}
-
-/* Background and layout */
 .home-bg {
   min-height: 100vh;
   background: #ffffff;
-  padding-bottom: 40px;
-  padding-top: 80px;
+  padding-bottom: 0;
+  padding-top: 65px;
 }
 
+/* ── Hero ── */
 .home-header {
   display: flex;
-  width: 100%;
-  height: 200px;
-  padding: 92px 400px 148px 400px;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 140px;
+  padding: 44px 24px;
   background: #043873;
+  box-sizing: border-box;
 }
 
 .home-title {
-  color: #FFF;
+  color: #fff !important;
   text-align: center;
-  /* Header/H1 */
-  font-family: Inter;
-  font-size: 72px;
-  font-style: bold;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: -1.44px;
-  margin-bottom: 40px;
-}
-
-.home-underline {
-  width: 80px;
-  height: 5px;
-  background: #ffc400;
-  margin: 16px auto 20px auto;
-  border-radius: 3px;
-  box-shadow: 0 2px 8px rgba(255, 196, 0, 0.3);
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #ffc400, #ffb300);
-    border-radius: 4px;
-    opacity: 0.3;
-    z-index: -1;
-  }
-}
-
-.home-subtitle {
-  color: #4a5568;
-  font-size: 1.15rem;
-  margin-top: 10px;
-  margin-bottom: 18px;
-  font-weight: 500;
-}
-
-.category-bar {
-  display: flex;
-height: 3563px;
-flex-direction: column;
-align-items: flex-start;
-gap: 59.383px;
-flex: 1 0 0;
-}
-
-.category-chip {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 48px !important;
   font-weight: 700 !important;
-  font-size: 1.08rem !important;
-  border-radius: 999px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  padding: 0 10px;
-  transition: all 0.3s ease;
-  display: flex;
-width: 396.517px;
-height: 445.375px;
-padding-bottom: 5.567px;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-gap: 35.259px;
-}
-.category-chip:hover {
-  background: #1a365d !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 16px rgba(26, 54, 93, 0.3);
-  transform: translateY(-2px);
+  line-height: normal !important;
+  letter-spacing: -1px !important;
 }
 
+/* ── Main layout ── */
 .main-content {
   display: flex;
-  max-width: 1400px;
-  margin: 0 auto;
-  gap: 40px;
-  padding: 0 16px;
+  flex-direction: row;
+  max-width: 1440px;
+  margin: 40px auto 60px;
+  gap: 32px;
+  padding: 0 32px;
+  align-items: flex-start;
 }
 
+/* ── Sidebar ── */
 .sidebar {
   display: flex;
-  width: fit-content;
-  height: fit-content;
-  padding: 20.538px 20.538px 0 20.538px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 3px;
-  border-radius: 18.557px;
-  background: #FFF;
-  box-shadow: 0 1.856px 5.567px 0 rgba(0, 0, 0, 0.10), 0 1.856px 3.711px -1.856px rgba(0, 0, 0, 0.10);
+  width: 240px;
+  min-width: 220px;
+  flex-shrink: 0;
+  padding: 24px 24px 8px;
+  gap: 4px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 100px;
+  box-sizing: border-box;
 }
 
 .sidebar::before {
   content: 'Filter(s)';
-  color: #6A7282;
-  flex: 1 0 0;
-  font-family: Inter;
-  font-size: 22.269px;
-  font-style: normal;
+  color: #6a7282;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 29.692px; /* 133.333% */
-  letter-spacing: 0.557px;
+  line-height: 22px;
+  letter-spacing: 0.4px;
+  padding-bottom: 8px;
 }
 
+/* ── Filter accordions ── */
 .filter-accordion {
   background: transparent !important;
   box-shadow: none !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
   border-radius: 0 !important;
-  transition: all 0.2s ease;
   border: none !important;
-  border-bottom: 3px solid #f1f5f9 !important;
+  border-bottom: 2px solid #e5e7eb !important;
   width: 100%;
   box-sizing: border-box;
 }
@@ -166,245 +89,88 @@ gap: 35.259px;
   border-bottom: none !important;
 }
 
-.filter-accordion:hover {
-  background: #f8fafc !important;
-  transform: none !important;
-  box-shadow: none !important;
+.filter-accordion::before {
+  display: none !important;
 }
 
 .filter-accordion .MuiAccordionSummary-root {
-  color: #1a365d !important;
-  font-weight: 700 !important;
-  font-size: 0.95rem !important;
-  padding: 8px 12px !important;
+  color: #364153 !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+  padding: 8px 4px !important;
   min-height: auto !important;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.2s ease;
-  border-radius: 6px;
-  margin: 0 4px;
-}
-
-.filter-accordion .MuiAccordionSummary-root:hover {
-  color: #0f2027 !important;
-  background: #f1f5f9;
+  letter-spacing: -0.2px;
 }
 
 .filter-accordion .MuiAccordionSummary-content {
   margin: 0 !important;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
 }
 
 .filter-accordion .MuiAccordionSummary-expandIconWrapper {
-  color: #1a365d !important;
-  transition: all 0.2s ease;
-  font-size: 1rem;
-  font-weight: 400;
-  width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-}
-
-.filter-accordion .MuiAccordionSummary-expandIconWrapper:hover {
-  background: #e2e8f0;
-  color: #1a365d !important;
-}
-
-.filter-accordion .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
-  transform: rotate(180deg);
-  background: transparent;
-  color: #1a365d !important;
+  color: #364153 !important;
 }
 
 .filter-accordion .MuiAccordionDetails-root {
   background: transparent;
   border-top: none;
-  padding: 8px 16px 12px 16px !important;
+  padding: 0 4px 12px 8px !important;
 }
 
 .filter-accordion .MuiFormControlLabel-root {
-  color: #374151 !important;
-  margin: 4px 0 !important;
-  font-size: 0.85rem !important;
-  font-weight: 400;
-  transition: all 0.2s ease;
-  border-radius: 4px;
-  padding: 4px 8px;
-  margin-left: -8px !important;
+  color: #4a5565 !important;
+  margin: 2px 0 !important;
+  font-size: 14px !important;
 }
 
-.filter-accordion .MuiFormControlLabel-root:hover {
-  background: #f1f5f9;
-  color: #1a365d !important;
+.filter-accordion .MuiFormControlLabel-label {
+  font-size: 14px !important;
+  font-family: 'Inter', sans-serif !important;
+  color: #4a5565 !important;
 }
 
 .filter-accordion .MuiCheckbox-root {
   color: #d1d5db !important;
   padding: 4px !important;
-  transition: all 0.2s ease;
-}
-
-.filter-accordion .MuiCheckbox-root:hover {
-  color: #1a365d !important;
-  background: rgba(26, 54, 93, 0.05);
-  border-radius: 4px;
 }
 
 .filter-accordion .MuiCheckbox-root.Mui-checked {
-  color: #1a365d !important;
+  color: #043873 !important;
 }
 
+/* ── Content area (right side) ── */
 .content-area {
   flex: 1;
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  padding: 32px 28px;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* Enhanced search styling is now handled by StyledAutocomplete component */
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 36px !important;
+  }
 
-/* CardGrid assumed to be a flex or grid container */
-.content-area .MuiGrid-root,
-.content-area .card-grid {
-  margin-top: 10px;
-  gap: 28px;
-  width: 50%;
-}
+  .home-header {
+    padding: 32px 16px;
+    min-height: 120px;
+  }
 
-/* Card styles (if using MUI Paper or custom) */
-.card,
-.MuiPaper-root {
-  background: #ffffff;
-  border-radius: 16px !important;
-  border: 1px solid #e2e8f0;
-  padding-bottom: 5.567px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow:hidden;
-  color: #99A1AF;
-
-text-align: center;
-font-family: Inter;
-font-size: 29.692px;
-font-style: normal;
-font-weight: 400;
-line-height: 44.538px; /* 150% */
-letter-spacing: -0.58px;
-}
-
-.card::before,
-.MuiPaper-root::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #1a365d, #ffc400);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: #99A1AF;
-
-text-align: center;
-font-family: Inter;
-font-size: 29.692px;
-font-style: normal;
-font-weight: 400;
-line-height: 44.538px; /* 150% */
-letter-spacing: -0.58px;
-}
-
-.card:hover,
-.MuiPaper-root:hover {
-  box-shadow: 0 8px 32px rgba(26, 54, 93, 0.15) !important;
-  transform: translateY(-4px);
-  border-color: #1a365d;
-}
-
-.card:hover::before,
-.MuiPaper-root:hover::before {
-  opacity: 1;
-}
-
-.cKMUIS {
-    color: #99A1AF;
-text-align: center;
-font-family: Inter;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: 44.538px; /* 150% */
-letter-spacing: -0.58px;
-}
-
-.MuiPaper-root-MuiCard-root {
-  color: #99A1AF;
-
-text-align: center;
-font-family: Inter;
-font-size: 29.692px;
-font-style: normal;
-font-weight: 400;
-line-height: 44.538px; /* 150% */
-letter-spacing: -0.58px;
-}
-
-.card-title {
-  color: #99A1AF;
-text-align: center;
-font-family: Inter;
-font-size: 29.692px;
-font-style: normal;
-font-weight: 400;
-line-height: 44.538px; /* 150% */
-letter-spacing: -0.58px;
-}
-
-.card-subtitle {
-  color: #ffc400;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-/* Responsive design */
-@media (max-width: 1100px) {
   .main-content {
     flex-direction: column;
-    gap: 22px;
+    gap: 24px;
+    padding: 0 16px;
+    margin: 24px auto 40px;
   }
+
   .sidebar {
-    max-width: 100%;
     width: 100%;
-    margin-bottom: 0;
-    flex-direction: row;
-    gap: 12px;
-    padding: 18px 6px 12px 6px;
-  }
-  .content-area {
-    padding: 18px 8px 18px 8px;
+    min-width: 0;
+    position: static;
   }
 }
 
-@media (max-width: 700px) {
-  .home-header {
-    padding-top: 18px;
-  }
-  .main-content {
-    padding: 0 2px;
-  }
-  .content-area {
-    padding: 8px 2px 8px 2px;
-  }
+.loading-message {
+  padding: 40px;
+  text-align: center;
 }
