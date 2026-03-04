@@ -41,7 +41,7 @@ const NavigationBar = () => {
   return (
     <AppBar position="fixed" className="navbar-appbar">
       <Toolbar className="navbar-toolbar">
-        <div className="navbar-logo">
+        <Link to="/about" className="navbar-logo">
           <img
             className="navbar-logo-image"
             src="/esuc-logo.png"
@@ -51,7 +51,7 @@ const NavigationBar = () => {
             }}
           />
           <span className="navbar-logo-text">ClubFinder</span>
-        </div>
+        </Link>
         <Box className="navbar-buttons">
           {navItems.map((item) => (
             <Button
