@@ -11,7 +11,7 @@ const AboutDescription = () => {
           </p>
         </div>
         <div className="about-description-image">
-          {/* Image placeholder */}
+          <img src="/exec.png" alt="ESUC Executive Board at UCLA Samueli School of Engineering" className="about-description-image-content" />
         </div>
       </div>
     </section>

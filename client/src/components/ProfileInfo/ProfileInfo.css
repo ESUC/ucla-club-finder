@@ -1,43 +1,23 @@
 .profile-component {
   display: flex;
   width: 100%;
-  max-width: 1200px;
-  margin: 0;
-  padding: 20px 0px 0;
-  flex-direction: column;
-  gap: 20px;
-  font-size: clamp(14px, 1vw, 16px);
-}
-
-.profile-main {
-  display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  gap: 28px;
-  align-self: stretch;
-}
-
-.profile-user {
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  gap: 20px;
+  padding: 0;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid rgba(4, 56, 115, 0.1);
+  flex-wrap: wrap;
 }
 
 .profile-picture {
-  display: flex;
-  height: 96px;
-  align-items: flex-start;
-  border-radius: 50%;
   flex-shrink: 0;
 }
 
 .profile-picture-container {
   display: flex;
-  width: 96px;
-  height: 96px;
+  width: 72px;
+  height: 72px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -46,96 +26,54 @@
 }
 
 .profile-picture-container svg {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
 }
 
-.profile-icon {
-  width: 48px;
-  height: 48px;
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
 }
 
 .profile-username {
-  display: flex;
-  padding: 0;
-  align-items: center;
-  align-self: stretch;
+  margin: 0;
   color: #043873;
-  font-family: "DM Sans";
-  font-size: 1.35rem;
-  font-style: normal;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.15rem;
   font-weight: 600;
-  line-height: 1.25;
-}
-
-.club-stats {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  align-self: stretch;
-}
-
-.club-saved,
-.club-joined {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 2px;
-}
-
-.number-saved,
-.number-joined {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #043873;
-  font-family: "DM Sans";
-  font-size: 1.2rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.stat-label {
-  color: #6A7282;
-  text-align: center;
-  font-family: "DM Sans";
-  font-size: 0.7rem;
-  font-style: normal;
-  font-weight: 500;
   line-height: 1.3;
-  letter-spacing: -0.02em;
 }
 
-.profile-description {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  flex-shrink: 0;
-  align-self: stretch;
-}
-
-.profile-year,
-.profile-bio {
+.profile-meta {
   display: flex;
   align-items: center;
-  align-self: stretch;
-  font-family: "DM Sans";
-  font-size: 0.95rem;
-  font-style: normal;
-  line-height: 1.35;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: #6A7282;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.3;
 }
 
-.profile-year {
-  color: #4A5565;
-  font-weight: 500;
+.profile-meta-divider {
+  color: #d1d5db;
 }
 
 .profile-bio {
-  color: #043873;
+  color: #4A5565;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
   font-weight: 400;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.profile-actions {
+  width: 100%;
+  padding-top: 12px;
 }
 
 .edit-profile-button {
@@ -143,46 +81,42 @@
   box-sizing: border-box;
   cursor: pointer;
   text-decoration: none;
-
-  height: 44px;
+  height: 36px;
   width: 100%;
-  padding: 0 1rem;
-
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-
+  gap: 6px;
   border-radius: 8px;
-  border: 1.5px solid rgba(4, 56, 115, 0.25);
-  background: #FFF;
+  border: 1.5px solid rgba(4, 56, 115, 0.15);
+  background: #f8f9fc;
+  transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
 .edit-profile-button:hover {
-  background: #f8f9fa;
+  background: #f5f7fb;
   border-color: rgba(4, 56, 115, 0.35);
 }
 
 .edit-profile-button svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-.edit-profile-icon {
-  width: 20px;
-  height: 20px;
-  stroke-width: 3.81px;
-  stroke: #043873;
-  display: block;
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
 }
 
 .edit-profile-text {
   color: #043873;
-  font-family: "DM Sans";
-  font-size: 0.95rem;
-  font-style: normal;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
   font-weight: 500;
   line-height: 1.3;
+}
+
+@media (max-width: 600px) {
+  .profile-component {
+    padding: 20px;
+    gap: 16px;
+  }
 }
