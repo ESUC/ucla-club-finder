@@ -19,7 +19,7 @@ const formatMajorYear = (major, year) => {
   return `${major} '${shortYear}`;
 };
 
-const ProfileInfo = ({ savedCount = 0 }) => {
+const ProfileInfo = () => {
   const userId = localStorage.getItem('token') || null;
   const [formData, setFormData] = useState(defaultFormData);
 
@@ -52,14 +52,14 @@ const ProfileInfo = ({ savedCount = 0 }) => {
       </div>
 
       <div className="profile-info">
-        <h2 className="profile-username">{formData.username}</h2>
-        {formData.pronouns && (
-          <span className="profile-pronouns">{formData.pronouns}</span>
-        )}
+        <div className="profile-username-row">
+          <h2 className="profile-username">{formData.username}</h2>
+          <span className="profile-pronouns">
+            ({formData.pronouns || '—'})
+          </span>
+        </div>
         <div className="profile-meta">
           <span>{formatMajorYear(formData.major, formData.year)}</span>
-          <span className="profile-meta-divider">·</span>
-          <span>{savedCount} saved</span>
         </div>
         {formData.bio && <span className="profile-bio">{formData.bio}</span>}
       </div>
