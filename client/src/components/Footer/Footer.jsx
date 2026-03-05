@@ -30,9 +30,9 @@ const Footer = () => {
         <div className="footer-column">
           <h3 className="footer-heading">Connect With Us</h3>
           <ul className="footer-links">
-            <li><a href="https://www.instagram.com/esuc.ucla/" target="_blank" rel="noopener noreferrer" className="footer-link">Instagram</a></li>
-            <li><a href="https://www.linkedin.com/company/esuc-ucla/" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a></li>
-            <li><a href="https://discord.gg/esuc" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a></li>
+            <li><a href="https://www.instagram.com/esucla?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="footer-link">Instagram</a></li>
+            <li><a href="https://discord.gg/9T3z9Bsr" target="_blank" rel="noopener noreferrer" className="footer-link">Discord</a></li>
+            <li><a href="https://www.linkedin.com/company/esucla/" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a></li>
           </ul>
         </div>
       </div>

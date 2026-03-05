@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
@@ -8,8 +8,15 @@ import '../css/account.css';
 import { API_BASE } from '../config';
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/home', { replace: true });
+    }
+  }, [navigate]);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
