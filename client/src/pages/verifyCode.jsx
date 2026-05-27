@@ -1,43 +1,13 @@
 import { useEffect, useState } from "react";
-import { TextField, Button, Typography, Container } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import axios from "axios";
 
 import NavigationBar from "../components/NavigationBar/NavigationBar";
+import Footer from "../components/Footer/Footer";
+import "../css/account.css";
 import { API_BASE } from "../config";
 
 const AUTH_API_BASE = `${API_BASE}/api/userAuth`;
-
-const PageContainer = styled.div`
-  display: flex;
-  min-height: 100vh;
-  width: 100vw;
-  background: #f5f8ff;
-`;
-
-const FormContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 16px;
-`;
-
-const StyledContainer = styled(Container)`
-  width: 100%;
-  max-width: 560px;
-  padding: 32px;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(4, 56, 115, 0.08);
-  border: 1px solid #e6eef9;
-`;
-
-const SidePanel = styled.div`
-  flex: 1;
-  background: #043873;
-`;
 
 export const VerifyCode = () => {
   const [code, setCode] = useState("");
@@ -45,11 +15,9 @@ export const VerifyCode = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const navigate = useNavigate();
-
   const email = localStorage.getItem("resetEmail");
 
   useEffect(() => {
-    // If user came here directly or refreshed and email is missing
     if (!email) {
       navigate("/auth/forgot-password");
     }
@@ -71,84 +39,71 @@ export const VerifyCode = () => {
     }
   };
 
+  const handleResend = async () => {
+    setErrors({});
+    try {
+      await axios.post(`${AUTH_API_BASE}/auth/forgot-password`, { email });
+      setErrors({ success: "A new code has been sent to your email." });
+    } catch (err) {
+      const apiErrors = err?.response?.data?.errors;
+      setErrors(apiErrors || { general: "Could not resend code. Please try again." });
+    }
+  };
+
   return (
-    <>
+    <div className="login-page-wrapper">
       <NavigationBar />
-      <PageContainer>
-        <FormContainer>
-          <StyledContainer>
-            <Typography variant="h5" align="left" gutterBottom sx={{ color: "#043873", fontWeight: 700 }}>
-              Verify Code
-            </Typography>
+      <div className="login-content-area">
+        <div className="login-container">
+          <h3 className="account-title">Verify Code</h3>
+          <p className="account-subtitle">
+            Enter the code we sent to your email.{" "}
+            <button
+              type="button"
+              onClick={handleResend}
+              className="account-link"
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+            >
+              Resend?
+            </button>
+          </p>
 
-            <Typography variant="body2" align="left" style={{ marginBottom: "20px" }}>
-              Enter the code we sent to your email.{" "}
-              <Link to="/auth/forgot-password" style={{ color: "#4F9CF9", textDecorationColor: "#A7CEFC" }}>
-                Resend?
-              </Link>
-            </Typography>
-
-            <form onSubmit={handleVerify}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="6-digit code"
+          <form className="account-form" onSubmit={handleVerify}>
+            <div className="account-input-wrapper">
+              <input
+                type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                error={Boolean(errors.code)}
-                helperText={errors.code || ""}
-                sx={{
-                  "& .MuiOutlinedInput-root": { borderRadius: 12 },
-                }}
+                className="account-input"
+                placeholder="6-digit code"
+                maxLength={6}
+                inputMode="numeric"
+                autoComplete="one-time-code"
               />
-
-              {errors.email && (
-                <Typography sx={{ color: "red", mt: 1 }}>
-                  {errors.email}
-                </Typography>
+              {errors?.code && (
+                <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.code}</p>
               )}
+            </div>
 
-              {errors.general && (
-                <Typography sx={{ color: "red", mt: 1 }}>
-                  {errors.general}
-                </Typography>
-              )}
+            {errors?.email && (
+              <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.email}</p>
+            )}
+            {errors?.general && (
+              <p style={{ color: "#d32f2f", fontSize: "0.9rem", marginTop: 8 }}>{errors.general}</p>
+            )}
+            {errors?.success && (
+              <p style={{ color: "#166534", fontSize: "0.9rem", marginTop: 8 }}>{errors.success}</p>
+            )}
 
-              <Button
-                fullWidth
-                variant="contained"
-                type="submit"
-                disabled={submitting}
-                sx={{
-                  mt: 2,
-                  mb: 2,
-                  height: 54,
-                  background: "#043873",
-                  color: "#FFFFFF",
-                  borderRadius: "16px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  letterSpacing: ".2px",
-                  boxShadow: "0 10px 20px rgba(79,156,249,0.35)",
-                  "&:hover": {
-                    background: "#062E63",
-                    boxShadow: "0 12px 24px rgba(79,156,249,0.45)",
-                  },
-                }}
-              >
-                {submitting ? "Verifying..." : "Verify"}
-              </Button>
+            <button type="submit" className="account-button" disabled={submitting}>
+              {submitting ? "Verifying..." : "Verify"}
+            </button>
 
-              <Typography align="center" sx={{ mt: 1 }}>
-                <Link to="/auth/login" style={{ color: "#4F9CF9", textDecoration: "none" }}>
-                  Back to login
-                </Link>
-              </Typography>
-            </form>
-          </StyledContainer>
-        </FormContainer>
-        <SidePanel />
-      </PageContainer>
-    </>
+            <Link to="/auth/login" className="account-forgot">Back to login</Link>
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </div>
   );
 };

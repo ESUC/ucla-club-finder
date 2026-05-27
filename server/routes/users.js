@@ -9,18 +9,8 @@ function isValidObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === id;
 }
 
-// GET all clubs
-// router.get('/', (req, res) => {
-//     res.json({mssg: 'GET all clubs'})
-// })
-
-// // GET a single club
-// router.get('/:id', (req, res) => {
-//     res.json({mssg: 'GET a single club'})
-// })
-// POST a new club
-
 const { validatePassword } = require("../services/validatePassword");
+const { sendContactEmail } = require("../services/mailer");
 
 // Return 503 if MongoDB is not connected (avoids 10s buffer timeout)
 function requireDb(res) {
@@ -36,16 +26,42 @@ function requireDb(res) {
 }
 
 const validateYear = (year) => {
-  if(!/^(2026|2027|2028|2029)$/.test(year)){
+  if (!/^(2026|2027|2028|2029)$/.test(year)) {
     return 1;
   }
   return 0;
-}
+};
 
+router.post('/contact', async (req, res) => {
+  try {
+    const { firstName, lastName, email, subject, clubName, message } = req.body || {};
+    const errors = {};
+
+    if (!email || String(email).trim() === '') {
+      errors.email = 'Please enter your email.';
+    }
+    if (!message || String(message).trim() === '') {
+      errors.message = 'Please enter a message.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
+
+    await sendContactEmail({ firstName, lastName, email, subject, clubName, message });
+    return res.status(200).json({ message: 'Message sent successfully.' });
+  } catch (err) {
+    console.error('CONTACT FORM ERROR 💥', err);
+    return res.status(500).json({
+      errors: {
+        general: 'Failed to send message. Please try again later.',
+      },
+    });
+  }
+});
 
 router.post('/auth/register', async (req, res) => {
   if (!requireDb(res)) return;
-  console.log("REGISTER BODY:", req.body);
   const { firstName, lastName, username, email, password, year, major } = req.body;
   const errors = {};
 
@@ -82,24 +98,17 @@ router.post('/auth/register', async (req, res) => {
 
   try {
     const user = await User.create({ firstName, lastName, username, email, password: hash, year: yearVal, major: majorVal });
-    res.status(200).json(user);
+    res.status(200).json({ userId: user._id.toString(), email: user.email });
   } catch (error) {
     if (error.code === 11000) {
-      const dupField = Object.keys(error.keyValue)[0]; //email or username is in database
+      const dupField = Object.keys(error.keyValue)[0];
       return res.status(400).json({ errors: { [dupField]: `${dupField} already exists` } });
     }
-    console.error('REGISTER ERROR', error);
-    return res.status(500).json({ errors: { general: error.message || 'Registration failed. Please try again.' } });
+    return res.status(500).json({ errors: { general: 'Registration failed. Please try again.' } });
   }
-  //year validation
-  //major should be a drop down
-  //update the reasong for password fail/ specs for correct pasword
-  //res.json({mssg: 'registered a user'})
 });
 router.post("/auth/login", async (req, res) => {
   if (!requireDb(res)) return;
-  console.log("LOGIN HIT ✅");
-  console.log("LOGIN BODY:", req.body);
 
   try {
     const { email, password } = req.body;
@@ -114,26 +123,21 @@ router.post("/auth/login", async (req, res) => {
     }
 
     if (Object.keys(errors).length > 0) {
-      console.log("LOGIN STOP 🚫 missing fields", errors);
       return res.status(400).json({ errors });
     }
 
     // 2) Normalize email (prevents case/space issues)
     const normalizedEmail = String(email).trim().toLowerCase();
-    console.log("LOGIN STEP ✅ normalizedEmail:", normalizedEmail);
 
     // 3) Find user
     const user = await User.findOne({ email: normalizedEmail });
     if (!user) {
-      console.log("LOGIN STOP 🚫 no user found");
       return res.status(404).json({ errors: { email: "No account found with that email." } });
     }
-    console.log("LOGIN STEP ✅ user found:", user._id.toString());
 
     // 4) Check password
     const passwordMatch = await bcrypt.compare(String(password), user.password);
     if (!passwordMatch) {
-      console.log("LOGIN STOP 🚫 wrong password");
       return res.status(400).json({ errors: { password: "Incorrect password." } });
     }
 
@@ -141,14 +145,12 @@ router.post("/auth/login", async (req, res) => {
     user.lastLoginAt = new Date();
     await user.save();
 
-    console.log("LOGIN SUCCESS ✅");
     return res.status(200).json({
       message: "Login successful.",
       userId: user._id.toString(),
       email: user.email || null,
     });
   } catch (err) {
-    console.error("LOGIN ERROR 💥", err);
     return res.status(500).json({ errors: { general: "Server error." } });
   }
 });
@@ -191,7 +193,8 @@ router.put('/profile/:userId', async (req, res) => {
     if (year != null) user.year = String(year).trim() || 'N/A';
     if (bio != null) user.bio = String(bio).trim();
     await user.save();
-    res.status(200).json(user);
+    const safeUser = await User.findById(userId).select('firstName lastName username email pronouns major year bio');
+    res.status(200).json(safeUser);
   } catch (error) {
     if (error.code === 11000) {
       const dupField = Object.keys(error.keyValue)[0];
@@ -222,6 +225,9 @@ router.post('/save/:clubId', async (req, res) => {
   if (!isValidObjectId(clubId)) {
     return res.status(400).json({ error: 'Invalid club ID' });
   }
+  if (!isValidObjectId(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -244,6 +250,9 @@ router.delete('/save/:clubId', async (req, res) => {
   const { userId } = req.body;
   if (!isValidObjectId(clubId)) {
     return res.status(400).json({ error: 'Invalid club ID' });
+  }
+  if (!isValidObjectId(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
   }
   try {
     const user = await User.findById(userId);

@@ -45,7 +45,7 @@
 
 /* Outer Container (for Verify Password) */
 .account-outer-container {
-  background: white;
+  display: flex;
   background: linear-gradient(to right bottom, #ffc400, #00d2ff);
   height: 100vh;
   width: 100%;
@@ -64,7 +64,7 @@
   display: block;
   margin-bottom: 8px;
   color: #101828;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -77,7 +77,7 @@
   border: 1px solid rgba(0, 0, 0, 0.00);
   background: #F3F3F5;
   color: #717182;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -188,7 +188,7 @@
   border: none;
   color: #FFF;
   text-align: center;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 0.9375rem;
   font-style: normal;
   font-weight: 500;
@@ -210,7 +210,7 @@
 /* Typography Styles */
 .account-title {
   color: #101828;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 500;
@@ -222,7 +222,7 @@
 .account-subtitle {
   display: block;
   color: #4A5565;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -233,7 +233,7 @@
 
 .account-link {
   color: #2B7FFF;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: inherit;
   font-style: normal;
   font-weight: 500;
@@ -251,7 +251,7 @@
 /* Form Helper Text */
 .account-helper-text {
   color: #364153;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 0.9375rem;
   font-style: normal;
   font-weight: 500;
@@ -261,7 +261,7 @@
 /* Legal Text */
 .account-legal-text {
   color: #4A5565;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
@@ -307,7 +307,7 @@
 
 .account-forgot {
   color: #2B7FFF;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-size: 0.9375rem;
   font-style: normal;
   font-weight: 500;

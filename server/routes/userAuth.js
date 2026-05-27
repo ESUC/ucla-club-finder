@@ -28,7 +28,6 @@ function isValidEmail(email) {
 
 router.post("/auth/forgot-password", async (req, res) => {
     if (!requireDb(res)) return;
-    console.log("FORGOT-PASSWORD HIT ✅", req.body);
     try {
         const { email } = req.body;
 
@@ -87,7 +86,7 @@ router.post("/auth/forgot-password", async (req, res) => {
                 return res.status(500).json({ errors: { general: "Could not send email. Try again later or contact support." } });
             }
         } else {
-            console.log("FORGOT PASSWORD (no email config): reset code for", email, "->", code);
+            return res.status(500).json({ errors: { general: "Email service not configured. Contact support." } });
         }
 
         return res.sendStatus(200);
@@ -123,7 +122,8 @@ router.post("/auth/verify-code", async (req, res) => {
             return res.status(400).json({ errors });
         }
 
-        const user = await User.findOne({ email });
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const user = await User.findOne({ email: normalizedEmail });
 
         if (!user) {
             return res.status(404).json({
@@ -197,8 +197,8 @@ router.post("/auth/reset-password", async (req, res) => {
             });
         }
 
-        // Find user
-        const user = await User.findOne({ email });
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const user = await User.findOne({ email: normalizedEmail });
         if (!user) {
             return res.status(404).json({ errors: { email: "No account found with that email." } });
         }
@@ -215,23 +215,16 @@ router.post("/auth/reset-password", async (req, res) => {
             });
         }
 
-        // Hash + save new password
-        console.log("BEFORE save password hash:", user.password);
-
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
         user.password = hash;
 
-
-        // Clear reset fields
         user.passwordResetCodeHash = null;
         user.passwordResetExpiresAt = null;
         user.passwordResetVerified = false;
         user.passwordResetLastSentAt = null;
 
         await user.save();
-        const fresh = await User.findOne({ email });
-        console.log("AFTER save password hash:", fresh.password);
 
 
         return res.sendStatus(200);

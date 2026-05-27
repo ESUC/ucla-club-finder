@@ -71,11 +71,10 @@ router.delete('/:id', async (req, res) => {
   }
   const { id } = req.params;
   try {
-    const club = await Club.findById(id);
+    const club = await Club.findByIdAndDelete(id);
     if (!club) {
-      return res.status(400).json({ error: 'No club detected' });
+      return res.status(404).json({ error: 'No club detected' });
     }
-    await club.remove();
     res.status(200).json({ message: "Club successfully deleted"});
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -12,9 +12,10 @@ async function main() {
     console.log('Connected to MongoDB');
 
     const data = JSON.parse(fs.readFileSync('clubs.json', 'utf-8'));
+    await Club.deleteMany({});
     const result = await Club.insertMany(data);
 
-    console.log(`Club list populated`);
+    console.log(`Uploaded ${result.length} clubs from clubs.json to the database.`);
   } catch (err) {
     console.error('Error uploading clubs:', err);
   } finally {
