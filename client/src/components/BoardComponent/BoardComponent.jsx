@@ -2,18 +2,24 @@ import './BoardComponent.css';
 
 const BoardComponent = () => {
   const executive = [
-    { name: 'Justin Xu', role: 'External Vice President', image: 'https://www.esuc.ucla.edu/assets/img/team/Justin.svg' },
-    { name: 'Jerard Agravante', role: 'President', image: 'https://www.esuc.ucla.edu/assets/img/team/Jerard.svg' },
-    { name: 'Clara Yee', role: 'Internal Vice President', image: 'https://www.esuc.ucla.edu/assets/img/team/Clara.svg' },
+    { name: 'Lian Elsa Linton', role: 'External Vice President', image: '/board/Lian_Elsa_Linton_EVP.png' },
+    { name: 'Justin Xu', role: 'President', image: '/board/Justin_Xu_President.png' },
+    { name: 'Aidan O\'Leary', role: 'Internal Vice President', image: '/board/Aidan_O_Leary_IVP.png' },
+    { name: 'Megan Lu', role: 'Treasurer', image: '/board/Megan_Lu_Treasurer.png' },
   ];
 
   const officers = [
-    { name: 'Tyler Lam', role: 'Corporate Director', image: 'https://www.esuc.ucla.edu/assets/img/team/Tyler.svg' },
-    { name: 'Jennie Ren', role: 'Treasurer', image: 'https://www.esuc.ucla.edu/assets/img/team/Jennie.svg' },
-    { name: 'Lian Elsa Linton', role: 'Webmaster', image: 'https://www.esuc.ucla.edu/assets/img/team/Lian.svg' },
-    { name: "Aidan O'Leary", role: 'Alumni Relations & Community Chair', image: 'https://www.esuc.ucla.edu/assets/img/team/Aidan.svg' },
-    { name: 'Ela Defne Erkan', role: 'Publicity Chair', image: 'https://www.esuc.ucla.edu/assets/img/team/Defne.svg' },
-    { name: 'Chris Wang', role: 'Secretary', image: 'https://www.esuc.ucla.edu/assets/img/team/Chris.svg' },
+    { name: 'Grace Li', role: 'Secretary', image: '/board/Grace_Li_Secratary.png' },
+    { name: 'Anastasia Yang', role: 'Co-Webmaster', image: '/board/Anastasia_Yang_Co-Webmaster.png' },
+    { name: 'Carter Ballow', role: 'Co-Webmaster', image: '/board/Carter_Ballow_Co-Webmaster.png' },
+    { name: "Darren Schuttinger", role: 'Alumni Relations Chair', image: '/board/Darren_ Schuttinger_Alumni_Relations_Chair.png' },
+    { name: 'Conner Lam', role: 'Corporate Chair', image: '/board/Conner_Lam_Corporate_Chair.png' },
+    { name: 'Alina Wang', role: 'Publicity Chair', image: '/board/Alina_Wang_Publicity.png' },
+    { name: "Al Ponce", role: 'Membership Chair', image: '/board/Al_Ponce_Membership_Chair.png' },
+    { name: 'Joanne Yu', role: 'Social Chair', image: '/board/Joanne_Yu_Social_Chair.png' },
+    { name: 'Sarah AlSabah', role: 'Wellness Chair', image: '/board/Sarah_AlSabah_Wellness_Chair.png' },
+    { name: "Natalie Ngo", role: 'Facilities Manager', image: '/board/Natalie_Ngo_Facilities_Manager.png' },
+    { name: 'Evelyn Han', role: 'Historian & Transfer Representative', image: '/board/Evelyn_Han_Historian.png' }
   ];
 
   return (
